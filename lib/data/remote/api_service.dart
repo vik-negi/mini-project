@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 // const String baseUrl = 'http://192.168.43.65:8000';
 // const String baseUrl = 'http://172.11.10.77:8000';
-const String baseUrl = 'http://172.15.0.218:8000';
+const String baseUrl = 'http://evika.herokuapp.com';
 
 class ApiServices extends ApiInterface {
   dynamic returnResponse(http.Response? response) {

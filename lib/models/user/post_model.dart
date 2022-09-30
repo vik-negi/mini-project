@@ -26,7 +26,7 @@ class Data {
   String? eventId;
   Position? eventLocation;
   DateTime? eventStartAt;
-  List<String?>? imageUrl;
+  List<String?>? image;
   int? likes;
   String? organizerType;
   String? postLink;
@@ -34,6 +34,8 @@ class Data {
   String? title;
   DateTime? updatedAt;
   String? username;
+  String? userId;
+  List<String>? likedUsers = [];
 
   Data({
     this.createdAt,
@@ -43,7 +45,7 @@ class Data {
     this.eventId,
     this.eventLocation,
     this.eventStartAt,
-    this.imageUrl,
+    this.image,
     this.likes,
     this.organizerType,
     this.postLink,
@@ -51,6 +53,8 @@ class Data {
     this.title,
     this.updatedAt,
     this.username,
+    this.userId,
+    this.likedUsers,
   });
 
   Map<String, dynamic> toMap() {
@@ -62,7 +66,7 @@ class Data {
       'eventId': eventId,
       'eventLocation': eventLocation,
       'eventStartAt': eventStartAt,
-      'imageUrl': imageUrl,
+      'image': image,
       'likes': likes,
       'organizerType': organizerType,
       'postLink': postLink,
@@ -70,6 +74,8 @@ class Data {
       'title': title,
       'updatedAt': updatedAt,
       'username': username,
+      'userId': userId,
+      'likedUsers': likedUsers,
     };
   }
 
@@ -83,7 +89,7 @@ class Data {
       eventId: map['eventId'] ? map['eventId'] : null,
       eventLocation: map['eventLocation'] ? map['eventLocation'] : null,
       eventStartAt: map['eventStartAt'] ? map['eventStartAt'] : null,
-      imageUrl: map['imageUrl'] ? List<String>.from(map['imageUrl']) : null,
+      image: map['image'] ? List<String>.from(map['image']) : null,
       likes: map['likes'] ? map['likes'] : 0,
       organizerType: map['organizerType'] ? map['organizerType'] : null,
       postLink: map['postLink'] ? map['postLink'] : null,
@@ -91,6 +97,8 @@ class Data {
       title: map['title'] ? map['title'] : null,
       updatedAt: map['updatedAt'] ? map['updatedAt'] : null,
       username: map['username'] ? map['username'] : null,
+      userId: map['userId'] ? map['userId'] : null,
+      likedUsers: map['likedUsers'] ? map['likedUsers'] : null,
     );
   }
 
