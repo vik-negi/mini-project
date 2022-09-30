@@ -1,7 +1,9 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:awesome_loader/awesome_loader.dart';
+import 'package:evika/home.dart';
+import 'package:evika/pages/auth/login.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/views/sign_up_from_view.dart';
-import 'package:frontend/views/signin.dart';
-import 'package:get/get.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,60 +12,26 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Evika',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              TextButton(
-                onPressed: () {
-                  Get.to(SignUpFrom());
-                },
-                child: const Text("Sign Up"),
-              ),
-              TextButton(
-                onPressed: () {
-                  Get.to(SigninPage());
-                },
-                child: const Text("Sign In"),
-              ),
-            ],
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(
+          seconds: 5,
+          image: Image(image: AssetImage('assets/sss.gif')),
+          title: const Text(
+            "𝑒ｖᎥⓀ𝐚",
+            style: TextStyle(
+                fontSize: 60,
+                fontFamily: 'Pacifico',
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(221, 135, 251, 100)),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
+          photoSize: 170,
+          navigateAfterSeconds: LoginPage(),
+          useLoader: false,
+          loaderColor: Colors.black54,
         ));
   }
 }
