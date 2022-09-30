@@ -9,9 +9,13 @@ class SigninPage extends StatelessWidget {
   SigninPage({super.key});
 
   final TextEditingController _usernameController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+
   SignupVM signupvm = Get.put(SignupVM());
+
   Map<dynamic, dynamic>? response = {};
 
   @override

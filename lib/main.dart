@@ -1,8 +1,5 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:awesome_loader/awesome_loader.dart';
-import 'package:evika/home.dart';
-import 'package:evika/pages/auth/login.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/views/signin.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() {
@@ -29,7 +26,7 @@ class MyApp extends StatelessWidget {
                 color: Color.fromARGB(221, 135, 251, 100)),
           ),
           photoSize: 170,
-          navigateAfterSeconds: LoginPage(),
+          navigateAfterSeconds: SigninPage(),
           useLoader: false,
           loaderColor: Colors.black54,
         ));
