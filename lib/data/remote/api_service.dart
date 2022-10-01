@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:evika/data/remote/api_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,7 +13,7 @@ class ApiServices extends ApiInterface {
     debugPrint(response!.body.toString());
     switch (response.statusCode) {
       case 200:
-        dynamic responseJson = jsonDecode(response.body ?? "");
+        dynamic responseJson = jsonDecode(response.body);
         return responseJson;
       case 400:
         throw Exception('Bad Request');

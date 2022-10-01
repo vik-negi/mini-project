@@ -1,6 +1,5 @@
+import 'package:evika/views/home.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/views/home.dart';
-import 'package:frontend/views/signin.dart';
 
 void main() {
   runApp(const MyApp());
