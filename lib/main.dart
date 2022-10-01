@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/home.dart';
 import 'package:frontend/views/signin.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,21 +14,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(
-          seconds: 5,
-          image: Image(image: AssetImage('assets/sss.gif')),
-          title: const Text(
-            "𝑒ｖᎥⓀ𝐚",
-            style: TextStyle(
-                fontSize: 60,
-                fontFamily: 'Pacifico',
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(221, 135, 251, 100)),
-          ),
-          photoSize: 170,
-          navigateAfterSeconds: SigninPage(),
-          useLoader: false,
-          loaderColor: Colors.black54,
-        ));
+        home:
+            // SplashScreen(
+            //   seconds: 5,
+            //   image: Image(image: AssetImage('assets/sss.gif')),
+            //   title: const Text(
+            //     "𝑒ｖᎥⓀ𝐚",
+            //     style: TextStyle(
+            //         fontSize: 60,
+            //         fontFamily: 'Pacifico',
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(221, 135, 251, 100)),
+            //   ),
+            //   photoSize: 170,
+            //   navigateAfterSeconds: SigninPage(),
+            //   useLoader: false,
+            //   loaderColor: Colors.black54,
+            // ),
+            HomePage());
   }
 }
