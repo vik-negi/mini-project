@@ -167,9 +167,6 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "0.4.14"
-=======
     version: "0.4.12"
   typed_data:
     dependency: transitive
@@ -178,7 +175,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.1"
->>>>>>> fda8c51eb1a720a96af817400247ecf57d8766d9
   vector_math:
     dependency: transitive
     description:
