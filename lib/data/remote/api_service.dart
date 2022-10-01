@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:frontend/data/remote/api_interface.dart';
+import 'package:evika/data/remote/api_interface.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 // const String baseUrl = 'http://192.168.43.65:8000';
@@ -9,10 +10,10 @@ const String baseUrl = 'http://evika.herokuapp.com';
 
 class ApiServices extends ApiInterface {
   dynamic returnResponse(http.Response? response) {
-    print(response!.body);
+    debugPrint(response!.body.toString());
     switch (response.statusCode) {
       case 200:
-        dynamic responseJson = jsonDecode(response.body ?? "");
+        dynamic responseJson = jsonDecode(response.body);
         return responseJson;
       case 400:
         throw Exception('Bad Request');

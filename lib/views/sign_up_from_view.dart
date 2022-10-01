@@ -1,7 +1,6 @@
+import 'package:evika/view_models/signup_viewmodel.dart';
+import 'package:evika/views/signin.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/view_models/signup_viewmodel.dart';
-import 'package:frontend/views/home.dart';
-import 'package:frontend/views/signin.dart';
 import 'package:get/get.dart';
 
 enum AccountType { Individual, Organization }

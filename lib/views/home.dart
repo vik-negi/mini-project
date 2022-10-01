@@ -1,5 +1,5 @@
+import 'package:evika/view_models/signup_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/view_models/signup_viewmodel.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {

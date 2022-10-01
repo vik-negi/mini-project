@@ -1,6 +1,6 @@
+import 'package:evika/data/remote/api_service.dart';
+import 'package:evika/resources/login_repo/login_repo.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:frontend/data/remote/api_service.dart';
-import 'package:frontend/resources/login_repo/login_repo.dart';
 
 class LoginRepoImp extends LoginRepo {
   ApiServices apiServices = ApiServices();
