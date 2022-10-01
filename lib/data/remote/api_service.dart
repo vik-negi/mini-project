@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:frontend/data/remote/api_interface.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,7 +10,7 @@ const String baseUrl = 'http://172.15.0.218:8000';
 
 class ApiServices extends ApiInterface {
   dynamic returnResponse(http.Response? response) {
-    print(response!.body);
+    debugPrint(response!.body.toString());
     switch (response.statusCode) {
       case 200:
         dynamic responseJson = jsonDecode(response.body ?? "");
