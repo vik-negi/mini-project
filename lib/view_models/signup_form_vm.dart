@@ -1,5 +1,5 @@
+import 'package:evika/models/user/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/models/user/user_model.dart';
 import 'package:get/get.dart';
 
 class SignUpFormVM extends GetxController {

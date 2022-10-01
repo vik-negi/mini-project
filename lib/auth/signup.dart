@@ -1,9 +1,7 @@
-import 'package:evika/pages/auth/login.dart';
+import 'package:evika/auth/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-import '../../home.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -19,7 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Center(
             child: Container(
               child: Form(
@@ -27,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -37,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: HexColor('#224957'),
                           fontFamily: 'LexendDeca'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
@@ -47,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: HexColor('#224957').withOpacity(0.7),
                           fontFamily: "LexendDeca-Bold"),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Image.asset(
@@ -59,16 +57,16 @@ class _RegisterPageState extends State<RegisterPage> {
                       width: 320,
                       height: 60,
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white70),
+                        style: const TextStyle(color: Colors.white70),
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: HexColor('#224957'),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.person,
                               color: Colors.white70,
                             ),
                             hintText: 'Username',
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 fontFamily: 'LexendDeca',
                                 color: Colors.white70,
                                 fontWeight: FontWeight.bold),
@@ -76,23 +74,23 @@ class _RegisterPageState extends State<RegisterPage> {
                                 borderRadius: BorderRadius.circular(10))),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     SizedBox(
                       width: 320,
                       height: 60,
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white70),
+                        style: const TextStyle(color: Colors.white70),
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: HexColor('#224957'),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.email,
                               color: Colors.white70,
                             ),
                             hintText: 'Email',
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 fontFamily: 'LexendDeca',
                                 color: Colors.white70,
                                 fontWeight: FontWeight.bold),
@@ -100,24 +98,24 @@ class _RegisterPageState extends State<RegisterPage> {
                                 borderRadius: BorderRadius.circular(10))),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     SizedBox(
                       width: 320,
                       height: 60,
                       child: TextFormField(
-                          style: TextStyle(color: Colors.white70),
+                          style: const TextStyle(color: Colors.white70),
                           obscureText: true,
                           decoration: InputDecoration(
                               filled: true,
                               fillColor: HexColor('#224957'),
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.lock,
                                 color: Colors.white70,
                               ),
                               hintText: 'Password',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   fontFamily: 'LexendDeca',
                                   color: Colors.white70,
                                   fontWeight: FontWeight.bold),
@@ -132,7 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
                           }),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5.5,
                     ),
                     Row(
@@ -158,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     fontSize: 15,
                                     color: HexColor('#224957')),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 40,
                               ),
                             ],
@@ -171,7 +169,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 50,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(249, 82, 255, 82),
+                            backgroundColor:
+                                const Color.fromARGB(249, 82, 255, 82),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
@@ -186,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         top: 7,
                       ),
                       child: Text.rich(TextSpan(
@@ -198,7 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           children: <TextSpan>[
                             TextSpan(
                                 text: "Login Here",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontFamily: 'LexendDeca',
                                     fontSize: 14,
                                     decoration: TextDecoration.underline),
@@ -206,9 +205,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ..onTap = () {
                                     Navigator.push(
                                         context,
-                                        new MaterialPageRoute(
+                                        MaterialPageRoute(
                                             builder: (context) =>
-                                                new LoginPage()));
+                                                const LoginPage()));
                                   }),
                           ])),
                     )

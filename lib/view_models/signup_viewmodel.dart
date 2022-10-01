@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:evika/data/remote/api_responce.dart';
+import 'package:evika/models/user/user_model.dart';
+import 'package:evika/resources/login_repo/login_repo.dart';
+import 'package:evika/resources/login_repo/login_repo_imp.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/data/remote/api_responce.dart';
-import 'package:frontend/models/user/user_model.dart';
-import 'package:frontend/resources/login_repo/login_repo.dart';
-import 'package:frontend/resources/login_repo/login_repo_imp.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

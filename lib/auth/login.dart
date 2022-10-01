@@ -1,5 +1,4 @@
-import 'package:evika/home.dart';
-import 'package:evika/pages/auth/signup.dart';
+import 'package:evika/auth/signup.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -19,15 +18,15 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Center(
-            child: Container(
+            child: SizedBox(
               child: Form(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -37,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
                           color: HexColor('#224957'),
                           fontFamily: 'LexendDeca'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
@@ -47,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                           color: HexColor('#224957').withOpacity(0.7),
                           fontFamily: "LexendDeca-Bold"),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Image.asset(
@@ -59,16 +58,16 @@ class _LoginPageState extends State<LoginPage> {
                       width: 320,
                       height: 60,
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white70),
+                        style: const TextStyle(color: Colors.white70),
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: HexColor('#224957'),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.email,
                               color: Colors.white70,
                             ),
                             hintText: 'Email',
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               color: Colors.white70,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'LexendDeca',
@@ -77,24 +76,24 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(10))),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     SizedBox(
                       width: 320,
                       height: 60,
                       child: TextFormField(
-                          style: TextStyle(color: Colors.white70),
+                          style: const TextStyle(color: Colors.white70),
                           obscureText: true,
                           decoration: InputDecoration(
                               filled: true,
                               fillColor: HexColor('#224957'),
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.lock,
                                 color: Colors.white70,
                               ),
                               hintText: 'Password',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Colors.white70,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'LexendDeca'),
@@ -109,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           }),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5.5,
                     ),
                     Row(
@@ -118,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                         Checkbox(
                           checkColor: Colors.white70,
                           activeColor: HexColor('#224957'),
-                          value: this.valuefirst,
+                          value: valuefirst,
                           onChanged: (value) {
                             setState(() {});
                           },
@@ -135,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                                     fontFamily: 'LexendDeca',
                                     color: HexColor('#224957')),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 40,
                               ),
                               Text(
@@ -157,7 +156,8 @@ class _LoginPageState extends State<LoginPage> {
                       height: 50,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(249, 82, 255, 82),
+                            backgroundColor:
+                                const Color.fromARGB(249, 82, 255, 82),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
@@ -172,10 +172,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         top: 7,
                       ),
-                      child: Text.rich(TextSpan(
+                      child: Text.rich(
+                        TextSpan(
                           text: "Don't have an account? ",
                           style: const TextStyle(
                               color: Colors.black,
@@ -183,20 +184,25 @@ class _LoginPageState extends State<LoginPage> {
                               fontFamily: 'LexendDeca'),
                           children: <TextSpan>[
                             TextSpan(
-                                text: "Register Here",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'LexendDeca',
-                                    decoration: TextDecoration.underline),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.push(
-                                        context,
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                                new RegisterPage()));
-                                  }),
-                          ])),
+                              text: "Register Here",
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'LexendDeca',
+                                  decoration: TextDecoration.underline),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterPage(),
+                                    ),
+                                  );
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
                     )
                   ],
                 ),
