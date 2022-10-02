@@ -1,4 +1,4 @@
-import 'package:evika/view_models/signup_viewmodel.dart';
+import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
 import 'package:evika/views/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

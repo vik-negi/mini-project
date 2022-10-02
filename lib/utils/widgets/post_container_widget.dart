@@ -103,7 +103,8 @@ class PostContainer extends StatelessWidget {
                       width: Get.width - 20,
                       fit: BoxFit.cover,
                       placeholder: const AssetImage(
-                          "assets/placeholderimageloading.gif"),
+                        "assets/placeholderimageloading.gif",
+                      ),
                       image: NetworkImage(images[0]),
                     ),
                   ),

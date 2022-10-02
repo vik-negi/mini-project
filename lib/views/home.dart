@@ -1,4 +1,4 @@
-import 'package:evika/view_models/signup_viewmodel.dart';
+import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,14 +10,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  SignupVM signupvm = Get.put(SignupVM());
+  SigninVM signupvm = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: GetBuilder<SignupVM>(builder: (vm) {
+      body: GetBuilder<SigninVM>(builder: (vm) {
         return Center(
           child: Text(vm.userModel.data?.email.toString() ?? "hii"),
         );

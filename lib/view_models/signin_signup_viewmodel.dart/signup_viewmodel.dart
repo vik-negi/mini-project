@@ -1,17 +1,12 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/models/user/user_model.dart';
-import 'package:evika/resources/login_repo/login_repo.dart';
 import 'package:evika/resources/login_repo/login_repo_imp.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupVM extends GetxController {
   ApiResponce<Map> response = ApiResponce.loading();
-  final LoginRepo loginRepo = LoginRepoImp();
+  final LoginRepoImp loginRepo = LoginRepoImp();
 
   UserModel userModel = Get.put(UserModel());
   RxInt _currentStep = 0.obs;
@@ -85,28 +80,6 @@ class SignupVM extends GetxController {
     return null;
   }
 
-  Future<Map?> userSignin(String username, String password) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    Map data = {'username': username, 'password': password};
-    Map<dynamic, dynamic>? response = await loginRepo.userSignin(data);
-
-    print(response);
-    if (response!["status"] == "success") {
-      sharedPreferences.setString("token", response["token"]);
-      _isSignup.value = true;
-      String userData = jsonEncode(response);
-      // print(response.toString());
-
-      // userModel = userModelFromJson(userData);
-      userModel = UserModel.fromJson(userData);
-      update();
-      print(userModel);
-      return response;
-    }
-    return null;
-  }
-
   @override
   void onInit() {
     super.onInit();
@@ -118,5 +91,12 @@ class SignupVM extends GetxController {
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+    emailController.clear();
+    passwordController.clear();
+    usernameController.clear();
+    nameController.clear();
+    confirmPasswordController.clear();
+    mobileController.clear();
+  }
 }

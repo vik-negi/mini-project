@@ -1,3 +1,8 @@
+import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
+import 'package:evika/views/create_post.dart';
+import 'package:evika/views/profile.dart';
+import 'package:evika/views/signin.dart';
+import 'package:evika/views/tranding.dart';
 import 'package:flutter/material.dart';
 import "package:evika/views/sample_post.dart";
 import 'package:get/get.dart';
@@ -12,7 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home:
           // SplashScreen(
@@ -31,7 +36,54 @@ class MyApp extends StatelessWidget {
           //   useLoader: false,
           //   loaderColor: Colors.black54,
           // ),
-          SamplePost(),
+          Navigation(),
+    );
+  }
+}
+
+class Navigation extends StatelessWidget {
+  Navigation({Key? key}) : super(key: key);
+  NavigationController nv = Get.put(NavigationController());
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> screens = <Widget>[
+      const SamplePost(),
+      const TrandingPage(),
+      const CreatePostPage(),
+      true ? SigninPage() : const ProfilePage(),
+    ];
+    return GetBuilder<NavigationController>(builder: (nv) {
+      return Scaffold(
+        body: screens.elementAt(nv.index.value),
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            navbarItem(icon: Icons.home, label: "Home"),
+            navbarItem(icon: Icons.next_week, label: "Tranding"),
+            navbarItem(icon: Icons.add, label: "Post"),
+            navbarItem(icon: Icons.account_box, label: "Accounts"),
+          ],
+          currentIndex: nv.index.value,
+          onTap: (int index) {
+            nv.changeIndex(index);
+            nv.update();
+          },
+          unselectedItemColor: const Color(0xffa1a1a1),
+          selectedItemColor: const Color(0xff415859),
+          showUnselectedLabels: true,
+          selectedIconTheme: const IconThemeData(size: 30),
+          unselectedIconTheme: const IconThemeData(size: 25),
+          type: BottomNavigationBarType.fixed,
+        ),
+      );
+    });
+  }
+
+  BottomNavigationBarItem navbarItem(
+      {required IconData icon, required String label}) {
+    return BottomNavigationBarItem(
+      icon: Icon(icon),
+      label: label,
     );
   }
 }
