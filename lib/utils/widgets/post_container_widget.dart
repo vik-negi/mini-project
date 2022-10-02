@@ -1,3 +1,4 @@
+import 'package:evika/models/user/post_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -65,7 +66,8 @@ String getDate(String dateTime) {
 }
 
 class PostContainer extends StatelessWidget {
-  const PostContainer({super.key});
+  const PostContainer({super.key, required this.postData});
+  final PostData postData;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +107,7 @@ class PostContainer extends StatelessWidget {
                       placeholder: const AssetImage(
                         "assets/placeholderimageloading.gif",
                       ),
-                      image: NetworkImage(images[0]),
+                      image: NetworkImage(postData.image.toString()),
                     ),
                   ),
                 ),
@@ -227,8 +229,8 @@ class PostContainer extends StatelessWidget {
                               ),
                               RichText(
                                 text: TextSpan(
-                                  text: getDate(
-                                      postData["eventStartAt"].toString()),
+                                  text:
+                                      getDate(postData.eventStartAt.toString()),
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: "LexendDeca",
@@ -258,8 +260,7 @@ class PostContainer extends StatelessWidget {
                               ),
                               RichText(
                                 text: TextSpan(
-                                  text: getDate(
-                                      postData["eventEndAt"].toString()),
+                                  text: getDate(postData.eventEndAt.toString()),
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: "LexendDeca",
@@ -275,7 +276,7 @@ class PostContainer extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(
-                          text: postData["description"].toString(),
+                          text: postData.description.toString(),
                           style: TextStyle(
                             color: Colors.grey.shade800,
                             fontFamily: "LexendDeca",

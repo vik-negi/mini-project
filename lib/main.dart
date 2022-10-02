@@ -1,7 +1,9 @@
+import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
 import 'package:evika/views/create_post.dart';
 import 'package:evika/views/profile.dart';
 import 'package:evika/views/signin.dart';
+import 'package:evika/views/splash_screen.dart';
 import 'package:evika/views/tranding.dart';
 import 'package:flutter/material.dart';
 import "package:evika/views/sample_post.dart";
@@ -19,36 +21,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home:
-          // SplashScreen(
-          //   seconds: 5,
-          //   image: Image(image: AssetImage('assets/sss.gif')),
-          //   title: const Text(
-          //     "𝑒ｖᎥⓀ𝐚",
-          //     style: TextStyle(
-          //         fontSize: 60,
-          //         fontFamily: 'Pacifico',
-          //         fontWeight: FontWeight.bold,
-          //         color: Color.fromARGB(221, 135, 251, 100)),
-          //   ),
-          //   photoSize: 170,
-          //   navigateAfterSeconds: SigninPage(),
-          //   useLoader: false,
-          //   loaderColor: Colors.black54,
-          // ),
-          Navigation(),
+      getPages: AppRotutes.pages,
+      home: SplashScreen(),
     );
   }
 }
 
-class Navigation extends StatelessWidget {
-  Navigation({Key? key}) : super(key: key);
+class ScreenNavigate extends StatelessWidget {
+  ScreenNavigate({Key? key}) : super(key: key);
   NavigationController nv = Get.put(NavigationController());
 
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = <Widget>[
-      const SamplePost(),
+      SamplePost(),
       const TrandingPage(),
       const CreatePostPage(),
       true ? SigninPage() : const ProfilePage(),

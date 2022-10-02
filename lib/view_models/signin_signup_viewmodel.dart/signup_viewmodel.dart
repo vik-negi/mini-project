@@ -1,6 +1,6 @@
 import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/models/user/user_model.dart';
-import 'package:evika/resources/login_repo/login_repo_imp.dart';
+import 'package:evika/repositories/login_repo/login_repo_imp.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

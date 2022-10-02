@@ -1,10 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
 
 class PostModel {
   String? creatorUserId;
-  Data? data;
+  PostData? data;
   int? status;
   String? message;
   String? accountType;
@@ -16,28 +17,59 @@ class PostModel {
     this.message,
     this.accountType,
   });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'creatorUserId': creatorUserId,
+      'data': data?.toMap(),
+      'status': status,
+      'message': message,
+      'accountType': accountType,
+    };
+  }
+
+  factory PostModel.fromMap(Map<String, dynamic> map) {
+    return PostModel(
+      creatorUserId:
+          map['creatorUserId'] != null ? map['creatorUserId'] as String : null,
+      data: map['data'] != null
+          ? PostData.fromMap(map['data'] as Map<String, dynamic>)
+          : null,
+      status: map['status'] != null ? map['status'] as int : null,
+      message: map['message'] != null ? map['message'] as String : null,
+      accountType:
+          map['accountType'] != null ? map['accountType'] as String : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PostModel.fromJson(String source) =>
+      PostModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
-class Data {
-  DateTime? createdAt;
-  String? description;
-  String? eventCategory;
-  DateTime? eventEndAt;
-  String? eventId;
-  Position? eventLocation;
-  DateTime? eventStartAt;
-  List<String?>? image;
-  int? likes;
-  String? organizerType;
-  String? postLink;
-  List<String?>? tags;
-  String? title;
-  DateTime? updatedAt;
-  String? username;
-  String? userId;
-  List<String>? likedUsers = [];
+class PostData {
+  final String? createdAt;
 
-  Data({
+  final String? description;
+  final String? eventCategory;
+  final String? eventEndAt;
+  final String? eventId;
+  final String? eventLocation;
+  final String? eventStartAt;
+  final List<dynamic>? image;
+  final int? likes;
+  final int noOfComments;
+  final String? organizerType = "Individual";
+  final String? postLink;
+  final List<dynamic>? tags;
+  // final List<dynamic>? likedUsers = [];
+  // final List<dynamic>? comments = [];
+  final String? title;
+  final String? updatedAt;
+  final String? username;
+  final String? userId;
+  PostData({
     this.createdAt,
     this.description,
     this.eventCategory,
@@ -47,18 +79,17 @@ class Data {
     this.eventStartAt,
     this.image,
     this.likes,
-    this.organizerType,
     this.postLink,
     this.tags,
     this.title,
     this.updatedAt,
     this.username,
     this.userId,
-    this.likedUsers,
+    this.noOfComments = 0,
   });
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'createdAt': createdAt,
       'description': description,
       'eventCategory': eventCategory,
@@ -68,42 +99,56 @@ class Data {
       'eventStartAt': eventStartAt,
       'image': image,
       'likes': likes,
-      'organizerType': organizerType,
       'postLink': postLink,
       'tags': tags,
       'title': title,
       'updatedAt': updatedAt,
       'username': username,
       'userId': userId,
-      'likedUsers': likedUsers,
+      'noOfComments': noOfComments,
     };
   }
 
-  factory Data.fromMap(Map<String, dynamic> map) {
-    return Data(
-      createdAt:
-          map['createdAt'] != null ? DateTime.parse(map['createdAt']) : null,
-      description: map['description'] ? map['description'] : null,
-      eventCategory: map['eventCategory'] ? map['eventCategory'] : null,
-      eventEndAt: map['eventEndAt'] ? map['eventEndAt'] : null,
-      eventId: map['eventId'] ? map['eventId'] : null,
-      eventLocation: map['eventLocation'] ? map['eventLocation'] : null,
-      eventStartAt: map['eventStartAt'] ? map['eventStartAt'] : null,
-      image: map['image'] ? List<String>.from(map['image']) : null,
-      likes: map['likes'] ? map['likes'] : 0,
-      organizerType: map['organizerType'] ? map['organizerType'] : null,
-      postLink: map['postLink'] ? map['postLink'] : null,
-      tags: map['tags'] ? List<String>.from(map['tags']) : null,
-      title: map['title'] ? map['title'] : null,
-      updatedAt: map['updatedAt'] ? map['updatedAt'] : null,
-      username: map['username'] ? map['username'] : null,
-      userId: map['userId'] ? map['userId'] : null,
-      likedUsers: map['likedUsers'] ? map['likedUsers'] : null,
+  factory PostData.fromMap(Map<String, dynamic> map) {
+    return PostData(
+      createdAt: map['createdAt'] != null ? map['createdAt'] as String : "null",
+      description:
+          map['description'] != null ? map['description'] as String : "null",
+      eventCategory: map['eventCategory'] != null
+          ? map['eventCategory'] as String
+          : "null",
+      eventEndAt:
+          map['eventEndAt'] != null ? map['eventEndAt'] as String : "null",
+      eventId: map['eventId'] != null ? map['eventId'] as String : "null",
+      eventLocation: map['eventLocation'] != null
+          ? map['eventLocation'] as String
+          : "null",
+      eventStartAt:
+          map['eventStartAt'] != null ? map['eventStartAt'] as String : "null",
+      image: map['image'] != null
+          ? List<dynamic>.from((map['image'] as List<dynamic>))
+          : [],
+      likes: map['likes'] != null ? map['likes'] as int : null,
+      postLink: map['postLink'] != null ? map['postLink'] as String : "null",
+      tags: map['tags'] != null
+          ? List<dynamic>.from((map['tags'] as List<dynamic>))
+          : [],
+      title: map['title'] != null ? map['title'] as String : "null",
+      updatedAt: map['updatedAt'] != null ? map['updatedAt'] as String : "null",
+      username: map['username'] != null ? map['username'] as String : "null",
+      userId: map['userId'] != null ? map['userId'] as String : "null",
+      noOfComments:
+          map['noOfComments'] != null ? map['noOfComments'] as int : 0,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Data.fromJson(String source) =>
-      Data.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PostData.fromJson(String source) =>
+      PostData.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+List<PostData> parsePhotos(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+  return parsed.map<PostData>((json) => PostData.fromJson(json)).toList();
 }
