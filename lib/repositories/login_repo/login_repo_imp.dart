@@ -6,8 +6,8 @@ class LoginRepoImp extends LoginRepo {
   LoginApiServices loginApiServices = LoginApiServices();
 
   @override
-  Future<Map>? userSignin(Map data) {
-    dynamic response = loginApiServices.userSignin(data);
+  Future<Map>? userSignin(Map data) async {
+    dynamic response = await loginApiServices.userSignin(data);
     debugPrint("signin Repo Imp $response");
     return response;
   }

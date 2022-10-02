@@ -22,27 +22,6 @@ var months = [
   'Nov',
   'Dec'
 ];
-var postData = {
-  "userId": "6335e15917b058c245976c9b",
-  "description":
-      "This is some description about the post what id the post is about",
-  "image": ["imageString"],
-  "tags": [],
-  "eventCategory": "Other",
-  "eventStartAt": "2022-10-01T18:23:05.785Z",
-  "eventEndAt": "2022-10-05T18:23:05.786Z",
-  "eventId": "63388589fe777a4221da0c39",
-  "eventLocation": "Online",
-  "eventDescription":
-      "Bhandara serves as an agricultural center for farmers in the region, who mostly grow rice. The city speaks Marathi language. Bhandara city is famous for brass and is known as ' Brass City ' also, Bhandara, as a district is famous for lakes and is known as ' District of lakes ' . Bhandara is split between two rivers, the Wainganga and the Sur, and crossed by National Highway No. 6. The city is surrounded by industries like Ashok Leyland, Sunflag Steel and an ordnance factory. The Wainganga is the principal river in the district and the only stream that does not dry up in the hot weather.",
-  "likes": 23,
-  "noOfComments": 0,
-  "_id": "63388589fe777a4221da0c3a",
-  "likedUsers": [],
-  "comments": [],
-  "createdAt": "2022-10-01T18:23:05.787Z",
-  "__v": 0
-};
 
 // take 2022-10-01T18:23:05.787Z format and retrun 12 hrs format
 String convertTime(String time) {
@@ -107,7 +86,7 @@ class PostContainer extends StatelessWidget {
                       placeholder: const AssetImage(
                         "assets/placeholderimageloading.gif",
                       ),
-                      image: NetworkImage(postData.image.toString()),
+                      image: NetworkImage(postData.image![0].toString()),
                     ),
                   ),
                 ),

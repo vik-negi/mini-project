@@ -40,6 +40,8 @@ class SigninVM extends GetxController {
     Map data = {'username': username, 'password': password};
     print(data);
     Map<dynamic, dynamic>? response = await loginRepo.userSignin(data);
+    print("ppppppppppppppppppppppp");
+    print(data);
 
     print(response);
     if (response!["status"] == "success") {
