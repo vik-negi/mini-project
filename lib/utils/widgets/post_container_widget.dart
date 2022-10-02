@@ -135,10 +135,10 @@ class PostContainer extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       text: const TextSpan(
-                        text: "Bhandara of the Navratri year 2022",
+                        text: "Matarani ka Bhandara",
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 25,
+                            fontSize: 20,
                             fontFamily: "LexendDeca",
                             fontWeight: FontWeight.bold),
                       ),
@@ -159,37 +159,76 @@ class PostContainer extends StatelessWidget {
                 Positioned(
                   top: 11,
                   left: 11,
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 0, 68, 227),
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.receipt_long_sharp,
-                          size: 10,
-                          color: Colors.white,
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 0, 96, 53),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        const SizedBox(
-                          width: 5,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.category,
+                              size: 10,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(
+                              width: 3,
+                            ),
+                            RichText(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              text: const TextSpan(
+                                text: "Spritual",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        RichText(
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          text: const TextSpan(
-                            text: "Reginstration Required!",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold),
-                          ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 0, 68, 227),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                      ],
-                    ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.receipt_long_sharp,
+                              size: 10,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(
+                              width: 3,
+                            ),
+                            RichText(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              text: const TextSpan(
+                                text: "Reginstration Required!",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -286,10 +325,14 @@ class PostContainer extends StatelessWidget {
                       Row(
                         // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.circle,
-                            color: Colors.grey,
-                            size: 5,
+                          const ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            child: Image(
+                              image: AssetImage("assets/img1.png"),
+                              height: 20,
+                              fit: BoxFit.cover,
+                              width: 20,
+                            ),
                           ),
                           const SizedBox(
                             width: 3,
