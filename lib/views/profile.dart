@@ -7,9 +7,11 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: const Text("Profile Page"),
+    return Container(
+      child: Column(
+        children: [
+          Text('Profile Page'),
+        ],
       ),
     );
   }

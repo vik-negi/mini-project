@@ -12,4 +12,14 @@ class PostRepoImp extends PostRepo {
     // debugPrint("Post Repo Imp $response");
     return response;
   }
+
+  @override
+  Future<Map?>? createPost(Map<String, dynamic> data) async {
+    Map<String, dynamic>? response = await postApiServices.createPost(data);
+    if (response != null) {
+      debugPrint("Post Repo Imp $response");
+      return response;
+    }
+    return null;
+  }
 }

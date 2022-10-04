@@ -15,15 +15,6 @@ class SamplePost extends StatefulWidget {
 class _SamplePostState extends State<SamplePost> {
   PostVM postVM = Get.put(PostVM());
 
-  // late final Future? fuo;
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   fuo = postVM.getAllPost();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
