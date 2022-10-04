@@ -207,8 +207,7 @@ class PostContainer extends StatelessWidget {
                                 ),
                                 RichText(
                                   text: TextSpan(
-                                    text: getDate(
-                                        postData.eventStartAt.toString()),
+                                    text: postData.eventStartAt.toString(),
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontFamily: "LexendDeca",
@@ -238,8 +237,7 @@ class PostContainer extends StatelessWidget {
                                 ),
                                 RichText(
                                   text: TextSpan(
-                                    text:
-                                        getDate(postData.eventEndAt.toString()),
+                                    text: postData.eventEndAt.toString(),
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontFamily: "LexendDeca",
