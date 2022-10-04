@@ -1,15 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
+import 'package:evika/utils/colors.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:get/get_connect/http/src/multipart/multipart_file.dart'
-    as multipart;
 
 class CreatePostPage extends StatefulWidget {
   const CreatePostPage({super.key});
@@ -128,242 +124,273 @@ class _CreatePostPageState extends State<CreatePostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Create Post',
+          style: TextStyle(
+            color: AppColors.secondaryColor,
+            fontFamily: "LexendDeca",
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        foregroundColor: AppColors.secondaryColor,
+      ),
       body: SingleChildScrollView(
         child: Container(
-          margin: const EdgeInsets.all(20),
+          margin:
+              const EdgeInsets.only(bottom: 20, left: 20, right: 20, top: 20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Form(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Title',
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Short Discription',
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                            maxLines: 10,
-                            decoration: const InputDecoration.collapsed(
-                              hintText: "Event Long  Description",
-                            )),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Location',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Icon(Icons.timer),
-                        TextButton(
-                          onPressed: () {
-                            selectDateTime(context, "start");
-                          },
-                          child: const Text('Select Date'),
-                        ),
-                      ],
-                    ),
-                    startDateController.text != '' &&
-                            startTimeController.text != ''
-                        ? Text(
-                            "${startDateController.text} ${startTimeController.text}")
-                        : const Text(''),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Icon(Icons.timer),
-                        TextButton(
-                          onPressed: () {
-                            selectDateTime(context, "end");
-                          },
-                          child: const Text('Select Event End Date'),
-                        ),
-                      ],
-                    ),
-                    endDateController.text != '' && endTimeController.text != ''
-                        ? Text(
-                            "${endDateController.text} ${endTimeController.text}")
-                        : const Text(''),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        final XFile? image = await picker.pickImage(
-                          source: ImageSource.gallery,
-                        );
-                        if (image != null) {
-                          setState(() {
-                            file_path = image.path;
-                            selectedImage = image;
-                          });
-                          // file_path = image.path;
-                          // filePicker.saveFile(
-                          //   fileName: "evika-image-${DateTime.now()}",
-                          // );
-                          print(image.path);
-                        }
-                      },
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.image,
-                            size: 25,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Add Image',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        final XFile? video = await picker.pickVideo(
-                          source: ImageSource.gallery,
-                        );
-                        if (video != null) {
-                          print(video.path);
-                        }
-                      },
-                      child: Row(
-                        children: const [
-                          Icon(Icons.video_camera_back),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Add Video to Post',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        final FilePickerResult? file = await filePicker
-                            .pickFiles(
-                                type: FileType.custom,
-                                allowedExtensions: ['pdf']);
-
-                        if (file != null) {
-                          print(file.files.single.path);
-                        }
-                      },
-                      child: Row(
-                        children: const [
-                          Icon(Icons.file_copy),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Add File to Post',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    file_path != null
-                        ? Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.amber,
-                            ),
-                            width: Get.height - 100,
-                            height: 250,
-                            child: Stack(
-                              children: [
-                                Image.file(
-                                  File(file_path!),
-                                  fit: BoxFit.cover,
-                                  width: Get.height - 100,
-                                ),
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        file_path = null;
-                                      });
-                                    },
-                                    icon: const Icon(Icons.close),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : Container(),
-                    ElevatedButton(
-                      onPressed: () async {
-                        final data = await createPost();
-                      },
-                      child: const Text('Create Post'),
-                    ),
-                  ],
+              const Text(
+                'Enter Details',
+                style: TextStyle(
+                  color: AppColors.secondaryColor,
+                  fontFamily: "LexendDeca",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
                 ),
+              ),
+              Column(
+                children: [
+                  Form(
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Title',
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Short Discription',
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Card(
+                          child: TextFormField(
+                            maxLines: 10,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: "Event Long Description",
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Location',
+                          ),
+                        ),
+                        // ignore: prefer_const_constructors
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.timer),
+                            TextButton(
+                              onPressed: () {
+                                selectDateTime(context, "start");
+                              },
+                              child: const Text('Select Date'),
+                            ),
+                          ],
+                        ),
+                        startDateController.text != '' &&
+                                startTimeController.text != ''
+                            ? Text(
+                                "${startDateController.text} ${startTimeController.text}")
+                            : const Text(''),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.timer),
+                            TextButton(
+                              onPressed: () {
+                                selectDateTime(context, "end");
+                              },
+                              child: const Text('Select Event End Date'),
+                            ),
+                          ],
+                        ),
+                        endDateController.text != '' &&
+                                endTimeController.text != ''
+                            ? Text(
+                                "${endDateController.text} ${endTimeController.text}")
+                            : const Text(''),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            final XFile? image = await picker.pickImage(
+                              source: ImageSource.gallery,
+                            );
+                            if (image != null) {
+                              setState(() {
+                                file_path = image.path;
+                                selectedImage = image;
+                              });
+                              // file_path = image.path;
+                              // filePicker.saveFile(
+                              //   fileName: "evika-image-${DateTime.now()}",
+                              // );
+                              print(image.path);
+                            }
+                          },
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.image,
+                                size: 25,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Add Image',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            final XFile? video = await picker.pickVideo(
+                              source: ImageSource.gallery,
+                            );
+                            if (video != null) {
+                              print(video.path);
+                            }
+                          },
+                          child: Row(
+                            children: const [
+                              Icon(Icons.video_camera_back),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Add Video to Post',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            final FilePickerResult? file = await filePicker
+                                .pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: ['pdf']);
+
+                            if (file != null) {
+                              print(file.files.single.path);
+                            }
+                          },
+                          child: Row(
+                            children: const [
+                              Icon(Icons.file_copy),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Add File to Post',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        file_path != null
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.amber,
+                                ),
+                                width: Get.height - 100,
+                                height: 250,
+                                child: Stack(
+                                  children: [
+                                    Image.file(
+                                      File(file_path!),
+                                      fit: BoxFit.cover,
+                                      width: Get.height - 100,
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            file_path = null;
+                                          });
+                                        },
+                                        icon: const Icon(Icons.close),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Container(),
+                        ElevatedButton(
+                          onPressed: () async {
+                            final data = await createPost();
+                          },
+                          child: const Text('Create Post'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -4,9 +4,9 @@ import 'package:evika/views/create_post.dart';
 import 'package:evika/views/profile.dart';
 import 'package:evika/views/signin.dart';
 import 'package:evika/views/splash_screen.dart';
-import 'package:evika/views/tranding.dart';
+import 'package:evika/views/trending_view/tranding.dart';
 import 'package:flutter/material.dart';
-import "package:evika/views/sample_post.dart";
+import 'package:evika/views/feed.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: AppRotutes.pages,
-      home: SplashScreen(),
+      // home: SplashScreen(),
+      initialRoute: AppRotutes.splashScreen,
     );
   }
 }
@@ -34,7 +35,7 @@ class ScreenNavigate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = <Widget>[
-      SamplePost(),
+      FeedView(),
       const TrandingPage(),
       const CreatePostPage(),
       true ? SigninPage() : const ProfilePage(),
