@@ -21,12 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
-      home: Navigation(),
-=======
       getPages: AppRotutes.pages,
       home: SplashScreen(),
->>>>>>> eac18f58a167a6d6cf0928332bada78566271f3d
     );
   }
 }

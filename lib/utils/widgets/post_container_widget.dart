@@ -106,24 +106,6 @@ class PostContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-<<<<<<< HEAD
-                ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    width: Get.width - 50,
-                    margin: const EdgeInsets.all(11),
-                    child: RichText(
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      text: const TextSpan(
-                        text: "Matarani ka Bhandara",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: "LexendDeca",
-                            fontWeight: FontWeight.bold),
-=======
                   Positioned(
                     bottom: 0,
                     child: Container(
@@ -140,7 +122,6 @@ class PostContainer extends StatelessWidget {
                               fontFamily: "LexendDeca",
                               fontWeight: FontWeight.bold),
                         ),
->>>>>>> eac18f58a167a6d6cf0928332bada78566271f3d
                       ),
                     ),
                   ),
@@ -155,82 +136,6 @@ class PostContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-<<<<<<< HEAD
-                ),
-                Positioned(
-                  top: 11,
-                  left: 11,
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 0, 96, 53),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.category,
-                              size: 10,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 3,
-                            ),
-                            RichText(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              text: const TextSpan(
-                                text: "Spritual",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 0, 68, 227),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.receipt_long_sharp,
-                              size: 10,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 3,
-                            ),
-                            RichText(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              text: const TextSpan(
-                                text: "Reginstration Required!",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-=======
                   Positioned(
                     top: 11,
                     left: 11,
@@ -266,7 +171,6 @@ class PostContainer extends StatelessWidget {
                         ],
                       ),
                     ),
->>>>>>> eac18f58a167a6d6cf0928332bada78566271f3d
                   ),
                 ],
               ),
@@ -347,23 +251,6 @@ class PostContainer extends StatelessWidget {
                             ),
                           ],
                         ),
-<<<<<<< HEAD
-                      ),
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            child: Image(
-                              image: AssetImage("assets/img1.png"),
-                              height: 20,
-                              fit: BoxFit.cover,
-                              width: 20,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 3,
-=======
                         RichText(
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -374,7 +261,6 @@ class PostContainer extends StatelessWidget {
                               fontFamily: "LexendDeca",
                               fontSize: 18,
                             ),
->>>>>>> eac18f58a167a6d6cf0928332bada78566271f3d
                           ),
                         ),
                         Row(
