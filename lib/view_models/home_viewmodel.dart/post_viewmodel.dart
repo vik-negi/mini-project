@@ -26,7 +26,7 @@ class PostVM extends GetxController {
     response = ApiResponce.loading();
     update();
     Map<dynamic, dynamic>? data = await postRepoImp.getAllPost();
-    // print(data);
+    print(data);
     if (data != null) {
       List<dynamic> list = data['data'];
       response = ApiResponce.completed(data);

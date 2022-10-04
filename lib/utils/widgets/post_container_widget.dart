@@ -30,13 +30,13 @@ String convertTime(String time) {
   return '$hour:$minStr $ampm';
 }
 
-String getDate(String dateTime) {
-  var date = DateTime.parse(dateTime);
-  var day = date.day;
-  var month = date.month;
-  var year = date.year;
-  // list of months
-  return '$day-${months[month - 1]}-$year';
+// take input string as" Wed Jan 27 2021 00:15:53 GMT+0000 (Coordinated Universal Time)" and return date
+String getDate(String date) {
+  var dateList = date.split(' ');
+  var month = months.indexOf(dateList[1]) + 1;
+  var day = dateList[2];
+  var year = dateList[3];
+  return '$day-$month-$year';
 }
 
 class PostContainer extends StatelessWidget {

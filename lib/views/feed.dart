@@ -5,15 +5,8 @@ import 'package:evika/utils/widgets/post_container_widget.dart';
 import 'package:get/get.dart';
 
 // this page has only the UI of that page
-class SamplePost extends StatefulWidget {
-  SamplePost({super.key});
-
-  @override
-  State<SamplePost> createState() => _SamplePostState();
-}
-
-class _SamplePostState extends State<SamplePost> {
-  PostVM postVM = Get.put(PostVM());
+class FeedView extends StatelessWidget {
+  const FeedView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +40,7 @@ class _SamplePostState extends State<SamplePost> {
               ),
               ElevatedButton(
                   onPressed: () async {
-                    List<PostData>? post = await postVM.getAllPost();
+                    List<PostData>? post = await vm.getAllPost();
                     print(post![0].description);
                   },
                   child: Text("Click")),
