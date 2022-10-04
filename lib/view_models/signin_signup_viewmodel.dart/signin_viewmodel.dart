@@ -1,14 +1,16 @@
 import 'dart:convert';
 import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/models/user/user_model.dart';
-import 'package:evika/resources/login_repo/login_repo_imp.dart';
+import 'package:evika/repositories/login_repo/login_repo_imp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninVM extends GetxController {
   ApiResponce<Map> response = ApiResponce.loading();
   final LoginRepoImp loginRepo = LoginRepoImp();
+  final storage = const FlutterSecureStorage();
 
   UserModel userModel = Get.put(UserModel());
   bool isSigninClickedBool = false;
@@ -38,10 +40,14 @@ class SigninVM extends GetxController {
     Map data = {'username': username, 'password': password};
     print(data);
     Map<dynamic, dynamic>? response = await loginRepo.userSignin(data);
+    print("ppppppppppppppppppppppp");
+    print(data);
 
     print(response);
     if (response!["status"] == "success") {
-      sharedPreferences.setString("token", response["token"]);
+      await sharedPreferences.setString("token", response["token"]);
+      await sharedPreferences.setBool("isLoggedIn", true);
+      await storage.write(key: "evikaToken", value: response["token"]);
       String userData = jsonEncode(response);
       // print(response.toString());
 

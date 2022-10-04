@@ -14,7 +14,6 @@ class SignUpFrom extends StatefulWidget {
 
 class _SignUpFromState extends State<SignUpFrom> {
   SignupVM signupvm = Get.put(SignupVM());
-
   final _formKey = GlobalKey<FormState>();
 
   AccountType _accountType = AccountType.Individual;

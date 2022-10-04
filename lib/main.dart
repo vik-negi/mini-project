@@ -1,7 +1,9 @@
+import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
 import 'package:evika/views/create_post.dart';
 import 'package:evika/views/profile.dart';
 import 'package:evika/views/signin.dart';
+import 'package:evika/views/splash_screen.dart';
 import 'package:evika/views/tranding.dart';
 import 'package:flutter/material.dart';
 import "package:evika/views/sample_post.dart";
@@ -19,19 +21,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
       home: Navigation(),
+=======
+      getPages: AppRotutes.pages,
+      home: SplashScreen(),
+>>>>>>> eac18f58a167a6d6cf0928332bada78566271f3d
     );
   }
 }
 
-class Navigation extends StatelessWidget {
-  Navigation({Key? key}) : super(key: key);
+class ScreenNavigate extends StatelessWidget {
+  ScreenNavigate({Key? key}) : super(key: key);
   NavigationController nv = Get.put(NavigationController());
 
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = <Widget>[
-      const SamplePost(),
+      SamplePost(),
       const TrandingPage(),
       const CreatePostPage(),
       true ? SigninPage() : const ProfilePage(),

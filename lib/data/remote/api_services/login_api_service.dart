@@ -6,9 +6,10 @@ import 'package:http/http.dart' as http;
 
 // const String baseUrl = 'http://192.168.43.65:8000';
 // const String baseUrl = 'http://172.11.10.77:8000';
+// const String baseUrl = 'http://localhost:8000';
 const String baseUrl = 'http://evika.herokuapp.com';
 
-class ApiServices extends ApiInterface {
+class LoginApiServices extends LoginApiInterface {
   dynamic returnResponse(http.Response? response) {
     debugPrint(response!.body.toString());
     switch (response.statusCode) {
@@ -30,10 +31,20 @@ class ApiServices extends ApiInterface {
 
   @override
   Future<Map<String, dynamic>>? userSignin(Map data) async {
+    print(data);
+    print(data["username"]);
+    print(data["password"]);
     final response = await http.post(
-      Uri.parse('$baseUrl/api/account/signin/'),
-      body: data,
+      Uri.parse('$baseUrl/api/account/signin'),
+      // headers: <String, String>{
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      // },
+      body: {
+        'email': data["username"],
+        'password': data['password'],
+      },
     );
+    print(response.body);
     return returnResponse(response);
   }
 
