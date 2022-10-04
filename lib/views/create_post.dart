@@ -43,16 +43,16 @@ class _CreatePostPageState extends State<CreatePostPage> {
     if (selectedImage != null) {
       final imageBytes = File(selectedImage!.path).readAsBytesSync();
       // ignore: prefer_interpolation_to_compose_strings
-      String base64Image = "data:image/png;base64," + base64Encode(imageBytes);
+      String base64Image = base64Encode(imageBytes);
       data = {
         'title': titleController.text,
         'description': descriptionController.text,
-        'start_date': startDateController.text,
-        'end_date': endDateController.text,
-        'start_time': startTimeController.text,
-        'end_time': endTimeController.text,
+        'eventStartAt':
+            "${startTimeController.text} ${startDateController.text}",
+        'eventEndAt': "${endTimeController.text} ${endDateController.text}",
         'location': locationController.text,
-        // 'image': base64Image
+        "eventDescription": eventDescriptionController.text,
+        'image': base64Image
       };
     } else {
       data = {
@@ -63,10 +63,11 @@ class _CreatePostPageState extends State<CreatePostPage> {
         'start_time': startTimeController.text,
         'end_time': endTimeController.text,
         'location': locationController.text,
-        // 'image':
-        //     'https://img.freepik.com/free-photo/grunge-paint-background_1409-1337.jpg?w=2000',
+        'image':
+            'https://img.freepik.com/free-photo/grunge-paint-background_1409-1337.jpg?w=2000',
       };
     }
+    print(data);
     Map<dynamic, dynamic>? response = await postRepoImp.createPost(data);
     print(response);
     if (response != null) {
