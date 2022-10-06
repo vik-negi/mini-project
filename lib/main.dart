@@ -38,7 +38,7 @@ class ScreenNavigate extends StatelessWidget {
       FeedView(),
       const TrandingPage(),
       const CreatePostPage(),
-      true ? SigninPage() : const ProfilePage(),
+      true ? ProfilePage() : SigninPage(),
     ];
     return GetBuilder<NavigationController>(builder: (nv) {
       return Scaffold(
