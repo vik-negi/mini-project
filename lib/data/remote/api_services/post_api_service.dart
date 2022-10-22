@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:evika/data/remote/api_services/api_services.dart';
-import 'package:evika/models/user/post_model.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl = 'http://evika.herokuapp.com';
@@ -14,7 +12,7 @@ class PostApiServices {
       final response =
           await http.get(Uri.parse('$baseUrl/api/user/get-all-posts'));
       if (response.statusCode == 200) {
-        print(response.body);
+        debugPrint(response.body);
         Map<String, dynamic> body = apiServices.returnResponse(response);
 
         return body;
@@ -22,7 +20,7 @@ class PostApiServices {
         throw Exception('Failed to load post');
       }
     } catch (err) {
-      print(err);
+      debugPrint(err.toString());
     }
     return {};
   }
@@ -39,8 +37,8 @@ class PostApiServices {
         throw Exception('Failed to create post');
       }
     } catch (err) {
-      print("Catch Error $err");
-      print(err);
+      debugPrint("Catch Error $err");
+      debugPrint(err.toString());
       return null;
     }
   }

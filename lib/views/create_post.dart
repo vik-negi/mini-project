@@ -17,7 +17,7 @@ class CreatePostPage extends StatefulWidget {
 class _CreatePostPageState extends State<CreatePostPage> {
   final ImagePicker picker = ImagePicker();
   FilePicker filePicker = FilePicker.platform;
-  String? file_path = null;
+  String? filePath;
 
   String? dateTime;
 
@@ -67,9 +67,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
             'https://img.freepik.com/free-photo/grunge-paint-background_1409-1337.jpg?w=2000',
       };
     }
-    print(data);
+    debugPrint(data.toString());
     Map<dynamic, dynamic>? response = await postRepoImp.createPost(data);
-    print(response);
+    debugPrint(response.toString());
     if (response != null) {
       Get.snackbar('Success', 'Post Created Successfully');
     } else {
@@ -246,14 +246,14 @@ class _CreatePostPageState extends State<CreatePostPage> {
                             );
                             if (image != null) {
                               setState(() {
-                                file_path = image.path;
+                                filePath = image.path;
                                 selectedImage = image;
                               });
                               // file_path = image.path;
                               // filePicker.saveFile(
                               //   fileName: "evika-image-${DateTime.now()}",
                               // );
-                              print(image.path);
+                              debugPrint(image.path);
                             }
                           },
                           child: Row(
@@ -287,7 +287,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               source: ImageSource.gallery,
                             );
                             if (video != null) {
-                              print(video.path);
+                              debugPrint(video.path);
                             }
                           },
                           child: Row(
@@ -323,7 +323,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                     allowedExtensions: ['pdf']);
 
                             if (file != null) {
-                              print(file.files.single.path);
+                              debugPrint(file.files.single.path);
                             }
                           },
                           child: Row(
@@ -351,7 +351,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        file_path != null
+                        filePath != null
                             ? Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -362,7 +362,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                 child: Stack(
                                   children: [
                                     Image.file(
-                                      File(file_path!),
+                                      File(filePath!),
                                       fit: BoxFit.cover,
                                       width: Get.height - 100,
                                     ),
@@ -372,7 +372,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                       child: IconButton(
                                         onPressed: () {
                                           setState(() {
-                                            file_path = null;
+                                            filePath = null;
                                           });
                                         },
                                         icon: const Icon(Icons.close),
@@ -384,7 +384,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                             : Container(),
                         ElevatedButton(
                           onPressed: () async {
-                            final data = await createPost();
+                            // THIS VALUE WAS NOT USED BEFORE
+                            // final data = await createPost();
                           },
                           child: const Text('Create Post'),
                         ),

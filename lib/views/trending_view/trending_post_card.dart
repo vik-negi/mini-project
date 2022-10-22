@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class TrendingPostCard extends StatelessWidget {
-  final title;
-  final postedDate;
+  final String title;
+  final dynamic postedDate; // ISKA FORMAT KYA HAI BATAO @vikramnegiofficial
   const TrendingPostCard(
       {super.key, required this.title, required this.postedDate});
 
@@ -29,8 +29,8 @@ class TrendingPostCard extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                               context,
-                              new MaterialPageRoute(
-                                  builder: (context) => Description()));
+                              MaterialPageRoute(
+                                  builder: (context) => const Description()));
                         },
                         child: Text(
                           title,

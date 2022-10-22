@@ -1,11 +1,14 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
-import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
 import 'package:evika/views/home.dart';
 import 'package:evika/views/sign_up_from_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+// ISKA DEKHO KYA HO SKTA HAI PROBLEM DE RHA HAI ERROR NHI @vikramnegiofficial
 
 class SigninPage extends StatelessWidget {
   SigninPage({super.key});
@@ -211,21 +214,21 @@ class SigninPage extends StatelessWidget {
                               if (_formKey.currentState!.validate()) {
                                 vm.isSigninClickedBool = true;
                                 vm.update();
-                                Map data = {
-                                  "username": vm.usernameController.text,
-                                  "password": vm.passwordController.text
-                                };
-                                print(vm.usernameController.text);
-                                print(vm.passwordController.text);
+                                // Map data = {
+                                //   "username": vm.usernameController.text,
+                                //   "password": vm.passwordController.text
+                                // };
+                                debugPrint(vm.usernameController.text);
+                                debugPrint(vm.passwordController.text);
                                 response = (await vm.userSignin(
                                     vm.usernameController.text,
                                     vm.passwordController.text))!;
                               }
-                              print(response);
+                              debugPrint(response.toString());
                               if (response != null) {
                                 vm.isSigninClickedBool = false;
                                 if (response!["status"] == "success") {
-                                  Get.to(() => HomePage());
+                                  Get.to(() => const HomePage());
                                 }
                               }
                             },
@@ -251,7 +254,7 @@ class SigninPage extends StatelessWidget {
                                       decoration: TextDecoration.underline),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      Get.to(() => SignUpFrom());
+                                      Get.to(() => const SignUpFrom());
                                     },
                                 ),
                               ],

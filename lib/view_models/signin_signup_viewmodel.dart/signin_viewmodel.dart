@@ -38,23 +38,23 @@ class SigninVM extends GetxController {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     Map data = {'username': username, 'password': password};
-    print(data);
+    debugPrint(data.toString());
     Map<dynamic, dynamic>? response = await loginRepo.userSignin(data);
-    print("ppppppppppppppppppppppp");
-    print(data);
+    debugPrint("ppppppppppppppppppppppp");
+    debugPrint(data.toString());
 
-    print(response);
+    debugPrint(response.toString());
     if (response!["status"] == "success") {
       await sharedPreferences.setString("token", response["token"]);
       await sharedPreferences.setBool("isLoggedIn", true);
       await storage.write(key: "evikaToken", value: response["token"]);
       String userData = jsonEncode(response);
-      // print(response.toString());
+      // debugPrint(response.toString());
 
       // userModel = userModelFromJson(userData);
       userModel = UserModel.fromJson(userData);
       update();
-      print(userModel);
+      debugPrint(userModel.toString());
       // _isSigninClicked.value = false;
       return response;
     }

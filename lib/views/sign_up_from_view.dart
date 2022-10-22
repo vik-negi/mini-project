@@ -3,10 +3,11 @@ import 'package:evika/views/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// ignore: constant_identifier_names
 enum AccountType { Individual, Organization }
 
 class SignUpFrom extends StatefulWidget {
-  SignUpFrom({super.key});
+  const SignUpFrom({super.key});
 
   @override
   State<SignUpFrom> createState() => _SignUpFromState();
@@ -30,7 +31,7 @@ class _SignUpFromState extends State<SignUpFrom> {
             ),
             Form(
               key: _formKey,
-              child: Container(
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height - 50,
                 child: Stepper(
                   elevation: 0,
@@ -82,7 +83,7 @@ class _SignUpFromState extends State<SignUpFrom> {
                       ),
                     ),
                     Step(
-                      title: Text(''),
+                      title: const Text(''),
                       isActive: vm.currentStep >= 1 ? true : false,
                       state: vm.currentStep >= 1
                           ? StepState.editing

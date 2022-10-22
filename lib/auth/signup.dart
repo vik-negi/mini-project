@@ -19,7 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Center(
-            child: Container(
+            child: SizedBox(
               child: Form(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         Checkbox(
                           checkColor: Colors.white70,
                           activeColor: HexColor('#224957'),
-                          value: this.valuefirst,
+                          value: valuefirst,
                           onChanged: (value) {
                             setState(() {});
                           },

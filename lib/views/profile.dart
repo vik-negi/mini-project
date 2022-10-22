@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -16,13 +15,13 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 65),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 65),
       child:
           Column(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
@@ -34,13 +33,13 @@ class _ProfilePageState extends State<ProfilePage> {
             )
           ],
         ),
-        Center(
+        const Center(
           child: CircleAvatar(
             radius: 60,
             backgroundImage: AssetImage('assets/man.png'),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         Container(
@@ -71,14 +70,14 @@ class _ProfilePageState extends State<ProfilePage> {
               Expanded(
                   flex: 2,
                   child: Container(
-                      margin: EdgeInsets.all(2),
+                      margin: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.blueAccent.withOpacity(0.85)),
                       width: 90,
                       height: 25,
                       alignment: Alignment.center,
-                      child: Text("Edit",
+                      child: const Text("Edit",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
@@ -86,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
         Container(
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             fontSize: 16,
                             fontFamily: 'LexendDeca',
                             color: HexColor('#656565'))),
-                    Text("Unverified",
+                    const Text("Unverified",
                         style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'LexendDeca',
@@ -124,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 )
               ]),
         ),
-        Divider()
+        const Divider()
       ]),
     ));
   }

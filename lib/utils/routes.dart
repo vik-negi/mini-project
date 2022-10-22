@@ -25,15 +25,18 @@ class AppRotutes {
     GetPage(name: AppRotutes.signin, page: () => SigninPage()),
     GetPage(
         name: AppRotutes.signup,
-        page: () => SignUpFrom(),
+        page: () => const SignUpFrom(),
         binding: SignupBindings()),
     // GetPage(name: AppRotutes.forgotPassword, page: () => ForgotPasswordPage()),
-    GetPage(name: AppRotutes.screenNavigator, page: () => ScreenNavigate()),
+    GetPage(
+        name: AppRotutes.screenNavigator, page: () => const ScreenNavigate()),
     GetPage(name: AppRotutes.profile, page: () => const ProfilePage()),
     GetPage(name: AppRotutes.tranding, page: () => const TrandingPage()),
     GetPage(name: AppRotutes.createPost, page: () => const CreatePostPage()),
     GetPage(
-        name: AppRotutes.feed, page: () => FeedView(), binding: FeedBinding()),
-    GetPage(name: AppRotutes.splashScreen, page: () => SplashScreen()),
+        name: AppRotutes.feed,
+        page: () => const FeedView(),
+        binding: FeedBinding()),
+    GetPage(name: AppRotutes.splashScreen, page: () => const SplashScreen()),
   ];
 }

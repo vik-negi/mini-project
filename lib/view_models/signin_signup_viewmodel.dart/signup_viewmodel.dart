@@ -9,8 +9,8 @@ class SignupVM extends GetxController {
   final LoginRepoImp loginRepo = LoginRepoImp();
 
   UserModel userModel = Get.put(UserModel());
-  RxInt _currentStep = 0.obs;
-  RxBool _isSignup = false.obs;
+  final RxInt _currentStep = 0.obs;
+  final RxBool _isSignup = false.obs;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -78,16 +78,6 @@ class SignupVM extends GetxController {
       _isSignup.value = true;
     }
     return null;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

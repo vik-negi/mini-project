@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // i have chnaged somthing
 
 class SplashScreen extends StatefulWidget {
-  SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -17,7 +17,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Timer(const Duration(seconds: 3), () {
       isUserAuthenticated();
@@ -36,11 +35,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: Container(
-          child: const Image(image: AssetImage('assets/sss.gif')),
-        ),
+        child: Image(image: AssetImage('assets/sss.gif')),
       ),
     );
   }

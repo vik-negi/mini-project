@@ -47,7 +47,7 @@ class PostContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(postData.eventId);
+        debugPrint(postData.eventId);
       },
       child: Container(
         height: 330,

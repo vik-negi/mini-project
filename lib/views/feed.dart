@@ -1,6 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:evika/models/user/post_model.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:evika/utils/widgets/post_container_widget.dart';
@@ -18,7 +15,7 @@ class FeedView extends StatelessWidget {
       ),
       body: GetBuilder<PostVM>(builder: (vm) {
         return SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
           // height: Get.height - 100,
           child: Column(
             children: [
@@ -66,7 +63,7 @@ class FeedView extends StatelessWidget {
                           )
                         : vm.isErrorOnFetchingData.value
                             ? Center(
-                                child: Container(
+                                child: SizedBox(
                                 height: 90,
                                 child: Column(
                                   children: [
@@ -97,8 +94,8 @@ class FeedView extends StatelessWidget {
                                       onPressed: () {
                                         vm.getAllPost();
                                       },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
+                                      child: const Padding(
+                                        padding: EdgeInsets.symmetric(
                                             vertical: 8.0, horizontal: 16),
                                         child: Text("Try again"),
                                       ),

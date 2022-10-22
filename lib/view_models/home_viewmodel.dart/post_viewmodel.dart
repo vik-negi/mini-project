@@ -18,7 +18,6 @@ class PostVM extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     futurePosts = getAllPost();
   }
@@ -49,13 +48,13 @@ class PostVM extends GetxController {
           //   eventCategory: list[i]['eventCategory'] as String?,
           //   eventEndAt: list[i]['eventEndAt'] as String?,
           // );
-          print("aaaaaaaaaaaaaaaaaaa");
+          debugPrint("aaaaaaaaaaaaaaaaaaa");
           postList.add(postData);
           isPostFetched.value = true;
 
           update();
         }
-        print(postList.length);
+        debugPrint(postList.length.toString());
 
         return postList;
       } else {

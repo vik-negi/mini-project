@@ -31,9 +31,9 @@ class LoginApiServices extends LoginApiInterface {
 
   @override
   Future<Map<String, dynamic>>? userSignin(Map data) async {
-    print(data);
-    print(data["username"]);
-    print(data["password"]);
+    debugPrint(data.toString());
+    debugPrint(data["username"]);
+    debugPrint(data["password"]);
     final response = await http.post(
       Uri.parse('$baseUrl/api/account/signin'),
       // headers: <String, String>{
@@ -44,7 +44,7 @@ class LoginApiServices extends LoginApiInterface {
         'password': data['password'],
       },
     );
-    print(response.body);
+    debugPrint(response.body);
     return returnResponse(response);
   }
 

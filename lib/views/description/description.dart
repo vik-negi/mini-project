@@ -35,30 +35,29 @@ class _DescriptionState extends State<Description> {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             child: Column(
               children: <Widget>[
-                Container(
+                SizedBox(
                     width: double.infinity,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image(image: AssetImage('assets/img2.jpeg')))),
-                SizedBox(
+                        child: const Image(
+                            image: AssetImage('assets/img2.jpeg')))),
+                const SizedBox(
                   height: 10,
                 ),
-                Container(
-                  child: Text(
-                    'POSHAN JAGRUKTA ABHIYAAN started by central goverment',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'LexendDeca',
-                        color: HexColor('#656565'),
-                        fontSize: 18),
-                  ),
+                Text(
+                  'POSHAN JAGRUKTA ABHIYAAN started by central goverment',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'LexendDeca',
+                      color: HexColor('#656565'),
+                      fontSize: 18),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: <Widget>[
-                    Icon(
+                    const Icon(
                       Icons.person,
                     ),
                     Text(
@@ -69,10 +68,10 @@ class _DescriptionState extends State<Description> {
                           color: HexColor('#707070'),
                           fontSize: 14),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Icon(Icons.pin_drop),
+                    const Icon(Icons.pin_drop),
                     Text(
                       "Azamgarh",
                       style: TextStyle(
@@ -83,12 +82,12 @@ class _DescriptionState extends State<Description> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: <Widget>[
-                    Icon(
+                    const Icon(
                       Icons.date_range_rounded,
                     ),
                     Text(
@@ -99,10 +98,10 @@ class _DescriptionState extends State<Description> {
                           color: HexColor('#707070'),
                           fontSize: 14),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Icon(Icons.date_range_rounded),
+                    const Icon(Icons.date_range_rounded),
                     Text(
                       "Ends on 10/12/2022",
                       style: TextStyle(
@@ -113,7 +112,7 @@ class _DescriptionState extends State<Description> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(

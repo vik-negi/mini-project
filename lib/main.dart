@@ -2,8 +2,6 @@ import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
 import 'package:evika/views/create_post.dart';
 import 'package:evika/views/profile.dart';
-import 'package:evika/views/signin.dart';
-import 'package:evika/views/splash_screen.dart';
 import 'package:evika/views/trending_view/tranding.dart';
 import 'package:flutter/material.dart';
 import 'package:evika/views/feed.dart';
@@ -29,16 +27,20 @@ class MyApp extends StatelessWidget {
 }
 
 class ScreenNavigate extends StatelessWidget {
-  ScreenNavigate({Key? key}) : super(key: key);
-  NavigationController nv = Get.put(NavigationController());
+  const ScreenNavigate({Key? key}) : super(key: key);
+
+  // THIS WAS UNUSED CODE IF NEED IN FUTURE UNCOMMENT IT
+  // NavigationController nv = Get.put(NavigationController());
 
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = <Widget>[
-      FeedView(),
+      const FeedView(),
       const TrandingPage(),
       const CreatePostPage(),
-      true ? ProfilePage() : SigninPage(),
+      // ye kya bakchiodi hai THIS CODE WAS WRITTEN I COMMENT IT AND ADDE THE BELOW LINE
+      // true ? const ProfilePage() : SigninPage(),
+      const ProfilePage(),
     ];
     return GetBuilder<NavigationController>(builder: (nv) {
       return Scaffold(
