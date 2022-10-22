@@ -81,7 +81,8 @@ class _TrandingPageState extends State<TrandingPage> {
                   itemCount: 10,
                   itemBuilder: (context, i) {
                     return const TrendingPostCard(
-                        title: "How to make a good presentation workshop",
+                        title:
+                            "POSHAN JAGRUKTA ABHIYAAN started by central government",
                         postedDate: "12/12/2020");
                   },
                 ),

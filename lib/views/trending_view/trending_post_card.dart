@@ -1,3 +1,4 @@
+import 'package:evika/views/description/description.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -24,13 +25,21 @@ class TrendingPostCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'LexendDeca',
-                            color: HexColor('#656565'),
-                            fontSize: 14),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => Description()));
+                        },
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'LexendDeca',
+                              color: HexColor('#656565'),
+                              fontSize: 14),
+                        ),
                       ),
                       const SizedBox(
                         height: 5,
