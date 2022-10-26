@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/repositories/login_repo/login_repo_imp.dart';
+import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninVM extends GetxController {
   ApiResponce<Map> response = ApiResponce.loading();
+  SharedPrefs sharedPrefs = SharedPrefs();
   final LoginRepoImp loginRepo = LoginRepoImp();
   final storage = const FlutterSecureStorage();
 
@@ -49,6 +51,9 @@ class SigninVM extends GetxController {
       await sharedPreferences.setBool("isLoggedIn", true);
       await storage.write(key: "evikaToken", value: response["token"]);
       String userData = jsonEncode(response);
+      // await sharedPrefs.setString("user_id", response["data"]["_id"]);
+      await sharedPreferences.setString("user_id", response["data"]["_id"]);
+      await sharedPrefs.setString("username", response["data"]["username"]);
       // print(response.toString());
 
       // userModel = userModelFromJson(userData);

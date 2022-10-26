@@ -50,6 +50,7 @@ class PostModel {
 
 class PostData {
   final String? createdAt;
+  final String? id;
 
   final String? description;
   final String? eventCategory;
@@ -86,6 +87,7 @@ class PostData {
     this.username,
     this.userId,
     this.noOfComments = 0,
+    this.id,
   });
 
   Map<String, dynamic> toMap() {
@@ -106,6 +108,7 @@ class PostData {
       'username': username,
       'userId': userId,
       'noOfComments': noOfComments,
+      '_id': id,
     };
   }
 
@@ -139,6 +142,7 @@ class PostData {
       userId: map['userId'] != null ? map['userId'] as String : "null",
       noOfComments:
           map['noOfComments'] != null ? map['noOfComments'] as int : 0,
+      id: map['_id'] != null ? map['_id'] as String : "null",
     );
   }
 

@@ -1,4 +1,7 @@
+import 'package:http/http.dart';
+
 abstract class PostRepo {
   Future<Map>? getAllPost();
-  Future<Map?>? createPost(Map<String, dynamic> data);
+  Future<String?>? createPost(MultipartRequest data);
+  Future<Map<String, dynamic>?>? likePost(String id, String user_id);
 }

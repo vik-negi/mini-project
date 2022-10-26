@@ -1,6 +1,5 @@
 import 'package:evika/main.dart';
-import 'package:evika/utils/bindings/home_bindings.dart';
-import 'package:evika/utils/bindings/signup_bindings.dart';
+import 'package:evika/utils/bindings.dart';
 import 'package:evika/views/create_post.dart';
 import 'package:evika/views/profile.dart';
 import 'package:evika/views/feed.dart';
@@ -28,7 +27,11 @@ class AppRotutes {
         page: () => SignUpFrom(),
         binding: SignupBindings()),
     // GetPage(name: AppRotutes.forgotPassword, page: () => ForgotPasswordPage()),
-    GetPage(name: AppRotutes.screenNavigator, page: () => ScreenNavigate()),
+    GetPage(
+      name: AppRotutes.screenNavigator,
+      page: () => ScreenNavigate(),
+      binding: FeedBinding(),
+    ),
     GetPage(name: AppRotutes.profile, page: () => const ProfilePage()),
     GetPage(name: AppRotutes.tranding, page: () => const TrandingPage()),
     GetPage(name: AppRotutes.createPost, page: () => const CreatePostPage()),

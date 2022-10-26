@@ -5,4 +5,5 @@ abstract class LoginApiInterface {
 
 abstract class PostApiInterface {
   Future<Map<String, dynamic>>? getAllPosts();
+  Future<Map<String, dynamic>>? likePost(String id);
 }
