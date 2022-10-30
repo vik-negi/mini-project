@@ -171,9 +171,7 @@ class PostVM extends GetxController {
   }
 
   Future<bool?>? likePost(id) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String user_id = sharedPreferences.getString("user_id")!;
-    Map<String, dynamic>? response = await postRepoImp.likePost(id, user_id);
+    Map<String, dynamic>? response = await postRepoImp.likePost(id);
     if (response != null) {
       return true;
     } else {

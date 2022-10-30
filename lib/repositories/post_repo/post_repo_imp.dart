@@ -24,9 +24,8 @@ class PostRepoImp extends PostRepo {
   }
 
   @override
-  Future<Map<String, dynamic>?>? likePost(String id, String user_id) async {
-    Map<String, dynamic>? response =
-        await postApiServices.likePost(id, user_id);
+  Future<Map<String, dynamic>?>? likePost(String postId) async {
+    Map<String, dynamic>? response = await postApiServices.likePost(postId);
     if (response != null) {
       debugPrint("Post Repo Imp $response");
       return response;

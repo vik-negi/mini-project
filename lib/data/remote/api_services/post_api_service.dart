@@ -6,6 +6,7 @@ import 'package:evika/models/user/post_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // const String baseUrl = 'http://evika.herokuapp.com';
 // const String baseUrl = 'http://172.11.10.2:8000';
@@ -59,11 +60,33 @@ class PostApiServices {
     }
   }
 
-  Future<Map<String, dynamic>?> likePost(String id, String user_id) async {
-    const api = '$baseUrl/api/user/like-post';
+  Future<Map<String, dynamic>?> likePost(String postId) async {
+    var api = '$baseUrl/api/user/like-post/$postId';
     try {
-      final response = await http
-          .post(Uri.parse(api), body: {"postId": id, "userId": user_id});
+      var body = {
+        'postId': postId,
+      };
+
+      // String queryString = Uri.parse(queryParameters: {
+      //   'postId': postId
+      // }).query;
+
+      // var requestUrl = api + '?' + queryString;
+      // final uri = Uri.http(
+      //     "192.168.43.65:8000", '/api/user/like-post/', queryParameters);
+
+      // print(uri);
+      // final response = await http.post(uri);
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      String token = sharedPreferences.getString("token")!;
+      final response = await http.post(Uri.parse(api), body: {
+        'postId': postId,
+      }, headers: {
+        "authorization": "Bearer $token",
+      });
+      print("resssssssponnnceee");
+      print(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         Map<String, dynamic> body = apiServices.returnResponse(response);
         return body;

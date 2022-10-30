@@ -69,9 +69,9 @@ class Data {
   bool? isProfileCompleted;
   bool? isMobileVerified;
   bool? isEmailVerified;
-  int? follower;
-  int? following;
-  int? post;
+  List<dynamic>? follower;
+  List<dynamic>? following;
+  List<dynamic>? post;
   int? age;
   String? gender;
   String? bio;
@@ -182,9 +182,15 @@ class Data {
       isEmailVerified: map['isEmailVerified'] != null
           ? map['isEmailVerified'] as bool
           : null,
-      follower: map['follower'] != null ? map['follower'] as int : null,
-      following: map['following'] != null ? map['following'] as int : null,
-      post: map['post'] != null ? map['post'] as int : null,
+      follower: map['follower'] != null
+          ? List<dynamic>.from(map['follower'] as List<dynamic>)
+          : null,
+      following: map['following'] != null
+          ? List<dynamic>.from(map['following'] as List<dynamic>)
+          : null,
+      post: map['post'] != null
+          ? List<dynamic>.from(map['post'] as List<dynamic>)
+          : null,
       age: map['age'] != null ? map['age'] as int : null,
       gender: map['gender'] != null ? map['gender'] as String : null,
       bio: map['bio'] != null ? map['bio'] as String : null,
