@@ -39,38 +39,29 @@ class _TrandingPageState extends State<TrandingPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
-                      Text(
-                        "Top",
-                        style: TextStyle(
-                            color: Colors.black45,
-                            fontFamily: 'LexendDeca',
-                            fontSize: 18),
-                      ),
-                      Text("Trending",
-                          style: TextStyle(
-                              color: Colors.black45,
-                              fontFamily: 'LexendDeca',
-                              fontSize: 18)),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Text(
-                    "10",
-                    style: TextStyle(
-                        color: Colors.black45,
+              Padding(
+                padding: const EdgeInsets.only(
+                  // left: 10,
+                  top: 20,
+                  bottom: 15,
+                ),
+                child: Row(
+                  children: const [
+                    Icon(
+                      Icons.arrow_right_rounded,
+                      size: 30,
+                    ),
+                    Text(
+                      "Trending 10",
+                      style: TextStyle(
+                        color: Colors.black,
                         fontFamily: 'LexendDeca',
-                        fontSize: 50),
-                  )
-                ],
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               const Divider(),
@@ -80,10 +71,12 @@ class _TrandingPageState extends State<TrandingPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 10,
                   itemBuilder: (context, i) {
-                    return const TrendingPostCard(
-                        title:
-                            "POSHAN JAGRUKTA ABHIYAAN started by central government",
-                        postedDate: "12/12/2020");
+                    return TrendingPostCard(
+                      title:
+                          "POSHAN JAGRUKTA ABHIYAAN started by central government",
+                      postedDate: "12/12/2020",
+                      index: i + 1,
+                    );
                   },
                 ),
               ),
