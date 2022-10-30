@@ -1,3 +1,4 @@
+import 'package:evika/utils/colors.dart';
 import 'package:evika/views/description/description.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,21 +7,42 @@ import 'package:hexcolor/hexcolor.dart';
 class TrendingPostCard extends StatelessWidget {
   final title;
   final postedDate;
+  final index;
   const TrendingPostCard(
-      {super.key, required this.title, required this.postedDate});
+      {super.key,
+      required this.title,
+      required this.postedDate,
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        Container(
+          margin: const EdgeInsets.only(bottom: 30),
           child: Row(
             children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(right: 5),
+                child: Row(
+                  children: [
+                    Text(
+                      index.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Icon(Icons.arrow_right_rounded),
+                  ],
+                ),
+              ),
               Expanded(
                 flex: 7,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 5,
+                  padding: const EdgeInsets.only(
+                    top: 5,
+                    bottom: 5,
+                    right: 7,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,15 +51,18 @@ class TrendingPostCard extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                               context,
-                              new MaterialPageRoute(
-                                  builder: (context) => Description()));
+                              MaterialPageRoute(
+                                  builder: (context) => Description(
+                                        tag: index.toString(),
+                                      )));
                         },
                         child: Text(
                           title,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500,
                               fontFamily: 'LexendDeca',
-                              color: HexColor('#656565'),
+                              // color: HexColor('#656565'),
+                              color: AppColors.primaryColor,
                               fontSize: 14),
                         ),
                       ),
@@ -98,17 +123,20 @@ class TrendingPostCard extends StatelessWidget {
               ),
               Expanded(
                 flex: 2,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: const Image(image: AssetImage('assets/img2.jpeg')),
+                child: Hero(
+                  tag: index.toString(),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(3),
+                    child: const Image(image: AssetImage('assets/img2.jpeg')),
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        const Divider(
-          thickness: 1,
-        ),
+        // const Divider(
+        //   thickness: 1,
+        // ),
       ],
     );
   }
