@@ -1,5 +1,6 @@
 import 'package:evika/models/user/user_chat_model.dart';
 import 'package:evika/models/user/user_model.dart';
+import 'package:evika/views/user_Chat_page.dart';
 import "package:flutter/material.dart";
 
 class CustomUser extends StatelessWidget {
@@ -12,20 +13,18 @@ class CustomUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // if (isChatPage || isContactPage) {
-        //   Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => UserChatPage(
-        //         userChatModel: userChatModel,
-        //         sourceChat: sourceChat,
-        //         isWeb: (MediaQuery.of(context).size.width > 700)
-        //             ? true
-        //             : false,
-        //       ),
-        //     ),
-        //   );
-        // }
+        if (1 == 1) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UserChatPage(
+                isWeb: (MediaQuery.of(context).size.width > 700) ? true : false,
+                userModel: userChatModel,
+                sourceChat: userChatModel,
+              ),
+            ),
+          );
+        }
       },
       child: CustomUserCard(
         isContactPage: false,

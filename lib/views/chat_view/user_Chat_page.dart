@@ -1,4 +1,7 @@
+<<<<<<< HEAD:lib/views/user_Chat_page.dart
 // import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+=======
+>>>>>>> 1dd39efd66cfff26ef336ba882b48d02ac019bce:lib/views/chat_view/user_Chat_page.dart
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:evika/data/user_chat.dart';
 import 'package:evika/models/user/user_chat_model.dart';
