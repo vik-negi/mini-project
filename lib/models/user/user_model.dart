@@ -79,6 +79,8 @@ class Data {
   List<SocialMedia>? socialMedia;
   List<String>? interest;
   int? profileViews;
+  List<String>? likedPost;
+  List<String>? savedPost;
   Data({
     this.personId,
     required this.name,
@@ -110,6 +112,8 @@ class Data {
     this.socialMedia,
     this.interest,
     this.profileViews,
+    this.likedPost,
+    this.savedPost,
   });
 
   Map<String, dynamic> toMap() {
@@ -144,6 +148,8 @@ class Data {
       'socialMedia': socialMedia?.map((x) => x.toMap()).toList() ?? [],
       'interest': interest,
       'profileViews': profileViews,
+      'likedPost': likedPost?.map((x) => x).toList() ?? [],
+      'savedPost': savedPost?.map((x) => x).toList() ?? [],
     };
   }
 
@@ -207,6 +213,10 @@ class Data {
           : null,
       profileViews:
           map['profileViews'] != null ? map['profileViews'] as int : null,
+      likedPost:
+          map['likedPost'] != null ? map['likedPost'] as List<String> : [],
+      savedPost:
+          map['savedPost'] != null ? map['savedPost'] as List<String> : [],
     );
   }
 

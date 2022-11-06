@@ -5,6 +5,7 @@ import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
+import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,6 +50,7 @@ class PostVM extends GetxController {
   TextEditingController eventDescriptionController = TextEditingController();
 
   PostRepoImp postRepoImp = PostRepoImp();
+  CommonVM commonVM = Get.put(CommonVM());
 
   void pickImage() async {
     final XFile? image = await picker.pickImage(
@@ -61,6 +63,11 @@ class PostVM extends GetxController {
     }
     update();
   }
+
+//   String getDaet(DateTime date) {
+// // String datetime1 = DateFormat("yyyy-MM-dd").format(date);
+//     return DateFormat("MMMM dd, yyyy").parse(date);
+//   }
 
   @override
   void onInit() {
@@ -173,6 +180,16 @@ class PostVM extends GetxController {
   Future<bool?>? likePost(id) async {
     Map<String, dynamic>? response = await postRepoImp.likePost(id);
     if (response != null) {
+      print("uuuuuuuuuuuuuuu");
+      print("Liked Post response : $response");
+      List<String> likedPosts = [];
+      // likedPosts = response["data"]["likedPosts"] != null
+      //     ? List<String>.from(response["data"]["likedPosts"])
+      //     : [];
+      // print(likedPosts);
+
+      // commonVM.userLikedPostList = likedPosts;
+      // commonVM.update();
       return true;
     } else {
       return false;

@@ -1,56 +1,63 @@
 import 'package:evika/models/user/post_model.dart';
+import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
+import 'package:evika/views/description/description.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
-var months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec'
-];
+// var months = [
+//   'Jan',
+//   'Feb',
+//   'Mar',
+//   'Apr',
+//   'May',
+//   'Jun',
+//   'Jul',
+//   'Aug',
+//   'Sep',
+//   'Oct',
+//   'Nov',
+//   'Dec'
+// ];
 
 // take 2022-10-01T18:23:05.787Z format and retrun 12 hrs format
-String convertTime(String time) {
-  var date = DateTime.parse(time);
-  var hour = date.hour;
-  var min = date.minute;
-  var ampm = hour >= 12 ? 'pm' : 'am';
-  hour = hour % 12;
-  hour = hour != 0 ? hour : 12;
-  var minStr = min < 10 ? '0$min' : '$min';
-  return '$hour:$minStr $ampm';
-}
+// String convertTime(String time) {
+//   var date = DateTime.parse(time);
+//   var hour = date.hour;
+//   var min = date.minute;
+//   var ampm = hour >= 12 ? 'pm' : 'am';
+//   hour = hour % 12;
+//   hour = hour != 0 ? hour : 12;
+//   var minStr = min < 10 ? '0$min' : '$min';
+//   return '$hour:$minStr $ampm';
+// }
 
 // take input string as" Wed Jan 27 2021 00:15:53 GMT+0000 (Coordinated Universal Time)" and return date
-String getDate(String date) {
-  var dateList = date.split(' ');
-  var month = months.indexOf(dateList[1]) + 1;
-  var day = dateList[2];
-  var year = dateList[3];
-  return '$day-$month-$year';
-}
+// String getDate(String date) {
+//   var dateList = date.split(' ');
+//   var month = months.indexOf(dateList[1]) + 1;
+//   var day = dateList[2];
+//   var year = dateList[3];
+//   return '$day-$month-$year';
+// }
 
 class PostContainer extends StatelessWidget {
-  PostContainer({super.key, required this.postData});
-  final PostData postData;
+  PostContainer({super.key, required this.i});
+  final int i;
+  CommonVM commonVM = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    // print(postData.description);
+    // print(vm.postList[i].description);
     return GetBuilder<PostVM>(builder: (vm) {
       return InkWell(
         onTap: () {
           // print(vm.postList[i].eventId);
+          Get.to(Description(
+            index: i,
+          ));
         },
         child: Container(
           height: 330,
@@ -89,7 +96,7 @@ class PostContainer extends StatelessWidget {
                           placeholder: const AssetImage(
                             "assets/placeholderimageloading.gif",
                           ),
-                          image: NetworkImage(postData.image![0]),
+                          image: NetworkImage(vm.postList[i].image![0]),
                         ),
                       ),
                     ),
@@ -120,7 +127,7 @@ class PostContainer extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           text: TextSpan(
-                            text: postData.title,
+                            text: vm.postList[i].title,
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 25,
@@ -135,12 +142,21 @@ class PostContainer extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.all(15),
                         child: IconButton(
-                            onPressed: () {
-                              vm.likePost(postData.id);
+                            onPressed: () async {
+                              commonVM.tapOnLikedButton =
+                                  !commonVM.tapOnLikedButton;
+                              commonVM.tapOnLikedButtonFun();
+                              commonVM.update();
+                              await vm.likePost(vm.postList[i].id);
+                              await commonVM.likedPost();
+                              // commonVM.update();
                             },
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.favorite_border,
-                              color: Colors.white,
+                              color: commonVM.isLikedPost(vm.postList[i].id!) ||
+                                      commonVM.tapOnLikedButton
+                                  ? Colors.pink
+                                  : Colors.white,
                               size: 30,
                             )),
                       ),
@@ -196,7 +212,7 @@ class PostContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: Get.width - 85,
+                      width: Get.width - 88,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,7 +232,8 @@ class PostContainer extends StatelessWidget {
                                   ),
                                   RichText(
                                     text: TextSpan(
-                                      text: postData.eventStartAt.toString(),
+                                      text: vm.postList[i].eventStartAt
+                                          .toString(),
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontFamily: "LexendDeca",
@@ -246,7 +263,8 @@ class PostContainer extends StatelessWidget {
                                   ),
                                   RichText(
                                     text: TextSpan(
-                                      text: postData.eventEndAt.toString(),
+                                      text:
+                                          vm.postList[i].eventEndAt.toString(),
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontFamily: "LexendDeca",
@@ -262,7 +280,7 @@ class PostContainer extends StatelessWidget {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             text: TextSpan(
-                              text: postData.description.toString(),
+                              text: vm.postList[i].description.toString(),
                               style: TextStyle(
                                 color: Colors.grey.shade800,
                                 fontFamily: "LexendDeca",
@@ -283,7 +301,7 @@ class PostContainer extends StatelessWidget {
                               ),
                               RichText(
                                 text: TextSpan(
-                                  text: postData.username,
+                                  text: vm.postList[i].username,
                                   style: const TextStyle(
                                     color: Colors.grey,
                                     fontFamily: "LexendDeca",
@@ -302,11 +320,16 @@ class PostContainer extends StatelessWidget {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Icon(
-                            // CupertinoIcons.arrow_turn_up_right,
-                            CupertinoIcons.arrowshape_turn_up_right,
-                            color: Colors.grey.shade600,
-                            size: 30,
+                          child: IconButton(
+                            onPressed: () async {
+                              await Share.share(
+                                  "Hii! I am Joining this Event I want you to be part of this");
+                            },
+                            icon: Icon(
+                              CupertinoIcons.arrowshape_turn_up_right,
+                              color: Colors.grey.shade600,
+                              size: 30,
+                            ),
                           ),
                         ),
                         const SizedBox(

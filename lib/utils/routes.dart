@@ -1,6 +1,7 @@
 import 'package:evika/main.dart';
 import 'package:evika/utils/bindings.dart';
 import 'package:evika/views/create_post.dart';
+import 'package:evika/views/description/description.dart';
 import 'package:evika/views/profile.dart';
 import 'package:evika/views/feed.dart';
 import 'package:evika/views/sign_up_from_view.dart';
@@ -19,6 +20,7 @@ class AppRotutes {
   static const tranding = '/tranding';
   static const createPost = '/createPost';
   static const splashScreen = '/splashScreen';
+  static const postDescription = '/postDescription';
 
   static final pages = [
     GetPage(name: AppRotutes.signin, page: () => SigninPage()),
@@ -38,5 +40,6 @@ class AppRotutes {
     GetPage(
         name: AppRotutes.feed, page: () => FeedView(), binding: FeedBinding()),
     GetPage(name: AppRotutes.splashScreen, page: () => SplashScreen()),
+    // GetPage(name: AppRotutes.postDescription, page: () => Description()),
   ];
 }

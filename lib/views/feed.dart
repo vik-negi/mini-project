@@ -17,10 +17,13 @@ class FeedView extends StatelessWidget {
     return GetBuilder<PostVM>(builder: (vm) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text("Sample Post"),
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: const Text("Feeds"),
           actions: [
             IconButton(
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.logout),
               onPressed: () {
                 showDialog(
                     context: context,
@@ -49,76 +52,80 @@ class FeedView extends StatelessWidget {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            height: Get.height - 100,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: (vm.isPostFetched.value ||
-                          !vm.isErrorOnFetchingData.value)
-                      ? Get.height - 150
-                      : Get.height - 150,
-                  child: vm.isPostFetched.value
-                      ? ListView.builder(
-                          itemCount: vm.postList.length,
-                          // itemCount: 1,
-                          itemBuilder: (context, i) {
-                            print(vm.postList.length);
-                            print(vm.postList[0].likes);
-                            return PostContainer(postData: vm.postList[i]);
-                          },
-                        )
-                      : vm.isErrorOnFetchingData.value
-                          ? Center(
-                              child: Container(
-                              height: 90,
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "No data found",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  TextButton(
-                                    style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                          ),
-                                        ),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.blueGrey[800]),
-                                        foregroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.white)),
-                                    onPressed: () {
-                                      vm.getAllPost();
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0, horizontal: 16),
-                                      child: Text("Try again"),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await vm.getAllPost();
+          },
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Container(
+              height: Get.height - 100,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: (vm.isPostFetched.value ||
+                            !vm.isErrorOnFetchingData.value)
+                        ? Get.height - 150
+                        : Get.height - 150,
+                    child: vm.isPostFetched.value
+                        ? ListView.builder(
+                            itemCount: vm.postList.length,
+                            // itemCount: 1,
+                            itemBuilder: (context, i) {
+                              return PostContainer(i: i);
+                            },
+                          )
+                        : vm.isErrorOnFetchingData.value
+                            ? Center(
+                                child: Container(
+                                height: 90,
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      "No data found",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500),
                                     ),
-                                  )
-                                ],
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    TextButton(
+                                      style: ButtonStyle(
+                                          shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                            ),
+                                          ),
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.blueGrey[800]),
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.white)),
+                                      onPressed: () {
+                                        vm.getAllPost();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0, horizontal: 16),
+                                        child: Text("Try again"),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ))
+                            : const Center(
+                                child: CircularProgressIndicator(),
                               ),
-                            ))
-                          : const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-              ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

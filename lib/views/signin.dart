@@ -1,3 +1,4 @@
+import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
 import 'package:evika/views/home.dart';
@@ -225,7 +226,7 @@ class SigninPage extends StatelessWidget {
                               if (response != null) {
                                 vm.isSigninClickedBool = false;
                                 if (response!["status"] == "success") {
-                                  Get.to(() => HomePage());
+                                  Get.offAllNamed(AppRotutes.screenNavigator);
                                 }
                               }
                             },

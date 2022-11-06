@@ -7,3 +7,7 @@ abstract class PostApiInterface {
   Future<Map<String, dynamic>>? getAllPosts();
   Future<Map<String, dynamic>>? likePost(String id);
 }
+
+abstract class CommoApiInterface {
+  Future<List<String>>? userLikedPosts();
+}

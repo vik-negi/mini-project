@@ -2,6 +2,7 @@ import 'package:evika/utils/colors.dart';
 import 'package:evika/views/description/description.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class TrendingPostCard extends StatelessWidget {
@@ -49,12 +50,9 @@ class TrendingPostCard extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Description(
-                                        tag: index.toString(),
-                                      )));
+                          Get.to(Description(
+                            index: index,
+                          ));
                         },
                         child: Text(
                           title,
