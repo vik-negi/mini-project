@@ -1,7 +1,10 @@
 // import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:evika/data/user_chat.dart';
 import 'package:evika/models/user/user_chat_model.dart';
 import 'package:evika/utils/widgets/MoreOptionToSend.dart';
+import 'package:evika/utils/widgets/OtherSideMsg.dart';
+import 'package:evika/utils/widgets/OwnMsgCard.dart';
 import 'package:evika/utils/widgets/PopUpMenuBtn.dart';
 import 'package:evika/utils/widgets/custom_user_chat.dart';
 import 'package:evika/views/Individual%20_user_details.dart';
@@ -418,7 +421,7 @@ class _UserChatPageState extends State<UserChatPage> {
           indicatorColor: Colors.blue,
           iconColor: Colors.grey,
           iconColorSelected: Colors.blue,
-          progressIndicatorColor: Colors.blue,
+          // progressIndicatorColor: Colors.blue,
           backspaceColor: Colors.blue,
           skinToneDialogBgColor: Colors.white,
           skinToneIndicatorColor: Colors.grey,
