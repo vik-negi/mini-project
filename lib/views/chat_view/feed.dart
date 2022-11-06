@@ -3,6 +3,7 @@
 import 'package:evika/utils/routes.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
+import 'package:evika/views/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:evika/utils/widgets/post_container_widget.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,12 @@ class FeedView extends StatelessWidget {
           elevation: 0,
           title: const Text("Feeds"),
           actions: [
+            IconButton(
+              onPressed: () {
+                Get.to(Chats());
+              },
+              icon: Icon(Icons.message),
+            ),
             IconButton(
               icon: const Icon(Icons.logout),
               onPressed: () {

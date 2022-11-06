@@ -4,9 +4,7 @@ import 'package:evika/utils/widgets/custom_user_chat.dart';
 import 'package:flutter/material.dart';
 
 class Chats extends StatefulWidget {
-  const Chats({
-    Key? key,
-  }) : super(key: key);
+  const Chats({Key? key}) : super(key: key);
 
   @override
   State<Chats> createState() => _ChatsState();
