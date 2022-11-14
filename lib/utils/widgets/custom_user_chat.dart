@@ -11,7 +11,7 @@ class CustomUser extends StatelessWidget {
   const CustomUser({Key? key, required this.userChatModel, required this.index})
       : super(key: key);
 
-  // late  userChatModel sourceChat;
+//   // late  userChatModel sourceChat;
 
   @override
   Widget build(BuildContext context) {

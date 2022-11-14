@@ -34,11 +34,17 @@ class AppRotutes {
       page: () => ScreenNavigate(),
       binding: FeedBinding(),
     ),
-    GetPage(name: AppRotutes.profile, page: () => const ProfilePage()),
     GetPage(name: AppRotutes.tranding, page: () => const TrandingPage()),
     GetPage(name: AppRotutes.createPost, page: () => const CreatePostPage()),
     GetPage(
-        name: AppRotutes.feed, page: () => FeedView(), binding: FeedBinding()),
+      name: AppRotutes.profile,
+      page: () => ProfilePage(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+        name: AppRotutes.feed,
+        page: () => const FeedView(),
+        binding: FeedBinding()),
     GetPage(name: AppRotutes.splashScreen, page: () => SplashScreen()),
     // GetPage(name: AppRotutes.postDescription, page: () => Description()),
   ];

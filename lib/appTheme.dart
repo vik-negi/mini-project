@@ -14,7 +14,7 @@ ThemeData lightThemeData(BuildContext context) {
     accentColor: kPrimaryColor,
     fontFamily: "WorkSans",
     shadowColor: Theme.of(context).disabledColor,
-    dividerColor: Color(0xff707070),
+    dividerColor: const Color(0xff707070),
     canvasColor: Colors.white,
     backgroundColor: const Color(0xFFFFFFFF),
     scaffoldBackgroundColor: const Color(0xFFF5F5F5),
@@ -30,14 +30,14 @@ ThemeData darkThemeData(BuildContext context) {
   return ThemeData(
     scaffoldBackgroundColor: Colors.grey.shade900,
     primaryColor: kPrimaryColor,
-    colorScheme: ColorScheme.dark(),
+    colorScheme: const ColorScheme.dark(),
     indicatorColor: Colors.white,
     splashColor: Colors.white24,
     splashFactory: InkRipple.splashFactory,
     accentColor: kPrimaryColor,
     fontFamily: "WorkSans",
     shadowColor: Theme.of(context).disabledColor,
-    dividerColor: Color(0xff707070),
+    dividerColor: const Color(0xff707070),
     canvasColor: Colors.white,
     backgroundColor: Colors.black,
     errorColor: kErrorColor,
@@ -75,4 +75,4 @@ const kErrorColor = Color(0xFFF03738);
 
 const kDefaultPadding = 20.0;
 
-final appBarTheme = AppBarTheme(centerTitle: false, elevation: 0);
+final appBarTheme = const AppBarTheme(centerTitle: false, elevation: 0);

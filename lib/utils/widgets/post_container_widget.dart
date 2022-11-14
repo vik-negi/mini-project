@@ -56,7 +56,7 @@ class PostContainer extends StatelessWidget {
         onTap: () {
           // print(vm.postList[i].eventId);
           Get.to(Description(
-            index: i,
+            tag: i.toString(),
           ));
         },
         child: Container(

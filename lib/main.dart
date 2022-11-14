@@ -22,11 +22,14 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: darkThemeData(context),
-      theme: lightThemeData(context),
+      // theme: lightThemeData(context),
       // themeMode: ThemeMode.dark,
-      themeMode: ThemeMode.light,
+      // themeMode: ThemeMode.light,
       getPages: AppRotutes.pages,
       // home: SplashScreen(),
+      theme: ThemeData(
+        fontFamily: "Poppins",
+      ),
       initialRoute: AppRotutes.splashScreen,
     );
   }
@@ -50,7 +53,7 @@ class ScreenNavigate extends StatelessWidget {
         bottomNavigationBar: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
             navbarItem(icon: Icons.home, label: "Home"),
-            navbarItem(icon: Icons.trending_up_outlined, label: "Tranding"),
+            navbarItem(icon: Icons.trending_up_outlined, label: "Trending"),
             navbarItem(icon: Icons.add, label: "Post"),
             navbarItem(icon: Icons.account_box, label: "Accounts"),
           ],

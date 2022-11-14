@@ -1,19 +1,9 @@
 import 'dart:convert';
 
 import 'package:evika/data/remote/api_interface.dart';
+import 'package:evika/data/remote/api_services/api_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
-// const String baseUrl = 'http://192.168.43.65:8000';
-// const String baseUrl = 'http://172.11.10.136:8000';
-// const String baseUrl = 'http://192.168.137.94:8000'; //rohit laptop
-// const String baseUrl = 'http://192.168.191.65:8000'; //rohit
-const String baseUrl = 'http://192.168.252.65:8000'; //Aman
-// const String baseUrl = 'http://192.168.43.65:8000'; //mobile hotspot
-// const String baseUrl = 'http://192.168.100.112:8000';
-// const String baseUrl = 'http://172.11.10.77:8000';
-// const String baseUrl = 'http://localhost:8000';
-// const String baseUrl = 'http://evika.herokuapp.com';
 
 Future<String> getToken() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

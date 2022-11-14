@@ -108,10 +108,9 @@ class _ChatHomeViewState extends State<ChatHomeView>
                       ),
                     ];
                   },
-                  body: TabBarView(controller: _tabController, children: const [
-                    Chats(),
-                    ProfilePage(),
-                  ]))));
+                  body: TabBarView(
+                      controller: _tabController,
+                      children: [const Chats(), ProfilePage()]))));
     });
     // }
     // ),
