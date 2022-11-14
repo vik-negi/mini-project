@@ -6,7 +6,7 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
   String? jwtoken;
-  Data? data;
+  UserData? data;
   String? status;
   String? message;
   String? accountType;
@@ -33,7 +33,7 @@ class UserModel {
     return UserModel(
       jwtoken: map['jwtoken'] != null ? map['jwtoken'] as String : null,
       data: map['data'] != null
-          ? Data.fromMap(map['data'] as Map<String, dynamic>)
+          ? UserData.fromMap(map['data'] as Map<String, dynamic>)
           : null,
       status: map['status'] != null ? map['status'] as String : null,
       message: map['message'] != null ? map['message'] as String : null,
@@ -48,7 +48,7 @@ class UserModel {
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
-class Data {
+class UserData {
   int? personId;
   String name;
   DateTime? birthDate;
@@ -81,7 +81,7 @@ class Data {
   int? profileViews;
   List<String>? likedPost;
   List<String>? savedPost;
-  Data({
+  UserData({
     this.personId,
     required this.name,
     this.birthDate,
@@ -153,8 +153,8 @@ class Data {
     };
   }
 
-  factory Data.fromMap(Map<String, dynamic> map) {
-    return Data(
+  factory UserData.fromMap(Map<String, dynamic> map) {
+    return UserData(
       personId: map['personId'] != null ? map['personId'] as int : null,
       name: map['name'],
       birthDate: map['birthDate'] != null
@@ -222,8 +222,8 @@ class Data {
 
   String toJson() => json.encode(toMap());
 
-  factory Data.fromJson(String source) =>
-      Data.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserData.fromJson(String source) =>
+      UserData.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class LastUpdate {

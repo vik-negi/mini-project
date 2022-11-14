@@ -66,7 +66,7 @@ class _TrandingPageState extends State<TrandingPage> {
 
               const Divider(),
               SizedBox(
-                height: 840,
+                height: 980,
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 10,

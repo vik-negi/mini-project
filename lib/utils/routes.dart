@@ -3,7 +3,7 @@ import 'package:evika/utils/bindings.dart';
 import 'package:evika/views/create_post.dart';
 import 'package:evika/views/description/description.dart';
 import 'package:evika/views/profile.dart';
-import 'package:evika/views/feed.dart';
+import 'package:evika/views/feed/feed.dart';
 import 'package:evika/views/sign_up_from_view.dart';
 import 'package:evika/views/signin.dart';
 import 'package:evika/views/splash_screen.dart';
@@ -34,11 +34,17 @@ class AppRotutes {
       page: () => ScreenNavigate(),
       binding: FeedBinding(),
     ),
-    GetPage(name: AppRotutes.profile, page: () => const ProfilePage()),
     GetPage(name: AppRotutes.tranding, page: () => const TrandingPage()),
     GetPage(name: AppRotutes.createPost, page: () => const CreatePostPage()),
     GetPage(
-        name: AppRotutes.feed, page: () => FeedView(), binding: FeedBinding()),
+      name: AppRotutes.profile,
+      page: () => ProfilePage(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+        name: AppRotutes.feed,
+        page: () => const FeedView(),
+        binding: FeedBinding()),
     GetPage(name: AppRotutes.splashScreen, page: () => SplashScreen()),
     // GetPage(name: AppRotutes.postDescription, page: () => Description()),
   ];

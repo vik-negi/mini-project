@@ -3,7 +3,7 @@
 import 'package:evika/utils/routes.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
-import 'package:evika/views/chart.dart';
+import 'package:evika/views/chat_view/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:evika/utils/widgets/post_container_widget.dart';
 import 'package:get/get.dart';
@@ -25,7 +25,7 @@ class FeedView extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                Get.to(Chats());
+                // Get.to(Chats());
               },
               icon: Icon(Icons.message),
             ),
@@ -84,8 +84,8 @@ class FeedView extends StatelessWidget {
                           )
                         : vm.isErrorOnFetchingData.value
                             ? Center(
-                                child: Container(
-                                height: 90,
+                                child: SizedBox(
+                                height: 100,
                                 child: Column(
                                   children: [
                                     const Text(
@@ -118,7 +118,12 @@ class FeedView extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 8.0, horizontal: 16),
-                                        child: Text("Try again"),
+                                        child: Text(
+                                          "Try again",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
                                       ),
                                     )
                                   ],
