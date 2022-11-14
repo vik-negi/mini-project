@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:evika/utils/colors.dart';
 import 'package:evika/views/description/description_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,6 @@ class Description extends StatelessWidget {
             'Description',
             style: TextStyle(
               color: AppColors.secondaryColor,
-              fontFamily: "LexendDeca",
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -64,6 +65,27 @@ class Description extends StatelessWidget {
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Container(
+                                width: double.infinity,
+                                child: Center(
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        color: AppColors.accentTextColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(50))),
+                                    width: 100,
+                                    padding: const EdgeInsets.all(2),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: Image.network(
+                                          "https://images-platform.99static.com/74rlsIN7kmIJKDLsDsp7F9qdV5A=/500x500/top/smart/99designs-contests-attachments/37/37734/attachment_37734867"),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
                               RichText(
                                 text: const TextSpan(
                                   children: [
@@ -71,7 +93,6 @@ class Description extends StatelessWidget {
                                       text: 'Event Name\n',
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
-                                        fontFamily: "LexendDeca",
                                         fontSize: 13,
                                       ),
                                     ),
@@ -80,9 +101,8 @@ class Description extends StatelessWidget {
                                           'POSHAN JAGRUKTA ABHIYAAN started by central goverment and Association\n',
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
-                                        fontFamily: "LexendDeca",
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 15,
                                       ),
                                     ),
                                   ],
@@ -95,7 +115,6 @@ class Description extends StatelessWidget {
                                       text: 'Event Organizer\n',
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
-                                        fontFamily: "LexendDeca",
                                         fontSize: 13,
                                       ),
                                     ),
@@ -104,9 +123,8 @@ class Description extends StatelessWidget {
                                           'Young Social Reformers kjndkjng sd sd f sd f sd fskndosdg sdofjsodjfg sfigjsdfg skdfg"\n',
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
-                                        fontFamily: "LexendDeca",
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 15,
                                       ),
                                     ),
                                   ],
@@ -119,7 +137,6 @@ class Description extends StatelessWidget {
                                       text: 'Event Location\n',
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
-                                        fontFamily: "LexendDeca",
                                         fontSize: 13,
                                       ),
                                     ),
@@ -127,9 +144,8 @@ class Description extends StatelessWidget {
                                       text: 'Azamgarh',
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
-                                        fontFamily: "LexendDeca",
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 15,
                                       ),
                                     ),
                                   ],
@@ -155,7 +171,6 @@ class Description extends StatelessWidget {
                                 'POSHAN JAGRUKTA ABHIYAAN started by central goverment and Association',
                             style: TextStyle(
                               color: AppColors.secondaryColor,
-                              fontFamily: "LexendDeca",
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),
@@ -230,7 +245,7 @@ class Description extends StatelessWidget {
                                       fontSize: 14),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Stack(children: [
                                   Container(
@@ -257,11 +272,15 @@ class Description extends StatelessWidget {
                                           Text(
                                             "23",
                                             style: TextStyle(
-                                              fontSize: 35,
+                                              fontSize: 25,
                                             ),
                                           ),
                                           Text(
                                             "Oct 2022",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -316,7 +335,7 @@ class Description extends StatelessWidget {
                                       fontSize: 14),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Stack(children: [
                                   Container(
@@ -343,11 +362,15 @@ class Description extends StatelessWidget {
                                           Text(
                                             "23",
                                             style: TextStyle(
-                                              fontSize: 35,
+                                              fontSize: 25,
                                             ),
                                           ),
                                           Text(
                                             "Oct 2022",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -389,7 +412,7 @@ class Description extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 40),
                         // color: AppColors.white,
                         width: Get.width,
-                        height: 70,
+                        height: 50,
                         child: Center(
                           child: InkWell(
                             onTap: () {
@@ -414,7 +437,7 @@ class Description extends StatelessWidget {
                       vertical: 20,
                     ),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                       color: AppColors.accentColor,
                     ),
                     child: Column(
@@ -424,16 +447,17 @@ class Description extends StatelessWidget {
                           width: Get.width - 90,
                           margin: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: AppColors.accentTextColor,
-                          ),
+                              borderRadius: BorderRadius.circular(30),
+                              // color: AppColors.accentTextColor,
+                              color: Colors.white),
                           child: TextButton(
                             onPressed: () {},
                             child: const Text(
                               "Register Now",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: AppColors.accentColor,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
@@ -447,10 +471,10 @@ class Description extends StatelessWidget {
                           child: const Text(
                             "About Event",
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 // fontFamily: 'LexendDeca',
                                 // letterSpacing: 0.5,
-                                wordSpacing: 2,
+                                wordSpacing: 1,
                                 color: AppColors.accentTextColor,
                                 fontSize: 17),
                           ),
@@ -459,18 +483,23 @@ class Description extends StatelessWidget {
                           height: 10,
                         ),
                         Container(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
+                            // color: Colors.white
                             borderRadius: BorderRadius.circular(10),
-                            border:
-                                Border.all(color: AppColors.accentTextColor),
+                            border: Border.all(
+                              color: AppColors.accentTextColor,
+                            ),
                           ),
                           child: const Text(
                             "POSHAN Abhiyaan, strives to induce behavioural change through nutrition centric Jan Andolans in the form of Poshan Pakhwadas, Poshan Maahs and Community Based Events (CBEc) through involvement of Panchayati Raj Institutions/Villages Organizations/SHGs/volunteers etc. and ensuring wide public participation. States/UTs are carrying out IEC activities on regular basis. The month of September is celebrated as Rashtriya Poshan Maah across the country. The Rashtriya Poshan Maah 2021 witnessed wide participation and enthusiasm from convergent Ministries, States/UTs and field functionaries. Besides, community groups, Panchayati Raj Institutions, staff at Block and District level also participated in the month long activities. The activities were monitored online, in real time using the POSHAN Abhiyaan Jan Andolan Dashboard, that provided for data entry at National, State, District and Block levels.",
                             // textAlign: TextAlign.justify,
+                            textAlign: TextAlign.justify,
                             style: TextStyle(
-                              fontSize: 16,
-                            ),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0,
+                                wordSpacing: 1),
                           ),
                         ),
                       ],

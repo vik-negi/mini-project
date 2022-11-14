@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class TrendingPostCard extends StatelessWidget {
-  final title;
-  final postedDate;
-  final index;
+  final String title;
+  final String postedDate;
+  final int index;
   const TrendingPostCard(
       {super.key,
       required this.title,
@@ -59,11 +59,10 @@ class TrendingPostCard extends StatelessWidget {
                         child: Text(
                           title,
                           style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'LexendDeca',
-                              // color: HexColor('#656565'),
-                              color: AppColors.primaryColor,
-                              fontSize: 14),
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primaryColor,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -76,9 +75,7 @@ class TrendingPostCard extends StatelessWidget {
                           Text(
                             "Posted on $postedDate",
                             style: TextStyle(
-                                fontFamily: 'LexendDeca',
-                                color: HexColor('#656565'),
-                                fontSize: 11),
+                                color: HexColor('#656565'), fontSize: 11),
                           ),
                           const SizedBox(width: 30),
                           Row(
@@ -98,9 +95,7 @@ class TrendingPostCard extends StatelessWidget {
                               Text(
                                 "24K",
                                 style: TextStyle(
-                                    fontFamily: 'LexendDeca',
-                                    color: HexColor('#656565'),
-                                    fontSize: 15),
+                                    color: HexColor('#656565'), fontSize: 15),
                               ),
                               const SizedBox(
                                 width: 15,

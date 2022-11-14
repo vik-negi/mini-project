@@ -6,7 +6,7 @@ import 'package:evika/views/signin.dart';
 import 'package:evika/views/splash_screen.dart';
 import 'package:evika/views/trending_view/tranding.dart';
 import 'package:flutter/material.dart';
-import 'package:evika/views/feed.dart';
+import 'package:evika/views/feed/feed.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -23,6 +23,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       getPages: AppRotutes.pages,
       // home: SplashScreen(),
+      theme: ThemeData(
+        fontFamily: "Poppins",
+      ),
       initialRoute: AppRotutes.splashScreen,
     );
   }
@@ -46,7 +49,7 @@ class ScreenNavigate extends StatelessWidget {
         bottomNavigationBar: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
             navbarItem(icon: Icons.home, label: "Home"),
-            navbarItem(icon: Icons.trending_up_outlined, label: "Tranding"),
+            navbarItem(icon: Icons.trending_up_outlined, label: "Trending"),
             navbarItem(icon: Icons.add, label: "Post"),
             navbarItem(icon: Icons.account_box, label: "Accounts"),
           ],

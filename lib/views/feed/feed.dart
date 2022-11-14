@@ -25,7 +25,7 @@ class FeedView extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                Get.to(Chats());
+                // Get.to(Chats());
               },
               icon: Icon(Icons.message),
             ),
@@ -84,8 +84,8 @@ class FeedView extends StatelessWidget {
                           )
                         : vm.isErrorOnFetchingData.value
                             ? Center(
-                                child: Container(
-                                height: 90,
+                                child: SizedBox(
+                                height: 100,
                                 child: Column(
                                   children: [
                                     const Text(
@@ -118,7 +118,12 @@ class FeedView extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 8.0, horizontal: 16),
-                                        child: Text("Try again"),
+                                        child: Text(
+                                          "Try again",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
                                       ),
                                     )
                                   ],
