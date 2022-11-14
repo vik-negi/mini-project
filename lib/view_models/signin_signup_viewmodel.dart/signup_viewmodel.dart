@@ -55,6 +55,10 @@ class SignupVM extends GetxController {
     update();
   }
 
+  bool isNextClicked = false;
+  List<String> userType = ['Individual', 'Organization'];
+  String? selectedUserType;
+
   Future<Map?> userSignup(
       String name,
       String username,

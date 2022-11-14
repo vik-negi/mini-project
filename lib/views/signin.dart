@@ -1,3 +1,4 @@
+import 'package:evika/auth/signup.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
@@ -252,7 +253,8 @@ class SigninPage extends StatelessWidget {
                                       decoration: TextDecoration.underline),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      Get.to(() => SignUpFrom());
+                                      Get.to(() => RegisterPage());
+                                      // SignUpFrom());
                                     },
                                 ),
                               ],

@@ -1,4 +1,4 @@
-import 'package:evika/views/user_Chat_page.dart';
+import 'package:evika/views/chat_view/user_Chat_page.dart';
 import 'package:flutter/material.dart'; // import 'package:whatsapp/pages/camera.dart';
 
 class MoreOptionsToSend extends StatelessWidget {

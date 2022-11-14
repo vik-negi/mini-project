@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 class IndividualUserDetails extends StatefulWidget {
   const IndividualUserDetails({
     Key? key,
-    required this.userChatModel,
   }) : super(key: key);
-  final UserChatModel userChatModel;
 
   @override
   State<IndividualUserDetails> createState() => _IndividualUserDetailsState();
@@ -47,12 +45,13 @@ class _IndividualUserDetailsState extends State<IndividualUserDetails> {
             leadingWidth: 75,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: CircularAvatarWidget(
-                userChatModel: widget.userChatModel,
-                radiusOfAvatar: 50,
-                isChatPage: true,
-                isContactPage: false,
-              ),
+              title: Text("uju"),
+              // CircularAvatarWidget(
+              //   userChatModel: widget.userChatModel,
+              //   radiusOfAvatar: 50,
+              //   isChatPage: true,
+              //   isContactPage: false,
+              // ),
             ),
             leading: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,7 +93,7 @@ class _IndividualUserDetailsState extends State<IndividualUserDetails> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
-                    widget.userChatModel.name,
+                    "widget.userChatModel.name",
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w400,

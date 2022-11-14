@@ -48,6 +48,16 @@ class SigninVM extends GetxController {
     print(response);
     if (response!["status"] == "success") {
       await sharedPreferences.setString("token", response["token"]);
+      await sharedPreferences.setString("userId", response["data"]["_id"]);
+      await sharedPreferences.setString(
+          "username", response["data"]["username"]);
+      await sharedPreferences.setString("name", response["data"]["name"]);
+      await sharedPreferences.setString("email", response["data"]["email"]);
+      await sharedPreferences.setString("mobile", response["data"]["mobile"]);
+      await sharedPreferences.setBool(
+          "isVerified", response["data"]["isVerified"]);
+      await sharedPreferences.setString(
+          "accountType", response["data"]["accountType"]);
       await sharedPreferences.setBool("isLoggedIn", true);
       await storage.write(key: "evikaToken", value: response["token"]);
       String userData = jsonEncode(response);
