@@ -1,9 +1,9 @@
+import 'package:evika/appTheme.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
 import 'package:evika/views/create_post.dart';
 import 'package:evika/views/profile.dart';
 import 'package:evika/views/signin.dart';
-import 'package:evika/views/splash_screen.dart';
 import 'package:evika/views/trending_view/tranding.dart';
 import 'package:flutter/material.dart';
 import 'package:evika/views/feed/feed.dart';
@@ -21,6 +21,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      darkTheme: darkThemeData(context),
+      // theme: lightThemeData(context),
+      // themeMode: ThemeMode.dark,
+      // themeMode: ThemeMode.light,
       getPages: AppRotutes.pages,
       // home: SplashScreen(),
       theme: ThemeData(

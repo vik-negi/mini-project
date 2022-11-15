@@ -167,8 +167,9 @@ class UserData {
       password: map['password'],
       id: map['id'],
       jti: map['jti'] != null ? map['jti'] as String : null,
-      profileImage:
-          map['profileImage'] != null ? map['profileImage'] as String : null,
+      profileImage: map['profileImage'] != null
+          ? map['profileImage']["url"] as String
+          : null,
       profileCreatedAt: map['profileCreatedAt'] != null
           ? map['profileCreatedAt'] as String
           : null,
