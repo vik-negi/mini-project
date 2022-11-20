@@ -5,11 +5,14 @@ import 'package:evika/views/create_post.dart';
 import 'package:evika/views/profile.dart';
 import 'package:evika/views/signin.dart';
 import 'package:evika/views/trending_view/tranding.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:evika/views/feed/feed.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

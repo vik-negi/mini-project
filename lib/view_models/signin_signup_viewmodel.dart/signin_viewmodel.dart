@@ -22,7 +22,7 @@ class SigninVM extends GetxController {
   }
 
   bool rememberMeBool = false;
-  bool showPasswordBool = false;
+  bool showPasswordBool = true;
   void showPassword() {
     showPasswordBool = !showPasswordBool;
     update();
