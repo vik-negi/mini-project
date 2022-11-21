@@ -3,7 +3,6 @@ import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
 import 'package:evika/views/home.dart';
-import 'package:evika/views/sign_up_from_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -66,79 +65,39 @@ class SigninPage extends StatelessWidget {
                           width: 250,
                         ),
                         SizedBox(
-                          width: 320,
-                          height: 60,
-                          child: TextFormField(
-                            style: const TextStyle(color: Colors.white70),
-                            controller: vm.usernameController,
-                            decoration: InputDecoration(
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide:
-                                        BorderSide(color: HexColor('#224957'))),
-                                fillColor: HexColor('#224957'),
-                                prefixIcon: const Icon(
-                                  Icons.email,
-                                  color: Colors.white70,
-                                ),
-                                hintText: 'Email',
-                                hintStyle: const TextStyle(
-                                  color: Colors.white70,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'LexendDeca',
-                                ),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                          ),
-                        ),
+                            width: 320,
+                            height: 60,
+                            child: TextFormFieldContainer(
+                              isMobileNumber: false,
+                              controller: vm.usernameController,
+                              hintText: "Email",
+                              icon: Icons.email_rounded,
+                              function: () {},
+                            )),
                         const SizedBox(
                           height: 15,
                         ),
                         SizedBox(
-                          width: Get.width - 70,
-                          child: TextFormField(
-                              style: const TextStyle(color: Colors.white70),
-                              obscureText: vm.showPasswordBool ? false : true,
+                            width: Get.width - 70,
+                            child: TextFormFieldContainer(
+                              isMobileNumber: false,
                               controller: vm.passwordController,
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: HexColor('#224957'),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(
-                                          color: HexColor('#224957'))),
-                                  prefixIcon: const Icon(
-                                    Icons.lock,
-                                    color: Colors.white70,
-                                  ),
-                                  suffixIcon: InkWell(
-                                    onTap: () {
-                                      vm.showPassword();
-                                    },
-                                    child: Icon(
-                                      vm.showPasswordBool
-                                          ? Icons.visibility_off
-                                          : Icons.visibility,
-                                      color: Colors.white70,
-                                    ),
-                                  ),
-                                  hintText: 'Password',
-                                  hintStyle: const TextStyle(
-                                      color: Colors.white70,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'LexendDeca'),
-                                  focusColor: Colors.red,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              validator: (val) {
-                                if (val!.length < 6) {
-                                  return "Password must be at least 6 characters";
-                                } else {
-                                  return null;
-                                }
-                              }),
-                        ),
+                              icon: Icons.lock,
+                              function: () {},
+                              hintText: "Password",
+                              obscure: vm.showPasswordBool,
+                              suffix: InkWell(
+                                onTap: () {
+                                  vm.showPassword();
+                                },
+                                child: Icon(
+                                  vm.showPasswordBool
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            )),
                         const SizedBox(
                           height: 5.5,
                         ),

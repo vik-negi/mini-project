@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 
 class ProfileVM extends GetxController {
   var userData = UserData(
-      name: "Rohit Gupta",
-      email: "rohitgupta111abcd@gmail.com",
-      username: "@rohitcodr",
+      name: "Yashwant Sahu",
+      email: "mlp.yashvantgupta@gmail.com",
+      username: "@yash5626",
       password: "somepassword",
       id: "21",
       bio: "I am a Flutter Developer",
@@ -17,6 +17,7 @@ class ProfileVM extends GetxController {
       isMobileVerified: true,
       mobile: "6306406076",
       gender: "male",
+      location: [],
       follower: [
         1,
         1,
