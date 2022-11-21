@@ -20,4 +20,6 @@ abstract class ChatApiInterface {
   Future<Map<String, dynamic>>? sendMessageToUser(
       String receiverUserId, String message);
   Future<Map<String, dynamic>>? getAllChatUsers();
+  Future<Map<String, dynamic>>? deleteChat(String chatId);
+  Future<Map<String, dynamic>>? functionality(String chatId, Map body);
 }

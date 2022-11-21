@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:evika/models/chat/chat_page_model.dart';
 import 'package:evika/repositories/chat_repo/chat_repo_imp.dart';
 import 'package:evika/views/chat_view/user_Chat_page.dart';
 import 'package:flutter/material.dart';
@@ -56,9 +57,13 @@ class UserChatVM extends GetxController {
   ];
 
   List<MessageModel> messages = [];
+  bool showBottomNavigation = false;
 
   bool showEnojiOption = false;
+  String selectedChatId = "";
+  int? selectedIndex;
   bool sendButton = false;
+  String frowardedText = "";
   final ScrollController scrollController = ScrollController();
   FocusNode focusNode = FocusNode();
   final TextEditingController txtController = TextEditingController();
@@ -164,12 +169,52 @@ class UserChatVM extends GetxController {
     update();
   }
 
-  void sendMessageToUser() async {
+  void deleteChat(String chatId) async {
+    individualchats.removeWhere((element) => element.id == chatId);
+    Map<String, dynamic>? deleteMessage = await chatRepoImp.deleteChat(chatId);
+    update();
+    print("chat list : $deleteMessage");
+    if (deleteMessage == {} || deleteMessage["status"] == "failed") {
+      Get.snackbar("Message Deleted",
+          deleteMessage["message"] ?? "Error in Deleting Message");
+    }
+    if (deleteMessage["status"] == "success") {
+      Get.snackbar("Success", "Message Deleted");
+    }
+    getUserChat();
+    update();
+  }
+
+  void functionality(String chatId, String type, String trueFalse) async {
+    Map body = {type: trueFalse};
+    Map<String, dynamic>? deleteMessage =
+        await chatRepoImp.functionality(chatId, body);
+    update();
+    print("chat list : $deleteMessage");
+    if (deleteMessage == {} || deleteMessage["status"] == "failed") {
+      Get.snackbar("Message Deleted",
+          deleteMessage["message"] ?? "Error in Deleting Message");
+    }
+    if (deleteMessage["status"] == "success") {
+      Get.snackbar("Success", "Message Deleted");
+    }
+    getUserChat();
+    update();
+  }
+
+  void forwardToAll(List<ChatUsers> forwardedTo) async {
+    for (var element in forwardedTo) {
+      sendMessageToUser(receiverId: element.receiverId);
+    }
+  }
+
+  void sendMessageToUser({String? receiverId}) async {
     ChatModel chatModel = ChatModel(
         senderUserId: senderUserId!,
-        receiverUserId: Get.arguments["receiverUserId"],
+        receiverUserId:
+            receiverId != null ? receiverId : Get.arguments["receiverUserId"],
         message: txtController.text,
-        createdAt: DateTime.now().toString(),
+        createdAt: DateTime.now(),
         id: senderUserId!,
         isDeleted: false,
         isPinned: false,
@@ -181,10 +226,11 @@ class UserChatVM extends GetxController {
         sendBy: "user");
     print("lllllllllllllll");
     print(individualchats.length);
-    individualchats.add(chatModel);
+    receiverId == null ? individualchats.add(chatModel) : null;
     update();
-    String receiverUserId = Get.arguments["receiverUserId"];
-    String message = txtController.text;
+    String receiverUserId =
+        receiverId != null ? receiverId : Get.arguments["receiverUserId"];
+    String message = receiverId != null ? frowardedText : txtController.text;
     txtController.clear();
     print("message : $message");
     print("receiverUserId : $receiverUserId");
@@ -202,6 +248,7 @@ class UserChatVM extends GetxController {
     } else {
       Get.snackbar("error", "Message not sent");
     }
+    receiverId = null;
     update();
   }
 
@@ -214,5 +261,24 @@ class UserChatVM extends GetxController {
     socket.disconnect();
     socket.dispose();
     super.dispose();
+  }
+
+  String convertDateTime(DateTime dateTime) {
+    print("ttttttttttttttt");
+    print("dateTime : $dateTime");
+    dateTime = dateTime.toUtc().toLocal();
+    String date = dateTime.toString().substring(8, 10);
+    String month = dateTime.toString().substring(5, 7);
+    String year = dateTime.toString().substring(2, 4);
+    String time = dateTime.toString().substring(11, 16);
+    // function to convert time in 12 hours format
+    String hour = time.substring(0, 2);
+    String min = time.substring(3, 5);
+    String ampm = "AM";
+    if (int.parse(hour) > 12) {
+      hour = (int.parse(hour) - 12).toString();
+      ampm = "PM";
+    }
+    return "$hour:$min $ampm";
   }
 }

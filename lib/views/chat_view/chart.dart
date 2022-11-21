@@ -2,6 +2,7 @@ import 'package:evika/data/user_chat.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/utils/widgets/custom_user_chat.dart';
 import 'package:evika/view_models/user_chat_home_vm.dart';
+import 'package:evika/views/chat_view/forward_message_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,7 +42,9 @@ class _ChatsState extends State<Chats> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).colorScheme.primary,
           child: const Icon(Icons.message),
-          onPressed: () {},
+          onPressed: () {
+            // Get.to(() => ForwardView());
+          },
         ),
       );
     });

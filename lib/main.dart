@@ -22,14 +22,14 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: darkThemeData(context),
-      // theme: lightThemeData(context),
+      theme: lightThemeData(context),
       // themeMode: ThemeMode.dark,
       // themeMode: ThemeMode.light,
       getPages: AppRotutes.pages,
       // home: SplashScreen(),
-      theme: ThemeData(
-        fontFamily: "Poppins",
-      ),
+      // theme: ThemeData(
+      //   fontFamily: "Poppins",
+      // ),
       initialRoute: AppRotutes.splashScreen,
     );
   }

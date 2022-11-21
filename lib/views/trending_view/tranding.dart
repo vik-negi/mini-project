@@ -1,3 +1,4 @@
+import 'package:evika/utils/widgets/followWidget.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/views/trending_view/trending_post_card.dart';
 import 'package:flutter/gestures.dart';
@@ -35,6 +36,7 @@ class _TrandingPageState extends State<TrandingPage> {
           return Future(() => null);
         },
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
             child:
@@ -265,7 +267,8 @@ class _TrandingPageState extends State<TrandingPage> {
               ),
               const SizedBox(
                 height: 30,
-              )
+              ),
+              FollowWidget()
             ]),
           ),
         ),

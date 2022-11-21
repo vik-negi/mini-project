@@ -73,7 +73,6 @@ flutter:
   assets:
     - assets/
     - assets/placeholderimageloading.gif
-    - assets/img/profile/dp-4.jpg
     - assets/img/profile/
     - assets/img/
     - assets/svgs/
