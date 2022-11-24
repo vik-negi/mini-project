@@ -56,7 +56,7 @@ class PostData {
   final String? eventCategory;
   final String? eventEndAt;
   final String? eventId;
-  final String? eventLocation;
+  final List<double>? eventLocation;
   final String? eventStartAt;
   final List<dynamic>? image;
   final int? likes;
@@ -123,9 +123,7 @@ class PostData {
       eventEndAt:
           map['eventEndAt'] != null ? map['eventEndAt'] as String : "null",
       eventId: map['eventId'] != null ? map['eventId'] as String : "null",
-      eventLocation: map['eventLocation'] != null
-          ? map['eventLocation'] as String
-          : "null",
+      eventLocation: List<double>.from(map['eventLocation']),
       eventStartAt:
           map['eventStartAt'] != null ? map['eventStartAt'] as String : "null",
       image: map['image'] != null

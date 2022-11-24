@@ -1,4 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
-    "cmake.sourceDirectory": "${workspaceFolder}/linux"
+    "cmake.sourceDirectory": "${workspaceFolder}/linux",
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
+    ]
 }

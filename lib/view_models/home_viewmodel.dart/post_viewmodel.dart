@@ -9,6 +9,7 @@ import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -22,6 +23,10 @@ class PostVM extends GetxController {
   late final Future? futurePosts;
   RxBool isPostFetched = false.obs;
   RxBool isErrorOnFetchingData = false.obs;
+  void getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    print("${sharedPreferences.getString("token")!}");
+  }
 
   logout() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -77,6 +82,24 @@ class PostVM extends GetxController {
     futurePosts = getAllPost();
   }
 
+  var first1;
+  List<double> coordinatesPoints = [];
+
+  void _findPositionByAddress() async {
+    coordinatesPoints = [];
+    //changing entered user address to coordinates
+    final query = "${locationController.text}";
+    var address1 = await Geocoder.local.findAddressesFromQuery(query);
+    first1 = address1.first;
+    coordinatesPoints.add(first1.coordinates.longitude);
+    coordinatesPoints.add(first1.coordinates.latitude);
+    update();
+    debugPrint(coordinatesPoints.toString());
+    debugPrint("coordinates : ${first1.coordinates}");
+  }
+
+  get finCoordinates => _findPositionByAddress();
+
   PostApiServices postApiServices = PostApiServices();
 
   Future<List<PostData>?> getAllPost() async {
@@ -87,7 +110,6 @@ class PostVM extends GetxController {
     Map<dynamic, dynamic>? data = await postRepoImp.getAllPost();
     print("ddddddddddd");
     print(data);
-
     try {
       if (data != null) {
         List<dynamic> list = data['data'];
@@ -150,7 +172,7 @@ class PostVM extends GetxController {
           "POST", Uri.parse("$baseUrl/api/user/create-post/"));
       request.fields["title"] = titleController.text;
       request.fields["description"] = descriptionController.text;
-      request.fields["location"] = locationController.text;
+      request.fields["eventLocation"] = coordinatesPoints.toString();
       request.fields["eventDescription"] = eventDescriptionController.text;
       request.fields["eventStartAt"] =
           '${startDateController.text} ${startTimeController.text}';

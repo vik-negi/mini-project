@@ -4,6 +4,7 @@ import 'package:evika/utils/colors.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:get/get.dart';
 // import 'package:get/get.dart';
 
@@ -18,6 +19,7 @@ class CreatePostPage extends StatefulWidget {
 
 class _CreatePostPageState extends State<CreatePostPage> {
   // Future<Map<dynamic, dynamic>?> createPost() async {
+  PostVM signupvm = Get.put(PostVM());
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +98,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           TextFormField(
                             controller: vm.locationController,
                             decoration: const InputDecoration(
+                              hintText:
+                                  'Enter The Area Location For Which Event Is Organised',
                               labelText: 'Location',
                             ),
                           ),
@@ -109,6 +113,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               TextButton(
                                 onPressed: () {
                                   vm.selectDateTime(context, "start");
+                                  vm.finCoordinates();
                                 },
                                 child: const Text('Select Date'),
                               ),

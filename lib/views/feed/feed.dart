@@ -31,6 +31,12 @@ class FeedView extends StatelessWidget {
               icon: Icon(Icons.message),
             ),
             IconButton(
+              onPressed: () {
+                vm.getToken();
+              },
+              icon: Icon(Icons.delete),
+            ),
+            IconButton(
               icon: const Icon(Icons.logout),
               onPressed: () {
                 showDialog(
