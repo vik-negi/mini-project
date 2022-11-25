@@ -34,6 +34,7 @@
     </intent>
     </queries>
    <application
+        android:usesCleartextTraffic="true"
         android:label="frontend"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

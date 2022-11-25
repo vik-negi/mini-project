@@ -1,6 +1,8 @@
+import 'package:evika/auth/signup.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
+import 'package:evika/views/demo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -87,6 +89,21 @@ class _HomePageState extends State<HomePage> {
                               ),
                               const SizedBox(
                                 height: 10,
+                              ),
+                              CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.white,
+                                child: IconButton(
+                                  onPressed: () async {
+                                    commonVM.getComments(vm.postList[i].id!);
+                                    bottomModelWidget(context, vm);
+                                  },
+                                  icon: Icon(
+                                    Icons.comment,
+                                    color: Colors.grey.shade600,
+                                    size: 30,
+                                  ),
+                                ),
                               ),
                               CircleAvatar(
                                 radius: 25,
@@ -248,6 +265,133 @@ class _HomePageState extends State<HomePage> {
             });
       });
     });
+  }
+
+  Future<dynamic> bottomModelWidget(BuildContext context, PostVM vm) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return
+              // SizedBox.expand(
+              // child:
+              GetBuilder<CommonVM>(builder: (CommonVM) {
+            return DraggableScrollableSheet(
+              builder:
+                  (BuildContext context, ScrollController scrollController) {
+                return GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
+                  child: Container(
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      child: !commonVM.isLoading
+                          ? ListView.builder(
+                              controller: scrollController,
+                              itemCount: 5,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(
+                                  children: [
+                                    index == 0
+                                        ? Column(
+                                            children: [
+                                              const SizedBox(
+                                                height: 30,
+                                              ),
+                                              TextFormFieldContainer(
+                                                  width: Get.width - 20,
+                                                  icon: Icons.add_reaction,
+                                                  hintText: "Add Comment",
+                                                  function: () {},
+                                                  controller:
+                                                      vm.commentController,
+                                                  isMobileNumber: false),
+                                              const SizedBox(
+                                                height: 15,
+                                              ),
+                                            ],
+                                          )
+                                        : const SizedBox(),
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 10),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const CircleAvatar(
+                                              radius: 25,
+                                              backgroundImage: NetworkImage(
+                                                  'https://www.w3schools.com/howto/img_avatar.png'),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Container(
+                                                width: Get.width - 80,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      "Vikram Negi",
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                    RichText(
+                                                        text: const TextSpan(
+                                                      text:
+                                                          "Haa Haa haa this is too good and i am loving it, believed me..Haa Haa haa this is too good and i am loving it",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    )),
+                                                    Row(
+                                                      children: [
+                                                        TextButton.icon(
+                                                            label: const Text(
+                                                                "5k"),
+                                                            onPressed: () {},
+                                                            icon: Icon(
+                                                              Icons.thumb_up,
+                                                              color: Colors.grey
+                                                                  .shade600,
+                                                              size: 20,
+                                                            )),
+                                                        TextButton(
+                                                            onPressed: () {},
+                                                            child: const Text(
+                                                                "Reply")),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ))
+                                          ]),
+                                    ),
+                                  ],
+                                );
+                              },
+                            )
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            )),
+                );
+              },
+              // ),
+            );
+          });
+        });
   }
 }
 
