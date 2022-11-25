@@ -8,13 +8,11 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:vibration/vibration.dart';
 
 class Description extends StatelessWidget {
-  String tag;
-  Description({super.key, required this.tag});
+  final String tag;
+  const Description({super.key, required this.tag});
 
   @override
   Widget build(BuildContext context) {
-    DescriptionVM vm = Get.put(DescriptionVM());
-
     return GetBuilder<DescriptionVM>(
       builder: (vm) => Scaffold(
         appBar: AppBar(
