@@ -1,7 +1,16 @@
 import 'package:evika/models/user/user_model.dart';
+// import 'package:evika/utils/sharedPreferenced.dart';
+// import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:share_plus/share_plus.dart';
 
 class ProfileVM extends GetxController {
+  logout() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
+  }
+
   var userData = UserData(
       name: "Rohit Gupta",
       email: "rohitgupta111abcd@gmail.com",

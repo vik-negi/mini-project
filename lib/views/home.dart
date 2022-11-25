@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: GetBuilder<SigninVM>(builder: (vm) {
         return Center(
-          child: Text(vm.userModel.data?.email.toString() ?? "hii"),
+          child: Text(vm.userModel?.data?.email.toString() ?? "hii"),
         );
       }),
     );

@@ -2,7 +2,7 @@ import 'package:evika/appTheme.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
 import 'package:evika/views/create_post.dart';
-import 'package:evika/views/profile.dart';
+import 'package:evika/views/profile/profile.dart';
 import 'package:evika/views/signin.dart';
 import 'package:evika/views/trending_view/tranding.dart';
 import 'package:flutter/material.dart';

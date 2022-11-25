@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 // const String baseUrl = 'http://192.168.100.112:8000';
 const String baseUrl = 'http://192.168.43.65:8000'; //mobile hotspot
 // const String baseUrl = 'http://172.11.10.136:8000';
+// const String baseUrl = "http://192.168.43.29:8000"; // vikram
 // const String baseUrl = 'http://172.11.11.137:5000';
 
 const mlBaseUrl = "https://evika-ml.herokuapp.com";

@@ -23,11 +23,9 @@ class ChatApiServices extends ChatApiInterface {
       return {};
     }
     Map<String, dynamic> res = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      if (res.isNotEmpty) {
-        return res;
-      }
-    }
+    // if (response.statusCode == 200 && res.isNotEmpty) {
+    //   return res;
+    // }
     return res;
   }
 

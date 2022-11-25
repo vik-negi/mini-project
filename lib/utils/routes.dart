@@ -2,7 +2,7 @@ import 'package:evika/main.dart';
 import 'package:evika/utils/bindings.dart';
 import 'package:evika/views/create_post.dart';
 import 'package:evika/views/description/description.dart';
-import 'package:evika/views/profile.dart';
+import 'package:evika/views/profile/profile.dart';
 import 'package:evika/views/feed/feed.dart';
 import 'package:evika/views/sign_up_from_view.dart';
 import 'package:evika/views/signin.dart';

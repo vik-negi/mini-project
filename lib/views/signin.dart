@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:evika/auth/signup.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
@@ -16,7 +18,7 @@ class SigninPage extends StatelessWidget {
 
   SigninVM signinvm = Get.put(SigninVM());
 
-  Map<dynamic, dynamic>? response = {};
+  // Map<dynamic, dynamic>? response = {};
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +144,7 @@ class SigninPage extends StatelessWidget {
                         const SizedBox(
                           height: 5.5,
                         ),
-                        Container(
+                        SizedBox(
                           width: Get.width - 70,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,57 +212,47 @@ class SigninPage extends StatelessWidget {
                                         fontSize: 20),
                                   ),
                             onPressed: () async {
+                              debugPrint("Login Button CLicked");
                               if (_formKey.currentState!.validate()) {
-                                vm.isSigninClickedBool = true;
-                                vm.update();
-                                Map data = {
-                                  "username": vm.usernameController.text,
-                                  "password": vm.passwordController.text
-                                };
-                                print(vm.usernameController.text);
-                                print(vm.passwordController.text);
-                                response = (await vm.userSignin(
-                                    vm.usernameController.text,
-                                    vm.passwordController.text))!;
-                              }
-                              print(response);
-                              if (response != null) {
-                                vm.isSigninClickedBool = false;
-                                if (response!["status"] == "success") {
-                                  Get.offAllNamed(AppRotutes.screenNavigator);
-                                }
+                                vm.userSignin();
                               }
                             },
                           ),
                         ),
-                        Padding(
+                        Container(
+                          width: Get.width,
                           padding: const EdgeInsets.only(
                             top: 7,
                           ),
-                          child: Text.rich(
-                            TextSpan(
-                              text: "Don't have an account? ",
-                              style: const TextStyle(
-                                  color: Colors.black,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Don't Have an account? ",
+                                style: const TextStyle(
                                   fontSize: 14,
-                                  fontFamily: 'LexendDeca'),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: "Register Here",
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: 'LexendDeca',
-                                      decoration: TextDecoration.underline),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Get.to(() => RegisterPage());
-                                      // SignUpFrom());
-                                    },
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500,
                                 ),
-                              ],
-                            ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.toNamed(AppRotutes.signup);
+                                },
+                                child: Text(
+                                  "Register here",
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w700,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

@@ -1,5 +1,3 @@
-import 'package:evika/data/user_chat.dart';
-import 'package:evika/models/user/user_model.dart';
 import 'package:evika/utils/widgets/custom_user_chat.dart';
 import 'package:evika/view_models/user_chat_home_vm.dart';
 import 'package:flutter/material.dart';
