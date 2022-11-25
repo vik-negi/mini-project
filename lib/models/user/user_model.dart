@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
@@ -55,7 +56,7 @@ class UserData {
   String email;
   String? mobile;
   String username;
-  String? location;
+  List<double> location;
   String password;
   String id;
   String? jti;
@@ -88,7 +89,7 @@ class UserData {
     required this.email,
     this.mobile,
     required this.username,
-    this.location,
+    required this.location,
     required this.password,
     required this.id,
     this.jti,
@@ -163,7 +164,7 @@ class UserData {
       email: map['email'],
       mobile: map['mobile'] != null ? map['mobile'] as String : null,
       username: map['username'],
-      location: map['location'] != null ? map['location'] as String : null,
+      location: List<double>.from(map['location']),
       password: map['password'],
       id: map['id'],
       jti: map['jti'] != null ? map['jti'] as String : null,

@@ -65,7 +65,7 @@ class PostData {
   final String? postLink;
   final List<dynamic>? tags;
   // final List<dynamic>? likedUsers = [];
-  // final List<dynamic>? comments = [];
+  // final List<Comment>? comments;
   final String? title;
   final String? updatedAt;
   final String? username;
@@ -155,4 +155,100 @@ class PostData {
 List<PostData> parsePhotos(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
   return parsed.map<PostData>((json) => PostData.fromJson(json)).toList();
+}
+
+class Comment {
+  final String username;
+  final String userImage;
+  final String name;
+  final String id;
+  bool isEdited;
+  final String text;
+  final List<String>? images;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  Comment({
+    required this.username,
+    required this.id,
+    required this.userImage,
+    required this.name,
+    required this.isEdited,
+    required this.text,
+    this.images,
+    required this.createdAt,
+    this.updatedAt,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'username': username,
+      'isEdited': isEdited,
+      'text': text,
+      'images': images,
+      'createdAt': createdAt.millisecondsSinceEpoch,
+      'updatedAt': updatedAt!.millisecondsSinceEpoch,
+      'id': id,
+      'name': name,
+      'userImage': userImage,
+    };
+  }
+
+  factory Comment.fromMap(Map<String, dynamic> map) {
+    return Comment(
+      username: map['user'] as String,
+      isEdited: map['isEdited'] as bool,
+      text: map['text'] as String,
+      images: List<String>.from((map['images'] as List<String>)),
+      createdAt: DateTime.parse(map['createdAt']),
+      updatedAt: DateTime.parse(map['updatedAt']),
+      id: map['id'] as String,
+      name: map['name'] as String,
+      userImage: map['userImage'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Comment.fromJson(String source) =>
+      Comment.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+class Reply {
+  final String user;
+  bool isEdited;
+  final String text;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  Reply({
+    required this.user,
+    required this.isEdited,
+    required this.text,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'user': user,
+      'isEdited': isEdited,
+      'text': text,
+      'createdAt': createdAt.millisecondsSinceEpoch,
+      'updatedAt': updatedAt.millisecondsSinceEpoch,
+    };
+  }
+
+  factory Reply.fromMap(Map<String, dynamic> map) {
+    return Reply(
+      user: map['user'] as String,
+      isEdited: map['isEdited'] as bool,
+      text: map['text'] as String,
+      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt'] as int),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Reply.fromJson(String source) =>
+      Reply.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -29,32 +29,34 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  blur: ^3.1.0
+  carousel_slider: null
   cupertino_icons: ^1.0.2
+  dio: ^4.0.6
+  emoji_picker_flutter: ^1.3.0
+  file_picker: ^5.2.0+1
+  firebase_auth: ^4.1.3
+  firebase_core: ^2.3.0
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  http: ^0.13.5
-  get: ^4.6.5
-  image_picker: ^0.8.5+3
-  permission_handler: ^10.0.1
-  shared_preferences: ^2.0.15
-  geolocator: ^9.0.2
-  carousel_slider:
-  hexcolor: ^2.0.7
-  splashscreen: ^1.3.5
   flutter_secure_storage: ^6.0.0
-  file_picker: ^5.2.0+1
-  dio: ^4.0.6
-  vibration: ^1.7.6
-  share_plus: ^6.0.1
   flutter_svg: ^1.1.1+1
-  emoji_picker_flutter: ^1.3.0
+  geocoder: ^0.2.1
+  geolocator: ^9.0.2
+  get: ^4.6.5
+  hexcolor: ^2.0.7
+  http: ^0.13.5
+  image_picker: ^0.8.5+3
   intl: ^0.17.0
+  location: ^4.4.0
+  permission_handler: ^10.0.1
+  pinput: ^2.2.16
+  share_plus: ^6.0.1
+  shared_preferences: ^2.0.15
   socket_io_client: ^2.0.0
+  splashscreen: ^1.3.5
+  vibration: ^1.7.6
   web_socket_channel: ^2.2.0
-  blur: ^3.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -73,7 +75,6 @@ flutter:
   assets:
     - assets/
     - assets/placeholderimageloading.gif
-    - assets/img/profile/dp-4.jpg
     - assets/img/profile/
     - assets/img/
     - assets/svgs/
@@ -143,7 +144,6 @@ flutter:
         - asset: assets/fonts/poppins/Poppins-BlackItalic.ttf
           weight: 900
           style: italic
-
           # weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

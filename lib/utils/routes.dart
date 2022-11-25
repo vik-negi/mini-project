@@ -4,7 +4,6 @@ import 'package:evika/views/create_post.dart';
 import 'package:evika/views/description/description.dart';
 import 'package:evika/views/profile/profile.dart';
 import 'package:evika/views/feed/feed.dart';
-import 'package:evika/views/sign_up_from_view.dart';
 import 'package:evika/views/signin.dart';
 import 'package:evika/views/splash_screen.dart';
 import 'package:evika/views/trending_view/tranding.dart';
@@ -24,10 +23,10 @@ class AppRotutes {
 
   static final pages = [
     GetPage(name: AppRotutes.signin, page: () => SigninPage()),
-    GetPage(
-        name: AppRotutes.signup,
-        page: () => SignUpFrom(),
-        binding: SignupBindings()),
+    // GetPage(
+    //     name: AppRotutes.signup,
+    //     page: () => SignUpFrom(),
+    //     binding: SignupBindings()),
     // GetPage(name: AppRotutes.forgotPassword, page: () => ForgotPasswordPage()),
     GetPage(
       name: AppRotutes.screenNavigator,

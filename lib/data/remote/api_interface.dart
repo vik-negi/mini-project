@@ -13,6 +13,7 @@ abstract class PostApiInterface {
 
 abstract class CommoApiInterface {
   Future<List<String>>? userLikedPosts();
+  Future<List>? getComments(String postId);
 }
 
 abstract class ChatApiInterface {
@@ -20,4 +21,6 @@ abstract class ChatApiInterface {
   Future<Map<String, dynamic>>? sendMessageToUser(
       String receiverUserId, String message);
   Future<Map<String, dynamic>>? getAllChatUsers();
+  Future<Map<String, dynamic>>? deleteChat(String chatId);
+  Future<Map<String, dynamic>>? functionality(String chatId, Map body);
 }

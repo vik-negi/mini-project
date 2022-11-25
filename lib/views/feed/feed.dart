@@ -3,6 +3,7 @@
 import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/views/chat_view/chart_view_home.dart';
+import 'package:evika/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:evika/utils/widgets/post_container_widget.dart';
 import 'package:get/get.dart';
@@ -16,19 +17,28 @@ class FeedView extends StatelessWidget {
     return GetBuilder<PostVM>(builder: (vm) {
       return Scaffold(
         appBar: AppBar(
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          // backgroundColor: Colors.transparent,
+          // foregroundColor: Theme.of(context).colorScheme.onPrimary,
+          backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text("Feeds"),
+          title: const Text(
+            "Feeds",
+            style: TextStyle(color: Colors.black),
+          ),
           actions: [
             IconButton(
               onPressed: () {
                 Get.to(ChatHomeView());
               },
-              icon: Icon(Icons.message),
+              icon: Icon(Icons.message, color: Colors.grey.shade800),
             ),
+            // IconButton(
+            //   onPressed: () {
+            //     Get.to(HomePage());
+            //   },
+            //   icon: Icon(Icons.home),
+            // ),
             IconButton(
-              icon: const Icon(Icons.logout),
+              icon: Icon(Icons.logout, color: Colors.grey.shade800),
               onPressed: () {
                 showDialog(
                     context: context,
@@ -64,22 +74,25 @@ class FeedView extends StatelessWidget {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Container(
-              height: Get.height - 100,
+              height: Get.height - 75,
               child: Column(
                 children: [
+                  Suggessions(),
                   SizedBox(
                     height: (vm.isPostFetched.value ||
                             !vm.isErrorOnFetchingData.value)
                         ? Get.height - 150
                         : Get.height - 150,
                     child: vm.isPostFetched.value
-                        ? ListView.builder(
-                            itemCount: vm.postList.length,
-                            // itemCount: 1,
-                            itemBuilder: (context, i) {
-                              return PostContainer(i: i);
-                            },
-                          )
+                        ?
+                        // ListView.builder(
+                        //     itemCount: vm.postList.length,
+                        //     // itemCount: 1,
+                        //     itemBuilder: (context, i) {
+                        //       return PostContainer(i: i);
+                        //     },
+                        //   )
+                        HomePage()
                         : vm.isErrorOnFetchingData.value
                             ? Center(
                                 child: SizedBox(

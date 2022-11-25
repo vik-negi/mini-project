@@ -1,6 +1,8 @@
 import 'package:evika/models/chat/chat_page_model.dart';
 import 'package:evika/models/user/user_chat_model.dart';
 import 'package:evika/models/user/user_model.dart';
+import 'package:evika/view_models/user_chat_home_vm.dart';
+import 'package:evika/view_models/user_chat_viewmodal.dart';
 import 'package:evika/views/chat_view/user_Chat_page.dart';
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
@@ -42,7 +44,7 @@ class CustomUser extends StatelessWidget {
 }
 
 class CustomUserCard extends StatelessWidget {
-  const CustomUserCard({
+  CustomUserCard({
     Key? key,
     required this.isContactPage,
     required this.userChatModel,
@@ -57,90 +59,94 @@ class CustomUserCard extends StatelessWidget {
   final bool isChatPage;
   final FontWeight? fontW;
 
+  UserChatHomeVM vm = Get.find();
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          minVerticalPadding: isContactPage ? 15 : 4,
-          leading: CircularAvatarWidget(
-            userChatModel: userChatModel,
-            radiusOfAvatar: iconSize ?? 25,
-            isChatPage: isChatPage,
-            isContactPage: isContactPage,
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                userChatModel.name,
-                style: TextStyle(
-                  fontWeight: isContactPage ? fontW : FontWeight.w600,
-                  fontSize: 17,
-                ),
-              ),
-              isChatPage
-                  ? Text(
-                      userChatModel.lastMessageTime.isNotEmpty
-                          ? userChatModel.lastMessageTime
-                          : "05:45 PM",
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14.0,
-                      ),
-                    )
-                  : Container(),
-            ],
-          ),
-          subtitle: Container(
-            padding: const EdgeInsets.only(top: 5),
-            child: Row(
+    return GetBuilder<UserChatHomeVM>(builder: (vm) {
+      return Column(
+        children: [
+          ListTile(
+            minVerticalPadding: isContactPage ? 15 : 4,
+            leading: CircularAvatarWidget(
+              userChatModel: userChatModel,
+              radiusOfAvatar: iconSize ?? 25,
+              isChatPage: isChatPage,
+              isContactPage: isContactPage,
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // userChatModel.isgroup
-                //     ? Text(
-                //         "${userModel.name}: ",
-                //         style: const TextStyle(
-                //           fontSize: 16.0,
-                //         ),
-                //       )
-                //     :
-                isChatPage
-                    ? const Icon(
-                        Icons.done_all_rounded,
-                        size: 17,
-                      )
-                    : Container(),
-                const SizedBox(
-                  width: 5,
+                Text(
+                  userChatModel.name,
+                  style: TextStyle(
+                    fontWeight: isContactPage ? fontW : FontWeight.w600,
+                    fontSize: 17,
+                  ),
                 ),
                 isChatPage
                     ? Text(
-                        userChatModel.lastMessage.isNotEmpty
-                            ? userChatModel.lastMessage
-                            : "Hello",
+                        userChatModel.lastMessageTime != null
+                            ? vm.convertDateTime(userChatModel.lastMessageTime)
+                            : "05:45 PM",
                         style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 14.0,
                         ),
                       )
                     : Container(),
-                // isContactPage
-                // ?
-                // userChatModel.status != null
-                //     ? SizedBox(
-                //         width: MediaQuery.of(context).size.width * 0.70,
-                //         child: Text(
-                //           userModel.status!,
-                //           maxLines: 1,
-                //         ))
-                //     : Container()
-                // : Container(),
               ],
             ),
-          ),
-        )
-      ],
-    );
+            subtitle: Container(
+              padding: const EdgeInsets.only(top: 5),
+              child: Row(
+                children: [
+                  // userChatModel.isgroup
+                  //     ? Text(
+                  //         "${userModel.name}: ",
+                  //         style: const TextStyle(
+                  //           fontSize: 16.0,
+                  //         ),
+                  //       )
+                  //     :
+                  isChatPage
+                      ? const Icon(
+                          Icons.done_all_rounded,
+                          size: 17,
+                        )
+                      : Container(),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  isChatPage
+                      ? Text(
+                          userChatModel.lastMessage.isNotEmpty
+                              ? userChatModel.lastMessage
+                              : "Hello",
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14.0,
+                          ),
+                        )
+                      : Container(),
+                  // isContactPage
+                  // ?
+                  // userChatModel.status != null
+                  //     ? SizedBox(
+                  //         width: MediaQuery.of(context).size.width * 0.70,
+                  //         child: Text(
+                  //           userModel.status!,
+                  //           maxLines: 1,
+                  //         ))
+                  //     : Container()
+                  // : Container(),
+                ],
+              ),
+            ),
+          )
+        ],
+      );
+    });
     // Column(
     //   children: [
     //     ListTile(

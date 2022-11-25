@@ -32,4 +32,27 @@ class CommonApiServices extends CommoApiInterface {
     }
     return [];
   }
+
+  @override
+  Future<List>? getComments(String postId) async {
+    String token = await getToken();
+    print("token : $token");
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/user/get-comments/$postId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "authorization": "Bearer $token",
+      },
+    );
+    print("response :::: ${response.body}");
+    if (response.statusCode == 200) {
+      List comments = [];
+      Map<String, dynamic> res = jsonDecode(response.body);
+      comments = res["data"];
+
+      print("get comment : $comments");
+      return comments;
+    }
+    return [];
+  }
 }

@@ -5,7 +5,6 @@ import 'package:evika/data/remote/api_services/api_services.dart';
 import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
-import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +48,7 @@ class PostVM extends GetxController {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController eventDescriptionController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
 
   PostRepoImp postRepoImp = PostRepoImp();
   CommonVM commonVM = Get.put(CommonVM());

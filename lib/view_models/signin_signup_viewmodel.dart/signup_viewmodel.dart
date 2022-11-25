@@ -2,7 +2,9 @@ import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/repositories/login_repo/login_repo_imp.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 
 class SignupVM extends GetxController {
   ApiResponce<Map> response = ApiResponce.loading();
@@ -19,6 +21,10 @@ class SignupVM extends GetxController {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _accountTypeController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  TextEditingController locality1 = TextEditingController();
+  TextEditingController adminArea1 = TextEditingController();
+  TextEditingController postalCode1 = TextEditingController();
 
   TextEditingController get nameController => _nameController;
   TextEditingController get usernameController => _usernameController;
@@ -29,58 +35,104 @@ class SignupVM extends GetxController {
       _confirmPasswordController;
   TextEditingController get accountTypeController => _accountTypeController;
 
-  int get currentStep => _currentStep.value;
-  bool get isSignup => _isSignup.value;
-
-  void onTapped(int step) {
-    _currentStep.value = step;
-    update();
-  }
-
-  void onStepCancel() {
-    if (_currentStep.value > 0) {
-      _currentStep.value = _currentStep.value - 1;
-    } else {
-      _currentStep.value = 0;
-    }
-    update();
-  }
-
-  void onStepContinue() {
-    if (_currentStep.value < 2) {
-      _currentStep.value = _currentStep.value + 1;
-    } else {
-      _currentStep.value = 2;
-    }
+  bool rememberMeBool = false;
+  bool showPasswordBool = true;
+  List<double> coordinatesPoints = [];
+  void showPassword() {
+    showPasswordBool = !showPasswordBool;
     update();
   }
 
   bool isNextClicked = false;
-  List<String> userType = ['Individual', 'Organization'];
-  String? selectedUserType;
+  String selectedValue = "";
 
-  Future<Map?> userSignup(
-      String name,
-      String username,
-      String email,
-      String moile,
-      String password,
-      String confirmPassword,
-      String accountType) async {
+  var first1;
+  LocationData? locationData;
+
+  void _determinePosition() async {
+    Location location = Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        print("!_serviceEnabled");
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        print("_permissionGranted != PermissionStatus.granted");
+        return;
+      }
+    }
+    // location fetching
+
+    locationData = await location.getLocation();
+    update();
+
+    // Passed the coordinates of latitude and longitude
+    coordinatesPoints.add(locationData!.longitude!);
+    coordinatesPoints.add(locationData!.longitude!);
+    final coordinates =
+        Coordinates(locationData!.latitude, locationData!.longitude);
+    var address =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var first = address.first;
+    // on below line we have set the address to string
+    locality1.text = first.locality.toString();
+    adminArea1.text = first.adminArea.toString();
+    postalCode1.text = first.postalCode.toString();
+
+    /// update ui
+
+    /// get continuous location updates
+    // location.onLocationChanged.listen((LocationData currentLocation) {
+    //   // Use current location
+    // });
+
+    /// receive location when application is in background
+    // location.enableBackgroundMode(enable: true);
+  }
+
+  void _findPositionByAddress() async {
+    //changing entered user address to coordinates
+    final query = "${locality1.text} ${adminArea1.text} ${postalCode1.text}";
+    var address1 = await Geocoder.local.findAddressesFromQuery(query);
+    first1 = address1.first;
+    update();
+    coordinatesPoints.add(first1.coordinates.longitude);
+    coordinatesPoints.add(first1.coordinates.latitude);
+    update();
+    debugPrint("coordinates : ${first1.coordinates.latitude}");
+  }
+
+  get determinePosition => _determinePosition;
+  get findPositionByAddress => _findPositionByAddress;
+
+  Future<Map?> userSignup() async {
     Map data = {
-      'name': name,
-      'username': username,
-      'email': email,
-      'mobile': moile,
-      'password': password,
-      'confirmPassword': confirmPassword,
-      'accountType': accountType,
+      'name': nameController.text,
+      'username': usernameController.text,
+      'email': emailController.text,
+      'mobile': mobileController.text,
+      'password': passwordController.text,
+      'confirmPassword': passwordController.text,
+      'accountType': selectedValue,
+      'location': coordinatesPoints.toString()
     };
     Map<dynamic, dynamic>? response = await loginRepo.userSignup(data);
 
     if (response!["status"] == "success") {
       _isSignup.value = true;
     }
+    Get.snackbar(response["status"], response["message"]);
     return null;
   }
 

@@ -6,7 +6,7 @@ class ChatModel {
   final String sendBy;
   final String recieveBy;
   final String message;
-  final String createdAt;
+  final DateTime createdAt;
   final bool isSent;
   final bool isRead;
   final bool isDeleted;
@@ -55,7 +55,7 @@ class ChatModel {
       sendBy: map['sendBy'] as String,
       recieveBy: map['recieveBy'] as String,
       message: map['message'] as String,
-      createdAt: map['timestamp'] as String,
+      createdAt: DateTime.parse(map['timestamp']),
       isSent: map['isSent'] as bool,
       isRead: map['isRead'] as bool,
       isDeleted: map['isDeleted'] as bool,
