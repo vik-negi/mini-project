@@ -71,7 +71,7 @@ class SigninVM extends GetxController {
       // await sharedPrefs.setString("user_id", response["data"]["_id"]);
       await sharedPreferences.setString("user_id", response["data"]["_id"]);
       await sharedPrefs.setString("username", response["data"]["username"]);
-      // print(response.toString());
+      print(response.toString());
 
       // userModel = userModelFromJson(userData);
       var userModel = UserModel.fromJson(userData);

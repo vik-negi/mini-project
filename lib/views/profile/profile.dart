@@ -1,14 +1,16 @@
 import 'package:blur/blur.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/routes.dart';
+import 'package:evika/utils/ui_utility_widgets.dart';
 import 'package:evika/view_models/profile_viewmodels/profile_viewmodel.dart';
 import 'package:evika/views/profile/widget/own_post_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
-  ProfileVM vm = Get.put(ProfileVM());
+  final ProfileVM vm = Get.put(ProfileVM());
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +294,7 @@ class ProfilePage extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: const [
                                         Text(
-                                          "Create Post",
+                                          "Add Event",
                                           style: TextStyle(
                                             // color: Colors.black,
                                             fontSize: 12,
@@ -364,24 +366,65 @@ class ProfilePage extends StatelessWidget {
                       horizontal: 20,
                       vertical: 10,
                     ),
-                    child: const Text(
-                      "Your Events",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          CupertinoIcons.collections_solid,
+                          size: 18,
+                        ),
+                        gapx(5),
+                        const Text(
+                          "Your Events",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const OwnPostCard(
+                  OwnPostCard(
                     title:
                         "Meenakshi Temple in madurai pooja association fully colorfully and unique of its kind",
                     imgUrl:
                         "https://media.istockphoto.com/id/490736905/photo/meenakshi-hindu-temple-in-madurai-tamil-nadu-south-india.jpg?s=612x612&w=0&k=20&c=OlOLvdryIdkdyKcY9gRPsM1RZa5HiP6QBr2JVAIvPb0=",
+                    shares: "3.4K",
+                    likes: "23K",
+                    comments: "1.2K",
+                    registrations: "23",
+                    date: DateTime(2022, 11, 12),
+                    route: AppRotutes.myPostDetails,
                   ),
                 ],
               )),
         ),
+      ),
+    );
+  }
+
+  Widget showIconAndTextOnPost({IconData? icon, String? text}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 4),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 3,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.accentColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          icon != null
+              ? Icon(
+                  icon,
+                  size: 18,
+                )
+              : const SizedBox(),
+          icon != null ? gapx(4) : const SizedBox(),
+          text != null ? Text(text) : const SizedBox(),
+        ],
       ),
     );
   }

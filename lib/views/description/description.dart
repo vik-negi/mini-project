@@ -8,8 +8,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:vibration/vibration.dart';
 
 class Description extends StatelessWidget {
-  final String tag;
-  const Description({super.key, required this.tag});
+  // final String tag;
+  const Description({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class Description extends StatelessWidget {
                   SizedBox(
                       width: double.infinity,
                       child: Hero(
-                        tag: tag,
+                        tag: vm.imageTag ?? '1',
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: const Image(
@@ -92,6 +92,7 @@ class Description extends StatelessWidget {
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
                                         fontSize: 13,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                     TextSpan(
@@ -99,8 +100,8 @@ class Description extends StatelessWidget {
                                           'POSHAN JAGRUKTA ABHIYAAN started by central goverment and Association\n',
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 15,
+                                        // fontWeight: FontWeight.w700,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ],
@@ -114,6 +115,7 @@ class Description extends StatelessWidget {
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
                                         fontSize: 13,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                     TextSpan(
@@ -121,8 +123,8 @@ class Description extends StatelessWidget {
                                           'Young Social Reformers kjndkjng sd sd f sd f sd fskndosdg sdofjsodjfg sfigjsdfg skdfg"\n',
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 15,
+                                        // fontWeight: FontWeight.w700,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ],
@@ -136,14 +138,15 @@ class Description extends StatelessWidget {
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
                                         fontSize: 13,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                     TextSpan(
                                       text: 'Azamgarh',
                                       style: TextStyle(
                                         color: AppColors.secondaryColor,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 15,
+                                        // fontWeight: FontWeight.w700,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ],
