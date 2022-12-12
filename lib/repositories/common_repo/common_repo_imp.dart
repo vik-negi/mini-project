@@ -18,12 +18,13 @@ class CommonRepoImp extends CommonRepo {
   }
 
   @override
-  Future<List<Comment>> getComments(postId) async {
-    List? response = await commonApiServices.getComments(postId);
+  Future<List<Comment>> getAndAddComments(String postId, String? text) async {
+    List? response = await commonApiServices.getAndAddComments(postId, text);
     print("object $response");
     if (response != null && response.isNotEmpty) {
       List<Comment> commentList =
           response.map((e) => Comment.fromMap(e)).toList();
+
       return commentList;
     }
     return [];

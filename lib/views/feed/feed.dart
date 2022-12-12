@@ -74,85 +74,67 @@ class FeedView extends StatelessWidget {
           onRefresh: () async {
             await vm.getAllPost();
           },
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Container(
-              height: Get.height - 75,
-              child: Column(
-                children: [
-                  Suggessions(),
-                  SizedBox(
-                    height: (vm.isPostFetched.value ||
-                            !vm.isErrorOnFetchingData.value)
-                        ? Get.height - 150
-                        : Get.height - 150,
-                    child: vm.isPostFetched.value
-                        ?
-                        // ListView.builder(
-                        //     itemCount: vm.postList.length,
-                        //     // itemCount: 1,
-                        //     itemBuilder: (context, i) {
-                        //       return PostContainer(i: i);
-                        //     },
-                        //   )
-                        HomePage()
-                        : vm.isErrorOnFetchingData.value
-                            ? Center(
-                                child: SizedBox(
-                                height: 100,
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      "No data found",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    TextButton(
-                                      style: ButtonStyle(
-                                          shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18.0),
-                                            ),
-                                          ),
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.blueGrey[800]),
-                                          foregroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.white)),
-                                      onPressed: () {
-                                        vm.getAllPost();
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8.0, horizontal: 16),
-                                        child: Text(
-                                          "Try again",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ))
-                            : const Center(
-                                child: CircularProgressIndicator(),
+          child: Column(
+            children: [
+              Suggessions(),
+              vm.isPostFetched.value
+                  ?
+                  // ListView.builder(
+                  //     itemCount: vm.postList.length,
+                  //     // itemCount: 1,
+                  //     itemBuilder: (context, i) {
+                  //       return PostContainer(i: i);
+                  //     },
+                  //   )
+                  Expanded(child: HomePage())
+                  : vm.isErrorOnFetchingData.value
+                      ? Center(
+                          child: SizedBox(
+                          height: 100,
+                          child: Column(
+                            children: [
+                              const Text(
+                                "No data found",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
                               ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                ],
-              ),
-            ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextButton(
+                                style: ButtonStyle(
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                      ),
+                                    ),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.blueGrey[800]),
+                                    foregroundColor: MaterialStateProperty.all(
+                                        Colors.white)),
+                                onPressed: () {
+                                  vm.getAllPost();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0, horizontal: 16),
+                                  child: Text(
+                                    "Try again",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ))
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+            ],
           ),
         ),
       );

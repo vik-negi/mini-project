@@ -3,6 +3,7 @@ import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
 import 'package:evika/views/demo.dart';
+import 'package:evika/views/feed/show_files.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,13 +25,18 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return GetBuilder<CommonVM>(builder: (commonVM) {
       return GetBuilder<PostVM>(builder: (vm) {
-        return ListView.builder(
+        return ListView.separated(
             physics: const BouncingScrollPhysics(),
+            // physics: const NeverScrollableScrollPhysics(),
             itemCount: vm.postList.length,
+            separatorBuilder: ((context, i) {
+              return SizedBox(
+                height: i == vm.postList.length - 1 ? 75 : 20,
+              );
+            }),
             itemBuilder: (context, i) {
               return Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -60,7 +66,11 @@ class _HomePageState extends State<HomePage> {
                                       // commonVM.update();
                                     },
                                     icon: Icon(
-                                      Icons.favorite_border,
+                                      commonVM.isLikedPost(
+                                                  vm.postList[i].id!) ||
+                                              commonVM.tapOnLikedButton
+                                          ? CupertinoIcons.heart_fill
+                                          : Icons.favorite_border,
                                       color: commonVM.isLikedPost(
                                                   vm.postList[i].id!) ||
                                               commonVM.tapOnLikedButton
@@ -96,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                                 child: IconButton(
                                   onPressed: () async {
                                     commonVM.getComments(vm.postList[i].id!);
-                                    bottomModelWidget(context, vm);
+                                    bottomModelWidget(context, vm, i);
                                   },
                                   icon: Icon(
                                     Icons.comment,
@@ -248,11 +258,23 @@ class _HomePageState extends State<HomePage> {
                                   borderRadius: BorderRadius.circular(16),
                                   color: Colors.red,
                                 ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(16),
-                                  child: Image.network(
-                                    vm.postList[i].image![0],
-                                    fit: BoxFit.cover,
+                                child: InkWell(
+                                  onTap: () {
+                                    Get.to(
+                                      () => ShowFiles(
+                                        tag: i.toString(),
+                                        file: vm.postList[i].image![0],
+                                      ),
+                                    );
+                                  },
+                                  child: Hero(
+                                    tag: i.toString(),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(16),
+                                        child: Image.network(
+                                          vm.postList[i].image![0],
+                                          fit: BoxFit.cover,
+                                        )),
                                   ),
                                 ),
                               ),
@@ -267,7 +289,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<dynamic> bottomModelWidget(BuildContext context, PostVM vm) {
+  Future<dynamic> bottomModelWidget(BuildContext context, PostVM vm, int i) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -278,114 +300,216 @@ class _HomePageState extends State<HomePage> {
               // child:
               GetBuilder<CommonVM>(builder: (CommonVM) {
             return DraggableScrollableSheet(
+              maxChildSize: 0.9,
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return GestureDetector(
                   onTap: () {
                     FocusScope.of(context).unfocus();
                   },
-                  child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                      child: !commonVM.isLoading
-                          ? ListView.builder(
-                              controller: scrollController,
-                              itemCount: 5,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(
-                                  children: [
-                                    index == 0
-                                        ? Column(
-                                            children: [
-                                              const SizedBox(
-                                                height: 30,
-                                              ),
-                                              TextFormFieldContainer(
-                                                  width: Get.width - 20,
-                                                  icon: Icons.add_reaction,
-                                                  hintText: "Add Comment",
-                                                  function: () {},
-                                                  controller:
-                                                      vm.commentController,
-                                                  isMobileNumber: false),
-                                              const SizedBox(
-                                                height: 15,
-                                              ),
-                                            ],
-                                          )
-                                        : const SizedBox(),
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 10),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const CircleAvatar(
-                                              radius: 25,
-                                              backgroundImage: NetworkImage(
-                                                  'https://www.w3schools.com/howto/img_avatar.png'),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Container(
-                                                width: Get.width - 80,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text(
-                                                      "Vikram Negi",
+                  child: SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        // Column(
+                        //   children: [
+                        //     const SizedBox(
+                        //       height: 30,
+                        //     ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: TextFormFieldContainer(
+                              width: Get.width - 20,
+                              icon: Icons.add_reaction,
+                              hintText: "Add Comment",
+                              function: () {},
+                              controller: vm.commentController,
+                              isMobileNumber: false,
+                              suffix: InkWell(
+                                onTap: () {
+                                  commonVM.addComment(vm.postList[i].id!,
+                                      vm.commentController.text.trim());
+                                },
+                                child: const Icon(
+                                  Icons.send,
+                                  color: Colors.blue,
+                                ),
+                              )),
+                        ),
+                        //     const SizedBox(
+                        //       height: 15,
+                        //     ),
+                        //   ],
+                        // ),
+                        commonVM.isLoading
+                            ? ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: Get.height,
+                                  minWidth: Get.width,
+                                ),
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                            : Container(
+                                height: Get.height * 0.8,
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20))),
+                                child: !commonVM.isLoading
+                                    ? ListView.builder(
+                                        controller: scrollController,
+                                        itemCount: CommonVM.commentList.isEmpty
+                                            ? 1
+                                            : CommonVM.commentList.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return
+                                              // Column(
+                                              // children: [
+                                              // index == 0
+                                              //     ? Column(
+                                              //         children: [
+                                              //           const SizedBox(
+                                              //             height: 30,
+                                              //           ),
+                                              //           TextFormFieldContainer(
+                                              //               width: Get.width - 20,
+                                              //               icon:
+                                              //                   Icons.add_reaction,
+                                              //               hintText: "Add Comment",
+                                              //               function: () {},
+                                              //               controller: vm
+                                              //                   .commentController,
+                                              //               isMobileNumber: false,
+                                              //               suffix: InkWell(
+                                              //                 onTap: () {
+                                              //                   commonVM.addComment(
+                                              //                       vm.postList[i]
+                                              //                           .id!,
+                                              //                       vm.commentController
+                                              //                           .text
+                                              //                           .trim());
+                                              //                 },
+                                              //                 child: const Icon(
+                                              //                   Icons.send,
+                                              //                   color: Colors.blue,
+                                              //                 ),
+                                              //               )),
+                                              //           const SizedBox(
+                                              //             height: 15,
+                                              //           ),
+                                              //         ],
+                                              //       )
+                                              //     : const SizedBox(),
+                                              CommonVM.commentList.isNotEmpty
+                                                  ? Container(
+                                                      margin: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 10,
+                                                          horizontal: 10),
+                                                      child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            CircleAvatar(
+                                                              radius: 25,
+                                                              backgroundImage:
+                                                                  NetworkImage(CommonVM
+                                                                      .commentList[
+                                                                          index]
+                                                                      .userImage),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Container(
+                                                                width:
+                                                                    Get.width -
+                                                                        80,
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      CommonVM
+                                                                          .commentList[
+                                                                              index]
+                                                                          .username,
+                                                                      style: const TextStyle(
+                                                                          fontSize:
+                                                                              15,
+                                                                          fontWeight:
+                                                                              FontWeight.w400),
+                                                                    ),
+                                                                    RichText(
+                                                                        text:
+                                                                            TextSpan(
+                                                                      text: CommonVM
+                                                                          .commentList[
+                                                                              index]
+                                                                          .text,
+                                                                      style: const TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              15,
+                                                                          fontWeight:
+                                                                              FontWeight.w400),
+                                                                    )),
+                                                                    Row(
+                                                                      children: [
+                                                                        TextButton.icon(
+                                                                            label: const Text("5k"),
+                                                                            onPressed: () {},
+                                                                            icon: Icon(
+                                                                              Icons.thumb_up,
+                                                                              color: Colors.grey.shade600,
+                                                                              size: 20,
+                                                                            )),
+                                                                        TextButton(
+                                                                            onPressed:
+                                                                                () {},
+                                                                            child:
+                                                                                const Text("Reply")),
+                                                                      ],
+                                                                    ),
+                                                                    i == CommonVM.commentList.length - 1
+                                                                        ? const SizedBox(
+                                                                            height:
+                                                                                40,
+                                                                          )
+                                                                        : const SizedBox()
+                                                                  ],
+                                                                ))
+                                                          ]),
+                                                    )
+                                                  : const Text(
+                                                      "No Comments",
                                                       style: TextStyle(
-                                                          fontSize: 15,
+                                                          fontSize: 20,
                                                           fontWeight:
                                                               FontWeight.w400),
-                                                    ),
-                                                    RichText(
-                                                        text: const TextSpan(
-                                                      text:
-                                                          "Haa Haa haa this is too good and i am loving it, believed me..Haa Haa haa this is too good and i am loving it",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                    )),
-                                                    Row(
-                                                      children: [
-                                                        TextButton.icon(
-                                                            label: const Text(
-                                                                "5k"),
-                                                            onPressed: () {},
-                                                            icon: Icon(
-                                                              Icons.thumb_up,
-                                                              color: Colors.grey
-                                                                  .shade600,
-                                                              size: 20,
-                                                            )),
-                                                        TextButton(
-                                                            onPressed: () {},
-                                                            child: const Text(
-                                                                "Reply")),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ))
-                                          ]),
-                                    ),
-                                  ],
-                                );
-                              },
-                            )
-                          : const Center(
-                              child: CircularProgressIndicator(),
-                            )),
+                                                    );
+                                          // ],
+                                          // );
+                                        },
+                                      )
+                                    : const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.blue,
+                                        ),
+                                      )),
+                      ],
+                    ),
+                  ),
                 );
               },
               // ),
