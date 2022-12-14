@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "846662342855",
-    "project_id": "evika-56525",
-    "storage_bucket": "evika-56525.appspot.com"
+    "project_number": "532834850909",
+    "project_id": "evika01-2b2e5",
+    "storage_bucket": "evika01-2b2e5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:846662342855:android:2c12d463292b399689c6e2",
+        "mobilesdk_app_id": "1:532834850909:android:ef5ef7b06fde6a7a1e15b4",
         "android_client_info": {
           "package_name": "com.example.frontend"
         }
       },
       "oauth_client": [
         {
-          "client_id": "846662342855-r596vhlau3u7f12fso68nd1armd7vmcf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.frontend",
-            "certificate_hash": "695f896af762e39ce4f25f6458070350fb1ef7a1"
-          }
-        },
-        {
-          "client_id": "846662342855-otdce2ebqgqtel1ua5tjpmc8v83u5ulp.apps.googleusercontent.com",
+          "client_id": "532834850909-gqd1t82b8gemee91hthb2pe05g1kck91.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBuwoDx7Wa583i6MCF1M9u4B6QdNqiQ5Dg"
+          "current_key": "AIzaSyDJSoXZBCYpyepWwiJwImUxoHN5jJ35Dmk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "846662342855-otdce2ebqgqtel1ua5tjpmc8v83u5ulp.apps.googleusercontent.com",
+              "client_id": "532834850909-gqd1t82b8gemee91hthb2pe05g1kck91.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

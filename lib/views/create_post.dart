@@ -98,8 +98,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           TextFormField(
                             controller: vm.locationController,
                             decoration: const InputDecoration(
-                              hintText:
-                                  'Enter The Area Location For Which Event Is Organised',
+                              hintText: 'Enter The Area Location',
                               labelText: 'Location',
                             ),
                           ),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 

@@ -149,55 +149,60 @@ class PostVM extends GetxController {
   }
 
   Future<void> createPost() async {
-    if (titleController.text == "" || titleController.text == null) {
-      Get.snackbar("Error", "Please enter title");
-      return;
-    }
-    try {
-      print("chala");
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      http.Response tagsMap =
-          await http.post(Uri.parse("$mlBaseUrl/api/keywords"), body: {
-        "text": descriptionController.text,
-        "user_id": "1",
-      });
-      String tagString = "";
-      List tagList = jsonDecode(tagsMap.body)["data"];
-      jsonDecode(tagsMap.body)["data"].forEach((element) {
-        tagString += "$element,";
-      });
-      tagString = tagString.substring(0, tagString.length - 1);
-      var request = http.MultipartRequest(
-          "POST", Uri.parse("$baseUrl/api/user/create-post/"));
-      request.fields["title"] = titleController.text;
-      request.fields["description"] = descriptionController.text;
-      request.fields["eventLocation"] = coordinatesPoints.toString();
-      request.fields["eventDescription"] = eventDescriptionController.text;
-      request.fields["eventStartAt"] =
-          '${startDateController.text} ${startTimeController.text}';
+    print(titleController.text);
+    print(descriptionController.text);
+    print(coordinatesPoints.toString());
+    print(eventDescriptionController.text);
+    // if (titleController.text == "" || titleController.text == null) {
+    //   Get.snackbar("Error", "Please enter title");
+    //   return;
+    // }
+    // try {
+    //   print("chala");
+    //   SharedPreferences sharedPreferences =
+    //       await SharedPreferences.getInstance();
+    //   http.Response tagsMap =
+    //       await http.post(Uri.parse("$mlBaseUrl/api/keywords"), body: {
+    //     "text": descriptionController.text,
+    //     "user_id": "1",
+    //   });
 
-      request.fields["eventEndAt"] =
-          '${endDateController.text} ${endTimeController.text}';
-      request.fields["eventCategory"] = 'sports';
-      request.fields["tags"] = tagString;
-      request.fields["userId"] = sharedPreferences.getString("user_id")!;
-      request.files
-          .add(await http.MultipartFile.fromPath("image", selectedImage!.path));
+    //   String tagString = "";
+    //   // List tagList = jsonDecode(tagsMap.body)["data"];
+    //   print("knkn");
+    //   // jsonDecode(tagsMap.body)["data"].forEach((element) {
+    //   //   tagString += "$element,";
+    //   // });
+    //   // tagString = tagString.substring(0, tagString.length - 1);
+    //   var request = http.MultipartRequest(
+    //       "POST", Uri.parse("$baseUrl/api/user/create-post/"));
+    //   request.fields["title"] = titleController.text;
+    //   request.fields["description"] = descriptionController.text;
+    //   request.fields["eventLocation"] = coordinatesPoints.toString();
+    //   request.fields["eventDescription"] = eventDescriptionController.text;
+    //   request.fields["eventStartAt"] =
+    //       '${startDateController.text} ${startTimeController.text}';
 
-      String? response = await postRepoImp.createPost(request);
+    //   request.fields["eventEndAt"] =
+    //       '${endDateController.text} ${endTimeController.text}';
+    //   request.fields["eventCategory"] = 'sports';
+    //   // request.fields["tags"] = tagString;
+    //   request.fields["userId"] = sharedPreferences.getString("user_id")!;
+    //   request.files
+    //       .add(await http.MultipartFile.fromPath("image", selectedImage!.path));
 
-      print(response);
-      if (response != null) {
-        Get.snackbar('Success', 'Post Created Successfully');
-        print('Post Created Successfully');
-      } else {
-        Get.snackbar('Error', 'Something went wrong');
-        print("something went wrong");
-      }
-    } catch (err) {
-      print("err : $err");
-    }
+    //   String? response = await postRepoImp.createPost(request);
+    //   print(response);
+    //   if (response != null) {
+    //     Get.snackbar('Success', 'Post Created Successfully');
+    //     print('Post Created Successfully');
+    //   } else {
+    //     Get.snackbar('Error', 'Something went wrong');
+    //     print("something went wrong");
+    //   }
+    // } catch (err) {
+    //   print("err : $err");
+    // }
   }
 
   Future<bool?>? likePost(id) async {
