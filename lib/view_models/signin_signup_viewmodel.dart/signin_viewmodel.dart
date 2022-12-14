@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/repositories/login_repo/login_repo_imp.dart';
+import 'package:evika/utils/routes.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,12 +15,12 @@ class SigninVM extends GetxController {
   final LoginRepoImp loginRepo = LoginRepoImp();
   final storage = const FlutterSecureStorage();
 
-  UserModel userModel = Get.put(UserModel());
+  UserModel? userModel;
   bool isSigninClickedBool = false;
-  void isSigninClicked() {
-    isSigninClickedBool = !isSigninClickedBool;
-    update();
-  }
+  // void isSigninClicked() {
+  //   isSigninClickedBool = !isSigninClickedBool;
+  //   update();
+  // }
 
   bool rememberMeBool = false;
   bool showPasswordBool = true;
@@ -36,16 +37,22 @@ class SigninVM extends GetxController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<Map?> userSignin(String username, String password) async {
+  userSignin() async {
+    isSigninClickedBool = true;
+    debugPrint("Signin Clicked");
+    update();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    Map data = {'username': username, 'password': password};
-    print(data);
+    Map data = {
+      'username': usernameController.text.trim(),
+      'password': passwordController.text
+    };
+    debugPrint(data.toString());
     Map<dynamic, dynamic>? response = await loginRepo.userSignin(data);
-    print("ppppppppppppppppppppppp");
-    print(data);
+    debugPrint("ppppppppppppppppppppppp");
+    debugPrint(data.toString());
 
-    print(response);
+    debugPrint((response == null).toString());
     if (response!["status"] == "success") {
       await sharedPreferences.setString("token", response["token"]);
       await sharedPreferences.setString("userId", response["data"]["_id"]);
@@ -64,15 +71,14 @@ class SigninVM extends GetxController {
       // await sharedPrefs.setString("user_id", response["data"]["_id"]);
       await sharedPreferences.setString("user_id", response["data"]["_id"]);
       await sharedPrefs.setString("username", response["data"]["username"]);
-      // print(response.toString());
+      print(response.toString());
 
       // userModel = userModelFromJson(userData);
-      userModel = UserModel.fromJson(userData);
+      var userModel = UserModel.fromJson(userData);
+      isSigninClickedBool = false;
       update();
-      print(userModel);
-      // _isSigninClicked.value = false;
-      return response;
+      debugPrint(userModel.toString());
+      Get.offAllNamed(AppRotutes.screenNavigator);
     }
-    return null;
   }
 }

@@ -65,14 +65,8 @@ class PostVM extends GetxController {
     update();
   }
 
-//   String getDaet(DateTime date) {
-// // String datetime1 = DateFormat("yyyy-MM-dd").format(date);
-//     return DateFormat("MMMM dd, yyyy").parse(date);
-//   }
-
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     futurePosts = getAllPost();
   }
@@ -85,8 +79,8 @@ class PostVM extends GetxController {
     isPostFetched(false);
     update();
     Map<dynamic, dynamic>? data = await postRepoImp.getAllPost();
-    print("ddddddddddd");
-    print(data);
+    debugPrint("ddddddddddd");
+    debugPrint(data.toString());
 
     try {
       if (data != null) {
@@ -184,13 +178,7 @@ class PostVM extends GetxController {
       print("uuuuuuuuuuuuuuu");
       print("Liked Post response : $response");
       List<String> likedPosts = [];
-      // likedPosts = response["data"]["likedPosts"] != null
-      //     ? List<String>.from(response["data"]["likedPosts"])
-      //     : [];
-      // print(likedPosts);
 
-      // commonVM.userLikedPostList = likedPosts;
-      // commonVM.update();
       return true;
     } else {
       return false;

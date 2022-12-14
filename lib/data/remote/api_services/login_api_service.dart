@@ -27,11 +27,11 @@ class LoginApiServices extends LoginApiInterface {
   }
 
   @override
-  Future<Map<String, dynamic>>? userSignin(Map data) async {
-    print(data);
-    print(data["username"]);
-    print(data["password"]);
-    final response = await http.post(
+  Future<Map<String, dynamic>?> userSignin(Map data) async {
+    debugPrint(data.toString());
+    debugPrint(data["username"]);
+    debugPrint(data["password"]);
+    var response = await http.post(
       Uri.parse('$baseUrl/api/account/signin'),
       // headers: <String, String>{
       //   'Content-Type': 'application/json; charset=UTF-8',
@@ -41,12 +41,18 @@ class LoginApiServices extends LoginApiInterface {
         'password': data['password'],
       },
     );
-    print(response.body);
-    return returnResponse(response);
+    debugPrint(response.body);
+    // return returnResponse(response);
+    if (response == null) {
+      debugPrint("Backed not connectted");
+      return {};
+    }
+    var res = jsonDecode(response.body);
+    return res;
   }
 
   @override
-  Future<Map<String, dynamic>>? userSignup(Map data) async {
+  Future<Map<String, dynamic>> userSignup(Map data) async {
     final response = await http.post(
       Uri.parse('$baseUrl/api/account/signup/'),
       body: data,
