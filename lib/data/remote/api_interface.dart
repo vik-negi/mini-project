@@ -2,8 +2,8 @@ import 'package:evika/models/chat/chat_model.dart';
 import 'package:evika/models/chat/chat_page_model.dart';
 
 abstract class LoginApiInterface {
-  Future<Map<String, dynamic>>? userSignin(Map data);
-  Future<Map<String, dynamic>>? userSignup(Map data);
+  Future<Map<String, dynamic>?> userSignin(Map data);
+  Future<Map<String, dynamic>?> userSignup(Map data);
 }
 
 abstract class PostApiInterface {

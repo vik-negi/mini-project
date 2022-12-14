@@ -3,6 +3,13 @@ import 'package:vibration/vibration.dart';
 
 class DescriptionVM extends GetxController {
   bool notificationSet = false;
+  String? imageTag;
+
+  @override
+  void onInit() {
+    super.onInit();
+    getParameters();
+  }
 
   void toggleNotification() async {
     notificationSet = !notificationSet;
@@ -10,5 +17,12 @@ class DescriptionVM extends GetxController {
       Vibration.vibrate(duration: 100);
     }
     update();
+  }
+
+  getParameters() {
+    var tag = Get.parameters['tag'];
+    if (tag != null) {
+      imageTag = tag;
+    }
   }
 }

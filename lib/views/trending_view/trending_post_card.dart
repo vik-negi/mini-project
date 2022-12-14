@@ -1,7 +1,9 @@
 import 'package:evika/utils/colors.dart';
+import 'package:evika/utils/routes.dart';
 import 'package:evika/views/description/description.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class TrendingPostCard extends StatelessWidget {
@@ -19,7 +21,7 @@ class TrendingPostCard extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(bottom: 30),
+          margin: const EdgeInsets.only(bottom: 20),
           child: Row(
             children: <Widget>[
               Container(
@@ -49,12 +51,14 @@ class TrendingPostCard extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Description(
-                                        tag: index.toString(),
-                                      )));
+                          // Get.to(() => Description());
+
+                          Get.toNamed(
+                            AppRotutes.postDescription,
+                            parameters: {
+                              'tag': index.toString(),
+                            },
+                          );
                         },
                         child: Text(
                           title,
