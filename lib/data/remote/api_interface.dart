@@ -13,7 +13,8 @@ abstract class PostApiInterface {
 
 abstract class CommoApiInterface {
   Future<List<String>>? userLikedPosts();
-  Future<List>? getComments(String postId);
+  Future<List>? getAndAddComments(String postId, String? text);
+  // Future<bool> addComment(String postId, String text);
 }
 
 abstract class ChatApiInterface {

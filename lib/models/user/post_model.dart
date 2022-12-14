@@ -56,7 +56,7 @@ class PostData {
   final String? eventCategory;
   final String? eventEndAt;
   final String? eventId;
-  final String? eventLocation;
+  final EventLocation? eventLocation;
   final String? eventStartAt;
   final List<dynamic>? image;
   final int? likes;
@@ -124,8 +124,9 @@ class PostData {
           map['eventEndAt'] != null ? map['eventEndAt'] as String : "null",
       eventId: map['eventId'] != null ? map['eventId'] as String : "null",
       // eventLocation: map['eventLocation'] != null
-      //     ? map['eventLocation'] as String
-      //     : "null",
+      //     ? EventLocation.fromMap(map['eventLocation'] as Map<String, dynamic>)
+      //     : null,
+
       eventStartAt:
           map['eventStartAt'] != null ? map['eventStartAt'] as String : "null",
       image: map['image'] != null
@@ -158,20 +159,27 @@ List<PostData> parsePhotos(String responseBody) {
 }
 
 class Comment {
-  final String username;
+  final String username; //
   final String userImage;
-  final String name;
-  final String id;
-  bool isEdited;
-  final String text;
-  final List<String>? images;
-  final DateTime createdAt;
+  final String name; //
+  final String userId; //
+  final String id; //
+  final List? replies; //
+  bool isEdited; //
+  final String text; //
+  final List? images; //
+  final DateTime createdAt; //
   final DateTime? updatedAt;
+  final List? likes; //
+
   Comment({
-    required this.username,
+    required this.userId,
+    this.replies,
+    this.likes,
+    required this.username, //
     required this.id,
-    required this.userImage,
-    required this.name,
+    required this.userImage, //
+    required this.name, //
     required this.isEdited,
     required this.text,
     this.images,
@@ -187,7 +195,8 @@ class Comment {
       'images': images,
       'createdAt': createdAt.millisecondsSinceEpoch,
       'updatedAt': updatedAt!.millisecondsSinceEpoch,
-      'id': id,
+      '_id': id,
+      'userId': userId,
       'name': name,
       'userImage': userImage,
     };
@@ -195,15 +204,25 @@ class Comment {
 
   factory Comment.fromMap(Map<String, dynamic> map) {
     return Comment(
-      username: map['user'] as String,
+      username: map['username'] as String,
       isEdited: map['isEdited'] as bool,
       text: map['text'] as String,
-      images: List<String>.from((map['images'] as List<String>)),
+      images: map['image'] != null && map['image'] != []
+          ? List<dynamic>.from((map['image'] as List<dynamic>))
+          : [],
       createdAt: DateTime.parse(map['createdAt']),
-      updatedAt: DateTime.parse(map['updatedAt']),
-      id: map['id'] as String,
+      updatedAt:
+          map['updatedAt'] != null ? DateTime.parse(map['updatedAt']) : null,
+      id: map['_id'] as String,
       name: map['name'] as String,
-      userImage: map['userImage'] as String,
+      userImage: map['userImage']["url"] as String,
+      replies: map['image'] != null && map['replies'] != []
+          ? List<String>.from((map['replies'] as List))
+          : [],
+      likes: map['image'] != null && map['likes'] != []
+          ? List<String>.from((map['likes'] as List))
+          : [],
+      userId: map['userId'] as String,
     );
   }
 
@@ -251,4 +270,88 @@ class Reply {
 
   factory Reply.fromJson(String source) =>
       Reply.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+//  eventLocation: {
+//     type: {
+//       type: String,
+//       enum: ["Point"],
+//     },
+//     coordinates: {
+//       type: [Number],
+//       // required: true,
+//     },
+//   }
+class EventLocation {
+  final String type;
+  final List<double> coordinates;
+
+  EventLocation({
+    required this.type,
+    required this.coordinates,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'type': type,
+      'coordinates': coordinates,
+    };
+  }
+
+  factory EventLocation.fromMap(Map<String, dynamic> map) {
+    return EventLocation(
+      type: map['type'] as String,
+      coordinates: List<double>.from(map['coordinates'] as List),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory EventLocation.fromJson(String source) =>
+      EventLocation.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+class Address {
+  final String? address1;
+  final String? city;
+  final String state;
+  final String country;
+  final String zipcode;
+  final List<double> coordinates;
+
+  Address({
+    this.address1,
+    this.city,
+    required this.state,
+    required this.country,
+    required this.zipcode,
+    required this.coordinates,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'address1': address1,
+      'city': city,
+      'state': state,
+      'country': country,
+      'zipcode': zipcode,
+      'coordinates': coordinates,
+    };
+  }
+
+  factory Address.fromMap(Map<String, dynamic> map) {
+    return Address(
+      address1: map['address1'] as String,
+      city: map['city'] as String,
+      state: map['state'] as String,
+      country: map['country'] as String,
+      zipcode: map['zipcode'] as String,
+      coordinates: List<double>.from(map['coordinates'] as List),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Address.fromJson(String source) =>
+      Address.fromMap(json.decode(source) as Map<String, dynamic>);
 }
