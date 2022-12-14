@@ -79,9 +79,6 @@ class SigninVM extends GetxController {
       update();
       debugPrint(userModel.toString());
       Get.offAllNamed(AppRotutes.screenNavigator);
-      // _isSigninClicked.value = false;
-      // return response;
     }
-    // return null;
   }
 }

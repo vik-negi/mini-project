@@ -1,3 +1,4 @@
+import 'package:evika/auth/signup.dart';
 import 'package:evika/main.dart';
 import 'package:evika/utils/bindings.dart';
 import 'package:evika/views/create_post/create_post.dart';
@@ -36,6 +37,10 @@ class AppRotutes {
     ),
     GetPage(name: AppRotutes.signin, page: () => SigninPage()),
 
+    GetPage(
+      name: AppRotutes.signup,
+      page: () => const RegisterPage(),
+    ),
     GetPage(
       name: AppRotutes.screenNavigator,
       page: () => ScreenNavigate(),

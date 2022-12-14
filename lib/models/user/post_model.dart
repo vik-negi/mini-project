@@ -123,9 +123,9 @@ class PostData {
       eventEndAt:
           map['eventEndAt'] != null ? map['eventEndAt'] as String : "null",
       eventId: map['eventId'] != null ? map['eventId'] as String : "null",
-      eventLocation: map['eventLocation'] != null
-          ? map['eventLocation'] as String
-          : "null",
+      // eventLocation: map['eventLocation'] != null
+      //     ? map['eventLocation'] as String
+      //     : "null",
       eventStartAt:
           map['eventStartAt'] != null ? map['eventStartAt'] as String : "null",
       image: map['image'] != null
