@@ -41,7 +41,6 @@ class SigninVM extends GetxController {
     isSigninClickedBool = true;
     debugPrint("Signin Clicked");
     update();
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     Map data = {
       'username': usernameController.text.trim(),
@@ -54,23 +53,20 @@ class SigninVM extends GetxController {
 
     debugPrint((response == null).toString());
     if (response!["status"] == "success") {
-      await sharedPreferences.setString("token", response["token"]);
-      await sharedPreferences.setString("userId", response["data"]["_id"]);
-      await sharedPreferences.setString(
-          "username", response["data"]["username"]);
-      await sharedPreferences.setString("name", response["data"]["name"]);
-      await sharedPreferences.setString("email", response["data"]["email"]);
-      await sharedPreferences.setString("mobile", response["data"]["mobile"]);
-      await sharedPreferences.setBool(
-          "isVerified", response["data"]["isVerified"]);
-      await sharedPreferences.setString(
+      await SharedPrefs.setString("user", jsonEncode(response["data"]));
+      await SharedPrefs.setString("token", response["token"]);
+      await SharedPrefs.setString("name", response["data"]["name"]);
+      await SharedPrefs.setString("email", response["data"]["email"]);
+      await SharedPrefs.setString("mobile", response["data"]["mobile"]);
+      await SharedPrefs.setBool("isVerified", response["data"]["isVerified"]);
+      await SharedPrefs.setString(
           "accountType", response["data"]["accountType"]);
-      await sharedPreferences.setBool("isLoggedIn", true);
+      await SharedPrefs.setBool("isLoggedIn", true);
       await storage.write(key: "evikaToken", value: response["token"]);
       String userData = jsonEncode(response);
       // await sharedPrefs.setString("user_id", response["data"]["_id"]);
-      await sharedPreferences.setString("user_id", response["data"]["_id"]);
-      await sharedPrefs.setString("username", response["data"]["username"]);
+      await SharedPrefs.setString("user_id", response["data"]["_id"]);
+      await SharedPrefs.setString("username", response["data"]["username"]);
       print(response.toString());
 
       // userModel = userModelFromJson(userData);

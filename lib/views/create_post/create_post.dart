@@ -249,18 +249,33 @@ class CreatePostPage extends StatelessWidget {
                               }
                               vm.update();
                             },
-                            child: Row(
-                              children: [
-                                Checkbox(
-                                  materialTapTargetSize:
-                                      MaterialTapTargetSize.padded,
-                                  splashRadius: 20,
-                                  shape: const CircleBorder(),
-                                  onChanged: (value) {},
-                                  value: vm.isRegistrationRequired,
-                                ),
-                                const Text("Registration Required"),
-                              ],
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Row(
+                                children: [
+                                  Checkbox(
+                                    materialTapTargetSize:
+                                        MaterialTapTargetSize.padded,
+                                    splashRadius: 20,
+                                    shape: const CircleBorder(),
+                                    onChanged: (value) {
+                                      vm.isRegistrationRequired =
+                                          !vm.isRegistrationRequired;
+
+                                      if (!vm.isRegistrationRequired) {
+                                        vm.registrationFilds.name = false;
+                                        vm.registrationFilds.email = false;
+                                        vm.registrationFilds.phone = false;
+                                        vm.registrationFilds.dob = false;
+                                        vm.registrationFilds.gender = false;
+                                      }
+                                      vm.update();
+                                    },
+                                    value: vm.isRegistrationRequired,
+                                  ),
+                                  const Text("Registration Required"),
+                                ],
+                              ),
                             ),
                           ),
                           vm.isRegistrationRequired
@@ -277,120 +292,54 @@ class CreatePostPage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       // Name
-                                      InkWell(
+                                      showSelector(
+                                        name: "Name",
+                                        value: vm.registrationFilds.name,
                                         onTap: () {
                                           vm.registrationFilds.name =
                                               !vm.registrationFilds.name;
                                           vm.update();
                                         },
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
-                                              splashRadius: 20,
-                                              shape: const CircleBorder(),
-                                              onChanged: (value) {},
-                                              value: vm.registrationFilds.name,
-                                            ),
-                                            const Text("Name"),
-                                          ],
-                                        ),
                                       ),
                                       // Email
-                                      InkWell(
+                                      showSelector(
+                                        name: "Email",
+                                        value: vm.registrationFilds.email,
                                         onTap: () {
                                           vm.registrationFilds.email =
                                               !vm.registrationFilds.email;
                                           vm.update();
                                         },
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
-                                              splashRadius: 20,
-                                              shape: const CircleBorder(),
-                                              onChanged: (value) {},
-                                              value: vm.registrationFilds.email,
-                                            ),
-                                            const Text("Email"),
-                                          ],
-                                        ),
                                       ),
                                       // Phone Number
-                                      InkWell(
+                                      showSelector(
+                                        name: "Phone Number",
+                                        value: vm.registrationFilds.phone,
                                         onTap: () {
                                           vm.registrationFilds.phone =
                                               !vm.registrationFilds.phone;
                                           vm.update();
                                         },
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
-                                              splashRadius: 20,
-                                              shape: const CircleBorder(),
-                                              onChanged: (value) {},
-                                              value: vm.registrationFilds.phone,
-                                            ),
-                                            const Text("Phone Number"),
-                                          ],
-                                        ),
                                       ),
                                       // Age
-                                      InkWell(
+                                      showSelector(
+                                        name: "Age",
+                                        value: vm.registrationFilds.dob,
                                         onTap: () {
                                           vm.registrationFilds.dob =
                                               !vm.registrationFilds.dob;
                                           vm.update();
                                         },
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
-                                              splashRadius: 20,
-                                              shape: const CircleBorder(),
-                                              onChanged: (value) {
-                                                // vm.registrationFilds.dob =
-                                                //     value ?? false;
-                                                // vm.update();
-                                              },
-                                              value: vm.registrationFilds.dob,
-                                            ),
-                                            const Text("Date of Birth / Age"),
-                                          ],
-                                        ),
                                       ),
                                       // Gender
-                                      InkWell(
-                                        onTap: () {
-                                          vm.registrationFilds.gender =
-                                              !vm.registrationFilds.dob;
-                                          vm.update();
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
-                                              splashRadius: 20,
-                                              shape: const CircleBorder(),
-                                              onChanged: (value) {},
-                                              value:
-                                                  vm.registrationFilds.gender,
-                                            ),
-                                            const Text("Gender"),
-                                          ],
-                                        ),
-                                      ),
+                                      showSelector(
+                                          name: "Gender",
+                                          value: vm.registrationFilds.gender,
+                                          onTap: () {
+                                            vm.registrationFilds.gender =
+                                                !vm.registrationFilds.gender;
+                                            vm.update();
+                                          })
                                     ],
                                   ),
                                 )
@@ -426,6 +375,32 @@ class CreatePostPage extends StatelessWidget {
           ),
         );
       }),
+    );
+  }
+
+  Widget showSelector(
+      {required String name, required bool value, required Function onTap}) {
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        child: Row(
+          children: [
+            Checkbox(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              splashRadius: 20,
+              shape: const CircleBorder(),
+              onChanged: (value) {
+                onTap();
+              },
+              value: value,
+            ),
+            Text(name),
+          ],
+        ),
+      ),
     );
   }
 

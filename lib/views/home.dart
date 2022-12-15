@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/auth/signup.dart';
+import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
@@ -271,9 +273,11 @@ class _HomePageState extends State<HomePage> {
                                     tag: i.toString(),
                                     child: ClipRRect(
                                         borderRadius: BorderRadius.circular(16),
-                                        child: Image.network(
-                                          vm.postList[i].image![0],
+                                        child: CachedNetworkImage(
+                                          imageUrl: vm.postList[i].image![0],
                                           fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              showPlaceHolderImage(),
                                         )),
                                   ),
                                 ),

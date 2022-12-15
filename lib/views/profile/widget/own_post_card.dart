@@ -2,7 +2,9 @@
 
 import 'dart:ffi';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/utils/colors.dart';
+import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/ui_utility_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,31 +42,40 @@ class OwnPostCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
+          // borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
             BoxShadow(
-              color: Colors.grey.shade500,
+              color: Color.fromARGB(255, 206, 206, 206),
               blurRadius: 3,
               spreadRadius: 0,
-              offset: const Offset(1, 1),
+              offset: Offset(1, 1),
             )
           ],
         ),
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 20,
+          vertical: 2,
+          horizontal: 0,
         ),
         child: Column(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                imgUrl,
-                width: Get.width,
+              child: CachedNetworkImage(
+                imageUrl: imgUrl,
+                width: Get.width - 40,
                 height: 200,
-                fit: BoxFit.cover,
                 alignment: Alignment.bottomCenter,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => showPlaceHolderImage(),
               ),
             ),
             Container(
@@ -99,7 +110,8 @@ class OwnPostCard extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  SizedBox(
+                  Container(
+                    margin: EdgeInsets.only(left: 10),
                     width: Get.width - 80,
                     child: Text(
                       title,

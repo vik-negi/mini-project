@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/utils/colors.dart';
+import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/ui_utility_widgets.dart';
 import 'package:evika/views/create_post/selected_image_crousel_page.dart';
+import 'package:evika/views/mypost/my_post_comments.dart';
 import 'package:evika/views/mypost/my_post_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,21 +40,19 @@ class MyPostDetails extends StatelessWidget {
                               vm.activeImageNumber = index;
                               vm.update();
                             },
-                            // enlargeCenterPage: true,
-                            // height: 400.0,
                             viewportFraction: 1,
                           ),
                           items: vm.post.image!
                               .map(
                                 (e) => SizedBox(
                                   width: Get.width,
-                                  child: FadeInImage.assetNetwork(
+                                  child: CachedNetworkImage(
                                     fit: BoxFit.cover,
-                                    imageScale: 2,
-                                    placeholderFit: BoxFit.cover,
-                                    image: e,
-                                    placeholder:
-                                        "assets/placeholderimageloading.gif",
+                                    imageUrl: e,
+                                    placeholder: (context, url) =>
+                                        showPlaceHolderImage(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
                                 ),
                               )
@@ -84,17 +85,6 @@ class MyPostDetails extends StatelessWidget {
                             ),
                           )),
                         ),
-                        // InkWell(
-                        //   onTap: () {
-                        //     // nothing
-                        //   },
-                        //   child: const SizedBox(
-                        //     child: Icon(
-                        //       Icons.zoom_out_map_rounded,
-                        //       color: Colors.white,
-                        //     ),
-                        //   ),
-                        // )
                       ],
                     ),
                   ),
@@ -199,9 +189,86 @@ class MyPostDetails extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
+              statsPageButton(
+                lable: "View Comments",
+                icon: Icons.comment,
+                count: vm.post.noOfComments,
+                onTap: () {
+                  Get.to(
+                    const MyPostComments(),
+                    transition: Transition.rightToLeft,
+                    duration: const Duration(milliseconds: 150),
+                  );
+                },
+              ),
+              statsPageButton(
+                lable: "View Registraitons",
+                icon: Icons.receipt_long_sharp,
+                count: vm.post.noOfComments,
+                onTap: () {
+                  Get.to(
+                    const MyPostComments(),
+                    transition: Transition.rightToLeft,
+                    duration: const Duration(milliseconds: 150),
+                  );
+                },
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget statsPageButton({
+    required String lable,
+    required IconData icon,
+    int? count,
+    Function? onTap,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 5,
+      ),
+      padding: const EdgeInsets.symmetric(
+        vertical: 30,
+        horizontal: 30,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: AppColors.accentColor,
+      ),
+      child: InkWell(
+        onTap: () {
+          onTap != null ? onTap() : () {};
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(icon),
+                  gapx(10),
+                  Text(
+                    "$lable(${count ?? 0})",
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              CupertinoIcons.arrow_right,
+              size: 30,
+            )
+          ],
         ),
       ),
     );

@@ -168,7 +168,7 @@ class UserData {
           ? List<double>.from(map['location'])
           : [00, 00],
       password: map['password'],
-      id: map['id'],
+      id: map['_id'],
       jti: map['jti'] != null ? map['jti'] as String : null,
       profileImage: map['profileImage'] != null
           ? map['profileImage']["url"] as String

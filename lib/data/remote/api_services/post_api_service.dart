@@ -14,20 +14,20 @@ class PostApiServices {
   ApiServices apiServices = ApiServices();
   Future<Map<String, dynamic>> getAllPosts() async {
     try {
-      print("fetched");
+      // print("fetched");
       final response =
           await http.get(Uri.parse('$baseUrl/api/user/get-all-posts'));
-      print(response.statusCode);
-      print(response);
+      // print(response.statusCode);
+      // print(response);
       if (response.statusCode == 200) {
-        print(response.body);
+        // print(response.body);
         Map<String, dynamic> body = apiServices.returnResponse(response);
         return body;
       } else {
         throw Exception('Failed to load post');
       }
     } catch (err) {
-      print(err);
+      // print(err);
     }
     return {};
   }
@@ -35,11 +35,11 @@ class PostApiServices {
   Future<String?> createPost(MultipartRequest request) async {
     const api = '$baseUrl/api/user/create-post';
     try {
-      print("pppppppppppppppppppppp");
+      // print("pppppppppppppppppppppp");
       var response = await request.send();
       var responseData = await response.stream.toBytes();
       var responseString = String.fromCharCodes(responseData);
-      print(response);
+      // print(response);
       if (response.statusCode == 200) {
         // Map<String, dynamic> body = apiServices.returnResponse(response);
 
@@ -48,8 +48,8 @@ class PostApiServices {
         throw Exception('Failed to create post');
       }
     } catch (err) {
-      print("Catch Error $err");
-      print(err);
+      // print("Catch Error $err");
+      // print(err);
       return null;
     }
   }
@@ -61,16 +61,6 @@ class PostApiServices {
         'postId': postId,
       };
 
-      // String queryString = Uri.parse(queryParameters: {
-      //   'postId': postId
-      // }).query;
-
-      // var requestUrl = api + '?' + queryString;
-      // final uri = Uri.http(
-      //     "192.168.43.65:8000", '/api/user/like-post/', queryParameters);
-
-      // print(uri);
-      // final response = await http.post(uri);
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       String token = sharedPreferences.getString("token")!;

@@ -55,6 +55,7 @@ class PostData {
   final String? description;
   final String? eventCategory;
   final String? eventEndAt;
+
   final String? eventId;
   final EventLocation? eventLocation;
   final String? eventStartAt;
@@ -70,7 +71,11 @@ class PostData {
   final String? updatedAt;
   final String? username;
   final String? userId;
+  final String? name;
+  final String? profileImage;
   PostData({
+    this.name,
+    this.profileImage,
     this.createdAt,
     this.description,
     this.eventCategory,
@@ -92,6 +97,8 @@ class PostData {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'name': name,
+      'profileImage': profileImage,
       'createdAt': createdAt,
       'description': description,
       'eventCategory': eventCategory,
@@ -140,6 +147,10 @@ class PostData {
       title: map['title'] != null ? map['title'] as String : "null",
       updatedAt: map['updatedAt'] != null ? map['updatedAt'] as String : "null",
       username: map['username'] != null ? map['username'] as String : "null",
+      profileImage: map['profileImage'] != null
+          ? map['profileImage']['url'] as String
+          : "null",
+      name: map['name'] != null ? map['name'] as String : "null",
       userId: map['userId'] != null ? map['userId'] as String : "null",
       noOfComments:
           map['noOfComments'] != null ? map['noOfComments'] as int : 0,
