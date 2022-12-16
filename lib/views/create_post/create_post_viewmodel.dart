@@ -21,6 +21,7 @@ class CreatePostVM extends GetxController {
   ApiResponce<Map<dynamic, dynamic>?> response = ApiResponce.loading();
   PostData postData = PostData();
   List<PostData> postList = <PostData>[].obs;
+  double attentionHeight = 0.0;
 
   late final Future? futurePosts;
   RxBool isPostFetched = false.obs;
@@ -32,8 +33,6 @@ class CreatePostVM extends GetxController {
   String? dateTime;
   int viewImageIndex = 0;
   bool isRegistrationRequired = false;
-
-  RegistraionFields registrationFilds = RegistraionFields();
 
   List<DateTime> startAndEndDate = [];
 
@@ -186,6 +185,12 @@ class CreatePostVM extends GetxController {
       // jsonDecode(tagsMap.body)["data"].forEach((element) {
       // tagString += "$element,";
       // });
+      String tagString = "";
+      // List tagList = jsonDecode(tagsMap.body)["data"];
+      // jsonDecode(tagsMap.body)["data"].forEach((element) {
+      //   tagString += "$element,";
+      // });
+
       // tagString = tagString.substring(0, tagString.length - 1);
       var request = http.MultipartRequest(
           "POST", Uri.parse("$baseUrl/api/user/create-post/"));
@@ -195,11 +200,10 @@ class CreatePostVM extends GetxController {
       request.fields["description"] = descriptionController.text;
       request.fields["location"] = locationController.text;
       request.fields["eventDescription"] = eventDescriptionController.text;
-      request.fields["eventStartAt"] =
-          '${startDateController.text} ${startTimeController.text}';
-
-      request.fields["eventEndAt"] =
-          '${endDateController.text} ${endTimeController.text}';
+      request.fields["eventStartAt"] = startAndEndDate[0].toString();
+      request.fields["isRegistrationRequired"] =
+          isRegistrationRequired.toString();
+      request.fields["eventEndAt"] = startAndEndDate[1].toString();
       request.fields["eventCategory"] = 'sports';
       // request.fields["tags"] = [];
       request.fields["userId"] = sharedPreferences.getString("user_id")!;
@@ -209,8 +213,12 @@ class CreatePostVM extends GetxController {
       }
 
       print(request.fields.entries);
-      String? response = await postRepoImp.createPost(request);
+      // debugPrint("printing");
+      // for (var i in request.fields.entries) {
+      // }
+      // debugPrint("printed");
 
+      String? response = await postRepoImp.createPost(request);
       print(response);
       if (response != null) {
         Get.snackbar('Success', 'Post Created Successfully');
@@ -230,7 +238,6 @@ class CreatePostVM extends GetxController {
       print("uuuuuuuuuuuuuuu");
       print("Liked Post response : $response");
       List<String> likedPosts = [];
-
       return true;
     } else {
       return false;
@@ -269,38 +276,4 @@ class CreatePostVM extends GetxController {
 
     update();
   }
-
-  // selectDateTime(context, String type) async {
-  //   userSelectedDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime(2001),
-  //     lastDate: DateTime(2100),
-  //   );
-  //   userSelectedTime = await showTimePicker(
-  //     context: context,
-  //     initialTime: TimeOfDay.now(),
-  //   );
-  //   if (userSelectedDate != null) {
-  //     if (type == 'start') {
-  //       startDateController.text =
-  //           userSelectedDate!.toString().substring(0, 10);
-  //     } else {
-  //       endDateController.text = userSelectedDate!.toString().substring(0, 10);
-  //     }
-  //   }
-  //   if (userSelectedTime != null) {
-  //     if (type == 'start') {
-  //       startTimeController.text =
-  //           "${userSelectedTime!.hour}:${userSelectedTime!.minute}";
-  //     } else {
-  //       endTimeController.text =
-  //           "${userSelectedTime!.hour}:${userSelectedTime!.minute}";
-  //     }
-  //   }
-  //   if (userSelectedDate != null && userSelectedTime != null) {
-  //     dateTime = '${selectedDate.toString().substring(0, 10)} $selectedTime';
-  //   }
-  //   update();
-  // }
 }

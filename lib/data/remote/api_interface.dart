@@ -16,6 +16,8 @@ abstract class CommoApiInterface {
   Future<List>? getAndAddComments(String postId, String? text);
   Future<bool>? commentFunctionality(
       String postId, String type, String commentId);
+  Future<Map<String, dynamic>> getUserPost(String userId);
+  Future<Map<String, dynamic>?> otherUsersData(String userId);
   // Future<bool> addComment(String postId, String text);
 }
 

@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/auth/signup.dart';
+import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
 import 'package:evika/views/demo.dart';
 import 'package:evika/views/feed/show_files.dart';
+import 'package:evika/views/profile/other_user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,10 +47,19 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Column(
                             children: [
-                              const CircleAvatar(
-                                radius: 30,
-                                backgroundImage: NetworkImage(
-                                    'https://www.w3schools.com/howto/img_avatar.png'),
+                              GestureDetector(
+                                onTap: () {
+                                  commonVM
+                                      .otherUsersData(vm.postList[i].userId!);
+                                  Get.to(() => OtherProfilePage());
+                                },
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: NetworkImage(
+                                      // 'https://www.w3schools.com/howto/img_avatar.png'
+                                      vm.postList[i].profileImage ??
+                                          'https://www.w3schools.com/howto/img_avatar.png'),
+                                ),
                               ),
                               const SizedBox(
                                 height: 50,
@@ -141,26 +153,26 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  children: const [
+                                  children: [
                                     Text(
-                                      'Vikram Negi',
-                                      style: TextStyle(
+                                      vm.postList[i].name!,
+                                      style: const TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 4,
                                     ),
-                                    Icon(
+                                    const Icon(
                                       Icons.verified,
                                       size: 22,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Text(
-                                      '@vikram',
-                                      style: TextStyle(fontSize: 15),
+                                      '@${vm.postList[i].username}',
+                                      style: const TextStyle(fontSize: 15),
                                     ),
                                   ],
                                 ),
@@ -272,9 +284,11 @@ class _HomePageState extends State<HomePage> {
                                     tag: i.toString(),
                                     child: ClipRRect(
                                         borderRadius: BorderRadius.circular(16),
-                                        child: Image.network(
-                                          vm.postList[i].image![0],
+                                        child: CachedNetworkImage(
+                                          imageUrl: vm.postList[i].image![0],
                                           fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              showPlaceHolderImage(),
                                         )),
                                   ),
                                 ),
@@ -439,7 +453,7 @@ class _HomePageState extends State<HomePage> {
                                                                         (context) {
                                                                       return AlertDialog(
                                                                         content:
-                                                                            Text("Do you want to delete this comment?"),
+                                                                            const Text("Do you want to delete this comment?"),
                                                                         actions: [
                                                                           TextButton(
                                                                               onPressed: () {

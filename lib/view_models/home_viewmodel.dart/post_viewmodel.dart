@@ -79,8 +79,8 @@ class PostVM extends GetxController {
     isPostFetched(false);
     update();
     Map<dynamic, dynamic>? data = await postRepoImp.getAllPost();
-    debugPrint("ddddddddddd");
-    debugPrint(data.toString());
+    // debugPrint("ddddddddddd");
+    // debugPrint(data.toString());
 
     try {
       if (data != null) {
@@ -94,8 +94,8 @@ class PostVM extends GetxController {
           PostData postData = PostData.fromJson(postdataStr);
 
           postList.add(postData);
-          print("llllllllllllll");
-          print(postList[i].eventId);
+          // print("llllllllllllll");
+          // print(postList[i].eventId);
           isPostFetched.value = true;
 
           update();

@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       darkTheme: darkThemeData(context),
       theme: lightThemeData(context),
+      scrollBehavior: const ScrollBehavior(
+          androidOverscrollIndicator: AndroidOverscrollIndicator.stretch),
       // themeMode: ThemeMode.dark,
       // themeMode: ThemeMode.light,
       getPages: AppRotutes.pages,

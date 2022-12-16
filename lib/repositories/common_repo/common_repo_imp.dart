@@ -38,4 +38,15 @@ class CommonRepoImp extends CommonRepo {
     print("object $response");
     return response;
   }
+
+  @override
+  Future<Map<String, dynamic>?> otherUsersData(String userId) async {
+    Map<String, dynamic>? response =
+        await commonApiServices.otherUsersData(userId);
+    print("object $response");
+    if (response != null) {
+      return response;
+    }
+    return {};
+  }
 }

@@ -60,6 +60,8 @@ dependencies:
   omni_datetime_picker: ^0.1.3
   photo_view: ^0.14.0
   dialog_flowtter: ^0.3.3
+  cached_network_image: ^3.2.3
+  modal_progress_hud_nsn: ^0.1.0-nullsafety-1
 
 dev_dependencies:
   flutter_lints: ^2.0.0

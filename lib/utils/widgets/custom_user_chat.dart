@@ -22,10 +22,12 @@ class CustomUser extends StatelessWidget {
         if (1 == 1) {
           Get.to(
               () => UserChatPage(
-                  isWeb:
-                      (MediaQuery.of(context).size.width > 700) ? true : false,
-                  receiverId: userChatModel.receiverId,
-                  i: index),
+                    isWeb: (MediaQuery.of(context).size.width > 700)
+                        ? true
+                        : false,
+                    receiverId: userChatModel.receiverId,
+                    receiverName: userChatModel.name,
+                  ),
               arguments: {
                 "receiverUserId": userChatModel.receiverId,
               },
