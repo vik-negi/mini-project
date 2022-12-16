@@ -83,7 +83,7 @@ class ChatApiServices extends ChatApiInterface {
   ) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.getString("token")!;
-    print("chatId : $chatId");
+    // // print("chatId : $chatId");
     String api = "$baseUrl/api/user/chat/deleteChat/$chatId";
     var response = await http.get(
       Uri.parse(api),
@@ -102,14 +102,14 @@ class ChatApiServices extends ChatApiInterface {
   Future<Map<String, dynamic>>? functionality(String chatId, Map body) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.getString("token")!;
-    print("chatId : $chatId");
+    // // print("chatId : $chatId");
     String api = "$baseUrl/api/user/chat/functionality/$chatId";
     var response = await http.post(Uri.parse(api),
         headers: {
           "Authorization": "Bearer $token",
         },
         body: body);
-    print("response : ${response.body}");
+    // print("response : ${response.body}");
     if (response == null) {
       return {};
     }

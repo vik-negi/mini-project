@@ -18,6 +18,7 @@ ThemeData lightThemeData(BuildContext context) {
     backgroundColor: const Color(0xFFFFFFFF),
     scaffoldBackgroundColor: const Color(0xFFF5F5F5),
     errorColor: kErrorColor,
+
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 }
