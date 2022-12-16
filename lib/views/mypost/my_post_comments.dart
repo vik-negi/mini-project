@@ -1,3 +1,4 @@
+import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/views/mypost/my_post_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -9,7 +10,7 @@ class MyPostComments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MyPostDetailsViewModel vm = Get.find<MyPostDetailsViewModel>();
+    CommonVM commonVM = Get.find<CommonVM>();
     return GetBuilder<MyPostDetailsViewModel>(
       builder: (vm) => Scaffold(
         appBar: AppBar(
@@ -17,7 +18,7 @@ class MyPostComments extends StatelessWidget {
           foregroundColor: Colors.black,
           elevation: 1,
           title: Text(
-            vm.post.title ?? "Comments",
+            "Comments: ${commonVM.individualPostData!.title ?? 'You Post'}",
             style: const TextStyle(
               color: Colors.black,
               fontSize: 17,

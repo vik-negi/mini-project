@@ -73,8 +73,12 @@ class PostData {
   final String? userId;
   final String? name;
   final String? profileImage;
+  final List<dynamic>? registration;
+  final bool? registrationRequired;
 
   PostData({
+    this.registrationRequired,
+    this.registration,
     this.name,
     this.profileImage,
     this.createdAt,
@@ -98,6 +102,8 @@ class PostData {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'registrationRequired': registrationRequired,
+      'registration': registration,
       'name': name,
       'profileImage': profileImage,
       'createdAt': createdAt,
@@ -122,6 +128,10 @@ class PostData {
 
   factory PostData.fromMap(Map<String, dynamic> map) {
     return PostData(
+      registrationRequired: map['registrationRequired'] != null
+          ? map['registrationRequired'] as bool
+          : false,
+      registration: map['registration'] != null ? map['registration'] : [],
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : "null",
       description:
           map['description'] != null ? map['description'] as String : "null",

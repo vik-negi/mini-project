@@ -25,6 +25,7 @@ class CommonVM extends GetxController {
   ProfileRepoImp profileRepoImp = ProfileRepoImp();
   bool tapOnLikedButton = false;
   List<PostData> userPostList = [];
+  PostData? individualPostData;
   // SharedPreferences sharedPreferences = SharedPreferences as SharedPreferences;
   bool isLikedPost(String postId) {
     return userLikedPostList.contains(postId);
