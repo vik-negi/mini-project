@@ -21,6 +21,7 @@ class CreatePostVM extends GetxController {
   ApiResponce<Map<dynamic, dynamic>?> response = ApiResponce.loading();
   PostData postData = PostData();
   List<PostData> postList = <PostData>[].obs;
+  double attentionHeight = 0.0;
 
   late final Future? futurePosts;
   RxBool isPostFetched = false.obs;
@@ -32,8 +33,6 @@ class CreatePostVM extends GetxController {
   String? dateTime;
   int viewImageIndex = 0;
   bool isRegistrationRequired = false;
-
-  RegistraionFields registrationFilds = RegistraionFields();
 
   List<DateTime> startAndEndDate = [];
 
@@ -200,7 +199,8 @@ class CreatePostVM extends GetxController {
 
       request.fields["eventStartAt"] = startAndEndDate[0].toString();
 
-      request.fields["registration"] = [].toString();
+      request.fields["isRegistrationRequired"] =
+          isRegistrationRequired.toString();
 
       request.fields["eventEndAt"] = startAndEndDate[1].toString();
 

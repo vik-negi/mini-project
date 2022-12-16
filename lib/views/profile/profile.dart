@@ -3,17 +3,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
-import 'package:evika/utils/ui_utility_widgets.dart';
+import 'package:evika/utils/utility_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
-import 'package:evika/view_models/profile_viewmodels/profile_viewmodel.dart';
 import 'package:evika/views/profile/widget/own_post_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -408,7 +406,7 @@ class ProfilePage extends StatelessWidget {
                               CupertinoIcons.collections_solid,
                               size: 18,
                             ),
-                            gapx(5),
+                            UtilFunctions.gapx(5),
                             const Text(
                               "Your Events",
                               style: TextStyle(
@@ -421,7 +419,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       vm.userPostList.isEmpty
-                          ? Container(
+                          ? SizedBox(
                               height: 155,
                               child: Center(
                                 child: Column(
@@ -429,10 +427,10 @@ class ProfilePage extends StatelessWidget {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        // Get.toNamed(
-                                        //   AppRotutes.createPost,
-                                        // );
-                                        vm.getUserPost(vm.userData!.id);
+                                        Get.toNamed(
+                                          AppRotutes.createPost,
+                                        );
+                                        // vm.getUserPost(vm.userData!.id);
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(15),
@@ -448,7 +446,7 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    gapy(10),
+                                    UtilFunctions.gapy(10),
                                     const Text(
                                       "Create Your first Event",
                                       style: TextStyle(
@@ -462,22 +460,27 @@ class ProfilePage extends StatelessWidget {
                               ),
                             )
                           : SizedBox(
-                              height:
-                                  320.0 * (vm.userPostList.length.toDouble()),
                               child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
                                 itemCount: vm.userPostList.length,
+                                // itemCount: 1,
                                 itemBuilder: (context, index) {
                                   return OwnPostCard(
                                     title:
                                         vm.userPostList[index].title.toString(),
                                     imgUrl: vm.userPostList[index].image![0]
                                         .toString(),
-                                    shares: "3.4K",
+                                    // imgUrl:
+                                    //     "https://media.istockphoto.com/id/1038727610/photo/liquid-shapes-abstract-holographic-3d-wavy-background.jpg?s=612x612&w=0&k=20&c=OSfb3DuCHkjERNJTpK4GzMN851GhHQA6Evn9DKc-kw4=",
                                     likes:
                                         vm.userPostList[index].likes.toString(),
-                                    comments: "1.2K",
-                                    registrations: "23",
+                                    // likes: "266034",
+                                    comments: vm
+                                        .userPostList[index].noOfComments
+                                        .toString(),
+                                    registrations:
+                                        vm.userPostList[index].likes.toString(),
                                     date: DateTime(2022, 11, 12),
                                     route: AppRotutes.myPostDetails,
                                   );
@@ -511,7 +514,7 @@ class ProfilePage extends StatelessWidget {
                   size: 18,
                 )
               : const SizedBox(),
-          icon != null ? gapx(4) : const SizedBox(),
+          icon != null ? UtilFunctions.gapx(4) : const SizedBox(),
           text != null ? Text(text) : const SizedBox(),
         ],
       ),

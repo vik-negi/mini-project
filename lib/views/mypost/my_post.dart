@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
-import 'package:evika/utils/ui_utility_widgets.dart';
+import 'package:evika/utils/utility_functions.dart';
 import 'package:evika/views/create_post/selected_image_crousel_page.dart';
 import 'package:evika/views/mypost/my_post_comments.dart';
 import 'package:evika/views/mypost/my_post_viewmodel.dart';
@@ -253,7 +253,7 @@ class MyPostDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(icon),
-                  gapx(10),
+                  UtilFunctions.gapx(10),
                   Text(
                     "$lable(${count ?? 0})",
                     style: const TextStyle(
@@ -293,7 +293,7 @@ class MyPostDetails extends StatelessWidget {
                   size: 18,
                 )
               : const SizedBox(),
-          icon != null ? gapx(4) : const SizedBox(),
+          icon != null ? UtilFunctions.gapx(4) : const SizedBox(),
           text != null ? Text(text) : const SizedBox(),
         ],
       ),

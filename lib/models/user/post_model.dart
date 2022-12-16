@@ -73,6 +73,7 @@ class PostData {
   final String? userId;
   final String? name;
   final String? profileImage;
+
   PostData({
     this.name,
     this.profileImage,
