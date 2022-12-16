@@ -1,4 +1,5 @@
 import 'package:evika/utils/routes.dart';
+import 'package:evika/view_models/chat_bot.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/views/chat_view/chart_view_home.dart';
 import 'package:evika/views/home.dart';
@@ -28,12 +29,12 @@ class FeedView extends StatelessWidget {
               },
               icon: Icon(Icons.message, color: Colors.grey.shade800),
             ),
-            // IconButton(
-            //   onPressed: () {
-            //     Get.to(HomePage());
-            //   },
-            //   icon: Icon(Icons.home),
-            // ),
+            IconButton(
+              onPressed: () {
+                Get.to(ChatBot());
+              },
+              icon: Icon(Icons.home),
+            ),
             IconButton(
               icon: Icon(Icons.logout, color: Colors.grey.shade800),
               onPressed: () {

@@ -40,8 +40,8 @@ class CommonVM extends GetxController {
     update();
   }
 
-  void getComments(String postId) async {
-    isLoading = true;
+  void getComments({required String postId, String? type}) async {
+    isLoading = type == null ? true : false;
     update();
     try {
       var response = await commonRepoImp.getAndAddComments(postId, null);
@@ -75,6 +75,7 @@ class CommonVM extends GetxController {
       createdAt: DateTime.now(),
       id: '',
       text: text,
+      postId: postId,
       name: await getSharedPref('name', "String"),
       isEdited: false,
       userImage: 'https://www.w3schools.com/howto/img_avatar.png',
@@ -100,5 +101,23 @@ class CommonVM extends GetxController {
     }
     // isLoading = false;
     update();
+  }
+
+  void commentFuntionality(String postId, String type, String commentId) async {
+    try {
+      bool response =
+          await commonRepoImp.commentFunctionality(postId, type, commentId);
+      print("response $response");
+      Get.snackbar("success", "$type success");
+      // commentList.removeLast();
+      // if (response != null) {
+      //   commentList = response;
+      //   update();
+      // }
+      getComments(postId: postId, type: type);
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong");
+      print(e);
+    }
   }
 }

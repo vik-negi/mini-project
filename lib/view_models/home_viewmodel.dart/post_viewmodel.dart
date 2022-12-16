@@ -142,6 +142,8 @@ class PostVM extends GetxController {
       // tagString = tagString.substring(0, tagString.length - 1);
       var request = http.MultipartRequest(
           "POST", Uri.parse("$baseUrl/api/user/create-post/"));
+      request.headers["Authorization"] =
+          "Bearer ${sharedPreferences.getString("token")}";
       request.fields["title"] = titleController.text;
       request.fields["description"] = descriptionController.text;
       request.fields["location"] = locationController.text;

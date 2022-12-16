@@ -14,6 +14,8 @@ abstract class PostApiInterface {
 abstract class CommoApiInterface {
   Future<List<String>>? userLikedPosts();
   Future<List>? getAndAddComments(String postId, String? text);
+  Future<bool>? commentFunctionality(
+      String postId, String type, String commentId);
   // Future<bool> addComment(String postId, String text);
 }
 

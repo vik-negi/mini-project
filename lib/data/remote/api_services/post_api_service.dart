@@ -36,6 +36,7 @@ class PostApiServices {
     const api = '$baseUrl/api/user/create-post';
     try {
       print("pppppppppppppppppppppp");
+
       var response = await request.send();
       var responseData = await response.stream.toBytes();
       var responseString = String.fromCharCodes(responseData);

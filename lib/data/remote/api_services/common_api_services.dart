@@ -70,13 +70,13 @@ class CommonApiServices extends CommoApiInterface {
         response = r;
       }
     }
-    print("response :::: ${response.body}");
+    // print("response :::: ${response.body}");
     if (response.statusCode == 200) {
       List comments = [];
       Map<String, dynamic> res = jsonDecode(response.body);
       comments = res["data"];
 
-      print("get comment : $comments");
+      // print("get comment : $comments");
       return comments;
     }
     return [];
@@ -93,6 +93,29 @@ class CommonApiServices extends CommoApiInterface {
         },
         body: {
           "comment": text
+        });
+    print("response :::: ${response.body}");
+    if (response != null && response.statusCode == 200) {
+      Map<String, dynamic> res = jsonDecode(response.body);
+      print("add comment res : $res");
+      return res["success"] == "success" ? true : false;
+    }
+    return false;
+  }
+
+  @override
+  Future<bool> commentFunctionality(
+      String postId, String? type, String commentId) async {
+    String token = await getToken();
+    print("commentId : $commentId");
+    final response = await http.post(
+        Uri.parse('$baseUrl/api/user/commentfunctionality/$postId'),
+        headers: <String, String>{
+          "authorization": "Bearer $token",
+        },
+        body: {
+          "type": type,
+          "commentID": commentId
         });
     print("response :::: ${response.body}");
     if (response != null && response.statusCode == 200) {

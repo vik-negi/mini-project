@@ -176,19 +176,21 @@ class CreatePostVM extends GetxController {
       debugPrint("chala");
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      http.Response tagsMap =
-          await http.post(Uri.parse("$mlBaseUrl/api/keywords"), body: {
-        "text": descriptionController.text,
-        "user_id": "1",
-      });
-      String tagString = "";
+      // http.Response tagsMap =
+      //     await http.post(Uri.parse("$mlBaseUrl/api/keywords"), body: {
+      //   "text": descriptionController.text,
+      //   "user_id": "1",
+      // });
+      // String tagString = "";
       // List tagList = jsonDecode(tagsMap.body)["data"];
-      jsonDecode(tagsMap.body)["data"].forEach((element) {
-        tagString += "$element,";
-      });
-      tagString = tagString.substring(0, tagString.length - 1);
+      // jsonDecode(tagsMap.body)["data"].forEach((element) {
+      // tagString += "$element,";
+      // });
+      // tagString = tagString.substring(0, tagString.length - 1);
       var request = http.MultipartRequest(
           "POST", Uri.parse("$baseUrl/api/user/create-post/"));
+      request.headers["Authorization"] =
+          "Bearer ${sharedPreferences.getString("token")}";
       request.fields["title"] = titleController.text;
       request.fields["description"] = descriptionController.text;
       request.fields["location"] = locationController.text;
@@ -199,12 +201,14 @@ class CreatePostVM extends GetxController {
       request.fields["eventEndAt"] =
           '${endDateController.text} ${endTimeController.text}';
       request.fields["eventCategory"] = 'sports';
-      request.fields["tags"] = tagString;
+      // request.fields["tags"] = [];
       request.fields["userId"] = sharedPreferences.getString("user_id")!;
       for (var element in selectedImages) {
         request.files
             .add(await http.MultipartFile.fromPath("image", element.path));
       }
+
+      print(request.fields.entries);
       String? response = await postRepoImp.createPost(request);
 
       print(response);

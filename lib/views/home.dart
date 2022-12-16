@@ -105,7 +105,8 @@ class _HomePageState extends State<HomePage> {
                                 backgroundColor: Colors.white,
                                 child: IconButton(
                                   onPressed: () async {
-                                    commonVM.getComments(vm.postList[i].id!);
+                                    commonVM.getComments(
+                                        postId: vm.postList[i].id!);
                                     bottomModelWidget(context, vm, i);
                                   },
                                   icon: Icon(
@@ -429,66 +430,90 @@ class _HomePageState extends State<HomePage> {
                                                             const SizedBox(
                                                               width: 10,
                                                             ),
-                                                            Container(
-                                                                width:
-                                                                    Get.width -
-                                                                        80,
-                                                                child: Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Text(
-                                                                      CommonVM
-                                                                          .commentList[
-                                                                              index]
-                                                                          .username,
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight.w400),
-                                                                    ),
-                                                                    RichText(
-                                                                        text:
-                                                                            TextSpan(
-                                                                      text: CommonVM
-                                                                          .commentList[
-                                                                              index]
-                                                                          .text,
-                                                                      style: const TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight.w400),
-                                                                    )),
-                                                                    Row(
-                                                                      children: [
-                                                                        TextButton.icon(
-                                                                            label: const Text("5k"),
-                                                                            onPressed: () {},
-                                                                            icon: Icon(
-                                                                              Icons.thumb_up,
-                                                                              color: Colors.grey.shade600,
-                                                                              size: 20,
-                                                                            )),
-                                                                        TextButton(
-                                                                            onPressed:
-                                                                                () {},
-                                                                            child:
-                                                                                const Text("Reply")),
-                                                                      ],
-                                                                    ),
-                                                                    i == CommonVM.commentList.length - 1
-                                                                        ? const SizedBox(
-                                                                            height:
-                                                                                40,
-                                                                          )
-                                                                        : const SizedBox()
-                                                                  ],
-                                                                ))
+                                                            GestureDetector(
+                                                              onLongPress: () {
+                                                                showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) {
+                                                                      return AlertDialog(
+                                                                        content:
+                                                                            Text("Do you want to delete this comment?"),
+                                                                        actions: [
+                                                                          TextButton(
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: const Text("No")),
+                                                                          TextButton(
+                                                                              onPressed: () {
+                                                                                commonVM.commentFuntionality(CommonVM.commentList[index].postId, "delete", CommonVM.commentList[index].id);
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: const Text("Yes")),
+                                                                        ],
+                                                                      );
+                                                                    });
+                                                              },
+                                                              child: Container(
+                                                                  width:
+                                                                      Get.width -
+                                                                          80,
+                                                                  child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        CommonVM
+                                                                            .commentList[index]
+                                                                            .username,
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                                15,
+                                                                            fontWeight:
+                                                                                FontWeight.w400),
+                                                                      ),
+                                                                      RichText(
+                                                                          text:
+                                                                              TextSpan(
+                                                                        text: CommonVM
+                                                                            .commentList[index]
+                                                                            .text,
+                                                                        style: const TextStyle(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            fontSize:
+                                                                                15,
+                                                                            fontWeight:
+                                                                                FontWeight.w400),
+                                                                      )),
+                                                                      Row(
+                                                                        children: [
+                                                                          TextButton.icon(
+                                                                              label: Text("${CommonVM.commentList[index].likes}"),
+                                                                              onPressed: () {
+                                                                                CommonVM.commentFuntionality(CommonVM.commentList[index].postId, "likes", CommonVM.commentList[index].id);
+                                                                              },
+                                                                              icon: Icon(
+                                                                                Icons.thumb_up,
+                                                                                color: Colors.grey.shade600,
+                                                                                size: 20,
+                                                                              )),
+                                                                          TextButton(
+                                                                              onPressed: () {},
+                                                                              child: const Text("Reply")),
+                                                                        ],
+                                                                      ),
+                                                                      i == CommonVM.commentList.length - 1
+                                                                          ? const SizedBox(
+                                                                              height: 40,
+                                                                            )
+                                                                          : const SizedBox()
+                                                                    ],
+                                                                  )),
+                                                            )
                                                           ]),
                                                     )
                                                   : const Text(
