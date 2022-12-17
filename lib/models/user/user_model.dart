@@ -55,7 +55,7 @@ class UserData {
   String email;
   String? mobile;
   String username;
-  List<double> location;
+  List<double>? location;
   String password;
   String id;
   String? jti;
@@ -163,7 +163,9 @@ class UserData {
       email: map['email'],
       mobile: map['mobile'] != null ? map['mobile'] as String : null,
       username: map['username'],
-      location: List<double>.from(map['location']),
+      location: map['location'] != null
+          ? List<double>.from(map['location'])
+          : [00, 00],
       password: map['password'],
       id: map['id'],
       jti: map['jti'] != null ? map['jti'] as String : null,

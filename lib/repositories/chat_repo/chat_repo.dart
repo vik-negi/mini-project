@@ -6,4 +6,6 @@ abstract class ChatRepo {
   Future<Map<String, dynamic>>? sendMessageToUser(
       String receiverUserId, String message);
   Future<List<ChatUsers>> getAllChatUsers();
+  Future<Map<String, dynamic>> deleteChat(String chatId);
+  Future<Map<String, dynamic>> functionality(String chatId, Map body);
 }

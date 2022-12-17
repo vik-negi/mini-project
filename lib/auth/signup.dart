@@ -187,6 +187,7 @@ class TextFormFieldContainer extends StatelessWidget {
   final Widget? suffix;
   bool obscure = false;
   double? height;
+  double? width;
   TextEditingController controller = TextEditingController();
   TextFormFieldContainer(
       {Key? key,
@@ -197,13 +198,14 @@ class TextFormFieldContainer extends StatelessWidget {
       required this.isMobileNumber,
       this.suffix,
       this.height,
+      this.width,
       this.obscure = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: 320,
+        width: width ?? 320,
         // height: height ?? 60,
         child: TextFormField(
           controller: controller,

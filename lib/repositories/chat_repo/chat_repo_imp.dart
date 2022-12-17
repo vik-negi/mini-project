@@ -48,4 +48,25 @@ class ChatRepoImp extends ChatRepo {
     }
     return {};
   }
+
+  @override
+  Future<Map<String, dynamic>> deleteChat(String chatId) async {
+    Map<String, dynamic>? res = await chatApiServices.deleteChat(chatId);
+    debugPrint("chat detele Repo Imp $res");
+    if (res != null && res.isNotEmpty) {
+      return res;
+    }
+    return {};
+  }
+
+  @override
+  Future<Map<String, dynamic>> functionality(String chatId, Map body) async {
+    Map<String, dynamic>? res =
+        await chatApiServices.functionality(chatId, body);
+    debugPrint("chat functionality Repo Imp $res");
+    if (res != null && res.isNotEmpty) {
+      return res;
+    }
+    return {};
+  }
 }

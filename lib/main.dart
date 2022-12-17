@@ -1,8 +1,8 @@
 import 'package:evika/appTheme.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
-import 'package:evika/views/create_post.dart';
-import 'package:evika/views/profile.dart';
+import 'package:evika/views/create_post/create_post.dart';
+import 'package:evika/views/profile/profile.dart';
 import 'package:evika/views/signin.dart';
 import 'package:evika/views/trending_view/tranding.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,14 +25,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: darkThemeData(context),
-      // theme: lightThemeData(context),
+      theme: lightThemeData(context),
       // themeMode: ThemeMode.dark,
       // themeMode: ThemeMode.light,
       getPages: AppRotutes.pages,
-      // home: SplashScreen(),
-      theme: ThemeData(
-        fontFamily: "Poppins",
-      ),
       initialRoute: AppRotutes.splashScreen,
     );
   }
@@ -45,9 +41,9 @@ class ScreenNavigate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = <Widget>[
-      FeedView(),
+      const FeedView(),
       const TrandingPage(),
-      const CreatePostPage(),
+      CreatePostPage(),
       true ? ProfilePage() : SigninPage(),
     ];
     return GetBuilder<NavigationController>(builder: (nv) {

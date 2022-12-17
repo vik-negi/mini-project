@@ -1,4 +1,5 @@
 import 'package:evika/auth/signup.dart';
+import 'package:evika/utils/common_functions/location.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
 import 'package:evika/views/otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,7 @@ class _FurtherDetailsState extends State<FurtherDetails> {
   var phone = "";
 
   SignupVM vm = Get.put(SignupVM());
-
+  GetLocation getLoction = GetLocation();
   void sendOtp() async {
     Get.to(() => MyOtp());
     await FirebaseAuth.instance.verifyPhoneNumber(
@@ -62,7 +63,8 @@ class _FurtherDetailsState extends State<FurtherDetails> {
                   } else if (vm.locality1.text != "" &&
                       vm.adminArea1.text != "" &&
                       vm.postalCode1.text != "") {
-                    vm.findPositionByAddress();
+                    getLoction.findPositionByAddress(vm.locality1.text,
+                        vm.adminArea1.text, vm.postalCode1.text);
                     debugPrint("fetched by entering the location");
                     sendOtp();
                   } else {

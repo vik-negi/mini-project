@@ -1,6 +1,7 @@
 import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/repositories/login_repo/login_repo_imp.dart';
+import 'package:evika/utils/common_functions/location.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:location/location.dart';
 class SignupVM extends GetxController {
   ApiResponce<Map> response = ApiResponce.loading();
   final LoginRepoImp loginRepo = LoginRepoImp();
+  GetLocation getLoction = GetLocation();
 
   UserModel userModel = Get.put(UserModel());
   RxInt _currentStep = 0.obs;
@@ -22,6 +24,7 @@ class SignupVM extends GetxController {
       TextEditingController();
   final TextEditingController _accountTypeController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+
   TextEditingController locality1 = TextEditingController();
   TextEditingController adminArea1 = TextEditingController();
   TextEditingController postalCode1 = TextEditingController();
@@ -49,7 +52,7 @@ class SignupVM extends GetxController {
   var first1;
   LocationData? locationData;
 
-  void _determinePosition() async {
+  Future _determinePosition() async {
     Location location = Location();
 
     bool _serviceEnabled;
@@ -90,31 +93,31 @@ class SignupVM extends GetxController {
     adminArea1.text = first.adminArea.toString();
     postalCode1.text = first.postalCode.toString();
 
-    /// update ui
+    //   /// update ui
 
-    /// get continuous location updates
-    // location.onLocationChanged.listen((LocationData currentLocation) {
-    //   // Use current location
-    // });
+    //   /// get continuous location updates
+    //   // location.onLocationChanged.listen((LocationData currentLocation) {
+    //   //   // Use current location
+    //   // });
 
-    /// receive location when application is in background
-    // location.enableBackgroundMode(enable: true);
+    //   /// receive location when application is in background
+    //   // location.enableBackgroundMode(enable: true);
   }
 
-  void _findPositionByAddress() async {
-    //changing entered user address to coordinates
-    final query = "${locality1.text} ${adminArea1.text} ${postalCode1.text}";
-    var address1 = await Geocoder.local.findAddressesFromQuery(query);
-    first1 = address1.first;
-    update();
-    coordinatesPoints.add(first1.coordinates.longitude);
-    coordinatesPoints.add(first1.coordinates.latitude);
-    update();
-    debugPrint("coordinates : ${first1.coordinates.latitude}");
-  }
+  // void _findPositionByAddress() async {
+  //   //changing entered user address to coordinates
+  //   final query = "${locality1.text} ${adminArea1.text} ${postalCode1.text}";
+  //   var address1 = await Geocoder.local.findAddressesFromQuery(query);
+  //   first1 = address1.first;
+  //   update();
+  //   coordinatesPoints.add(first1.coordinates.longitude);
+  //   coordinatesPoints.add(first1.coordinates.latitude);
+  //   update();
+  //   debugPrint("coordinates : ${first1.coordinates.latitude}");
+  // }
 
   get determinePosition => _determinePosition;
-  get findPositionByAddress => _findPositionByAddress;
+  // get findPositionByAddress => _findPositionByAddress;
 
   Future<Map?> userSignup() async {
     Map data = {

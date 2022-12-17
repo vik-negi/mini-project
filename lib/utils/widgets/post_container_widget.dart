@@ -1,4 +1,5 @@
 import 'package:evika/models/user/post_model.dart';
+import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/views/description/description.dart';
@@ -6,42 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
-
-// var months = [
-//   'Jan',
-//   'Feb',
-//   'Mar',
-//   'Apr',
-//   'May',
-//   'Jun',
-//   'Jul',
-//   'Aug',
-//   'Sep',
-//   'Oct',
-//   'Nov',
-//   'Dec'
-// ];
-
-// take 2022-10-01T18:23:05.787Z format and retrun 12 hrs format
-// String convertTime(String time) {
-//   var date = DateTime.parse(time);
-//   var hour = date.hour;
-//   var min = date.minute;
-//   var ampm = hour >= 12 ? 'pm' : 'am';
-//   hour = hour % 12;
-//   hour = hour != 0 ? hour : 12;
-//   var minStr = min < 10 ? '0$min' : '$min';
-//   return '$hour:$minStr $ampm';
-// }
-
-// take input string as" Wed Jan 27 2021 00:15:53 GMT+0000 (Coordinated Universal Time)" and return date
-// String getDate(String date) {
-//   var dateList = date.split(' ');
-//   var month = months.indexOf(dateList[1]) + 1;
-//   var day = dateList[2];
-//   var year = dateList[3];
-//   return '$day-$month-$year';
-// }
 
 class PostContainer extends StatelessWidget {
   PostContainer({super.key, required this.i});
@@ -54,10 +19,7 @@ class PostContainer extends StatelessWidget {
     return GetBuilder<PostVM>(builder: (vm) {
       return InkWell(
         onTap: () {
-          // print(vm.postList[i].eventId);
-          Get.to(Description(
-            tag: i.toString(),
-          ));
+          Get.toNamed(AppRotutes.postDescription);
         },
         child: Container(
           height: 330,

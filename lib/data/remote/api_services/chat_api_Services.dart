@@ -23,11 +23,9 @@ class ChatApiServices extends ChatApiInterface {
       return {};
     }
     Map<String, dynamic> res = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      if (res.isNotEmpty) {
-        return res;
-      }
-    }
+    // if (response.statusCode == 200 && res.isNotEmpty) {
+    //   return res;
+    // }
     return res;
   }
 
@@ -76,6 +74,46 @@ class ChatApiServices extends ChatApiInterface {
         return res;
       }
     }
+    return res;
+  }
+
+  @override
+  Future<Map<String, dynamic>>? deleteChat(
+    String chatId,
+  ) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token")!;
+    print("chatId : $chatId");
+    String api = "$baseUrl/api/user/chat/deleteChat/$chatId";
+    var response = await http.get(
+      Uri.parse(api),
+      headers: {
+        "Authorization": "Bearer $token",
+      },
+    );
+    if (response == null) {
+      return {};
+    }
+    Map<String, dynamic> res = jsonDecode(response.body);
+    return res;
+  }
+
+  @override
+  Future<Map<String, dynamic>>? functionality(String chatId, Map body) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token")!;
+    print("chatId : $chatId");
+    String api = "$baseUrl/api/user/chat/functionality/$chatId";
+    var response = await http.post(Uri.parse(api),
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+        body: body);
+    print("response : ${response.body}");
+    if (response == null) {
+      return {};
+    }
+    Map<String, dynamic> res = jsonDecode(response.body);
     return res;
   }
 }

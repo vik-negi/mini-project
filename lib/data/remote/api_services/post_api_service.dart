@@ -32,6 +32,34 @@ class PostApiServices {
     return {};
   }
 
+  // filter post
+  Future<Map<String, dynamic>> filterPosts(Map range) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token")!;
+    try {
+      print("fetched filtered posts");
+      final response = await http
+          .post(Uri.parse('$baseUrl/api/user/filter-posts'), headers: {
+        "authorization": "Bearer $token",
+      }, body: {
+        "maxrange": range['maxrange']
+      });
+
+      print(response.statusCode);
+      print(response);
+      if (response.statusCode == 200) {
+        // print(response.body);
+        Map<String, dynamic> body = apiServices.returnResponse(response);
+        return body;
+      } else {
+        throw Exception('Failed to load post');
+      }
+    } catch (err) {
+      print(err);
+    }
+    return {};
+  }
+
   Future<String?> createPost(MultipartRequest request) async {
     const api = '$baseUrl/api/user/create-post';
     try {

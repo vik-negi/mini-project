@@ -14,6 +14,13 @@ class PostRepoImp extends PostRepo {
   }
 
   @override
+  Future<Map<String, dynamic>>? filterPost(Map range) async {
+    Map<String, dynamic> response = await postApiServices.filterPosts(range);
+    // debugPrint("Post Repo Imp $response");
+    return response;
+  }
+
+  @override
   Future<String?>? createPost(MultipartRequest data) async {
     String? response = await postApiServices.createPost(data);
     if (response != null) {

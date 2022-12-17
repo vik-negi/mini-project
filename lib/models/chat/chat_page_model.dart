@@ -7,8 +7,9 @@ class ChatUsers {
   final String name;
   final String profilePic;
   final String lastMessage;
-  final String lastMessageTime;
+  final DateTime lastMessageTime;
   final String lastMessageBy;
+  bool select;
   ChatUsers({
     required this.receiverId,
     required this.username,
@@ -17,6 +18,7 @@ class ChatUsers {
     required this.lastMessage,
     required this.lastMessageTime,
     required this.lastMessageBy,
+    this.select = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,7 +40,7 @@ class ChatUsers {
       name: map['name'] as String,
       profilePic: map['profilePic'] as String,
       lastMessage: map['lastMessage'] as String,
-      lastMessageTime: map['lastMessageTime'] as String,
+      lastMessageTime: DateTime.parse(map['lastMessageTime']),
       lastMessageBy: map['lastMessageBy'] as String,
     );
   }

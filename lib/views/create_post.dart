@@ -112,7 +112,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               TextButton(
                                 onPressed: () {
                                   vm.selectDateTime(context, "start");
-                                  vm.finCoordinates();
+                                  // vm.finCoordinates();
                                 },
                                 child: const Text('Select Date'),
                               ),
