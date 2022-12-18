@@ -20,7 +20,7 @@ class CommonRepoImp extends CommonRepo {
   @override
   Future<List<Comment>> getAndAddComments(String postId, String? text) async {
     List? response = await commonApiServices.getAndAddComments(postId, text);
-    print("object $response");
+    // print("object $response");
     if (response != null && response.isNotEmpty) {
       List<Comment> commentList =
           response.map((e) => Comment.fromMap(e)).toList();
@@ -28,5 +28,25 @@ class CommonRepoImp extends CommonRepo {
       return commentList;
     }
     return [];
+  }
+
+  @override
+  Future<bool> commentFunctionality(
+      String postId, String type, String commentId) async {
+    bool response =
+        await commonApiServices.commentFunctionality(postId, type, commentId);
+    print("object $response");
+    return response;
+  }
+
+  @override
+  Future<Map<String, dynamic>?> otherUsersData(String userId) async {
+    Map<String, dynamic>? response =
+        await commonApiServices.otherUsersData(userId);
+    print("object $response");
+    if (response != null) {
+      return response;
+    }
+    return {};
   }
 }

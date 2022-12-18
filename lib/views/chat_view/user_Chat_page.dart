@@ -40,12 +40,14 @@ class UserChatPage extends StatefulWidget {
   const UserChatPage({
     Key? key,
     required this.receiverId,
-    required this.i,
+    required this.receiverName,
+    // required this.i,
     this.isWeb,
   }) : super(key: key);
   final String receiverId;
+  final String receiverName;
   final bool? isWeb;
-  final int i;
+  // final int i;
 
   @override
   State<UserChatPage> createState() => _UserChatPageState();
@@ -66,7 +68,7 @@ class _UserChatPageState extends State<UserChatPage> {
   //   });
   // }
   UserChatVM vm = Get.put(UserChatVM());
-  UserChatHomeVM chatHomeVM = Get.put(UserChatHomeVM());
+  // UserChatHomeVM chatHomeVM = Get.put(UserChatHomeVM());
 
   @override
   Widget build(BuildContext context) {
@@ -250,14 +252,14 @@ class _UserChatPageState extends State<UserChatPage> {
                     ),
                   )
                 : Container(width: 1),
-            GetBuilder<UserChatHomeVM>(builder: (vm) {
-              return CircularAvatarWidget(
-                isContactPage: true,
-                isChatPage: false,
-                userChatModel: vm.chatUsersList[widget.i],
-                radiusOfAvatar: 20,
-              );
-            })
+            // GetBuilder<UserChatHomeVM>(builder: (vm) {
+            //   return CircularAvatarWidget(
+            //     isContactPage: true,
+            //     isChatPage: false,
+            //     userChatModel: vm.chatUsersList[widget.i],
+            //     radiusOfAvatar: 20,
+            //   );
+            // })
           ]),
         ),
       ),
@@ -279,42 +281,39 @@ class _UserChatPageState extends State<UserChatPage> {
     );
   }
 
-  GetBuilder userChatTitle() {
-    return GetBuilder<UserChatHomeVM>(builder: (vm) {
-      return Padding(
-        padding: !widget.isWeb!
-            ? const EdgeInsets.all(8)
-            : const EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 8),
-        child: InkWell(
-          onTap: () {
-            Get.to(() => const IndividualUserDetails());
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                vm.chatUsersList[widget.i].name,
-                style: TextStyle(
-                    fontSize: 18.5,
-                    fontWeight:
-                        widget.isWeb! ? FontWeight.w100 : FontWeight.bold,
-                    color: widget.isWeb! ? Colors.black : Colors.white),
-              ),
-              Text(
-                widget.isWeb!
-                    ? "Click here for contact info"
-                    : "Last seen today at ${vm.chatUsersList[widget.i].lastMessageTime}",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight:
-                        widget.isWeb! ? FontWeight.w200 : FontWeight.w400,
-                    color: widget.isWeb! ? Colors.black : Colors.white),
-              ),
-            ],
-          ),
+  Padding userChatTitle() {
+    return Padding(
+      padding: !widget.isWeb!
+          ? const EdgeInsets.all(8)
+          : const EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 8),
+      child: InkWell(
+        onTap: () {
+          Get.to(() => const IndividualUserDetails());
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.receiverName,
+              style: TextStyle(
+                  fontSize: 18.5,
+                  fontWeight: widget.isWeb! ? FontWeight.w100 : FontWeight.bold,
+                  color: widget.isWeb! ? Colors.black : Colors.white),
+            ),
+            Text(
+              widget.isWeb!
+                  ? "Click here for contact info"
+                  : "Last seen today at ",
+              // ${vm.chatUsersList[widget.i].lastMessageTime}",
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: widget.isWeb! ? FontWeight.w200 : FontWeight.w400,
+                  color: widget.isWeb! ? Colors.black : Colors.white),
+            ),
+          ],
         ),
-      );
-    });
+      ),
+    );
   }
 
   // Widget sendFiles(){

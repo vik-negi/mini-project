@@ -65,7 +65,7 @@ class SigninVM extends GetxController {
       await storage.write(key: "evikaToken", value: response["token"]);
       String userData = jsonEncode(response);
       // await sharedPrefs.setString("user_id", response["data"]["_id"]);
-      await SharedPrefs.setString("user_id", response["data"]["_id"]);
+      await SharedPrefs.setString("userId", response["data"]["_id"]);
       await SharedPrefs.setString("username", response["data"]["username"]);
       print(response.toString());
 

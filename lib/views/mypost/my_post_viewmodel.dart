@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:evika/models/user/post_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class MyPostDetailsViewModel extends GetxController {
   int activeImageNumber = 0;
-  double fullCommentShown = 120;
+  double fullCommentShown = 0;
   Map<String, dynamic>? postData;
   // PostData? post;
 
@@ -61,10 +62,11 @@ class MyPostDetailsViewModel extends GetxController {
   }
 
   toggleCommentVisibility() {
-    if (fullCommentShown == 120) {
-      fullCommentShown = 300;
+    debugPrint("Comment Visibility: $fullCommentShown");
+    if (fullCommentShown == 0) {
+      fullCommentShown = double.maxFinite;
     } else {
-      fullCommentShown = 120;
+      fullCommentShown = 0;
     }
     update();
   }

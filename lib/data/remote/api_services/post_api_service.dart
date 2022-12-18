@@ -35,6 +35,8 @@ class PostApiServices {
   Future<String?> createPost(MultipartRequest request) async {
     const api = '$baseUrl/api/user/create-post';
     try {
+      print("pppppppppppppppppppppp");
+
       // print("pppppppppppppppppppppp");
       var response = await request.send();
       var responseData = await response.stream.toBytes();

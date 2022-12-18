@@ -17,6 +17,7 @@ class CommonVM extends GetxController {
   List<Comment> commentList = [];
   bool isLoading = false;
   UserData? userData;
+  UserData? otherUserData;
   bool isProfileLoading = false;
   CommonRepoImp commonRepoImp = CommonRepoImp();
   ApiResponce<Map<dynamic, dynamic>?> response = ApiResponce.loading();
@@ -26,6 +27,7 @@ class CommonVM extends GetxController {
   bool tapOnLikedButton = false;
   List<PostData> userPostList = [];
   PostData? individualPostData;
+  List<PostData> otherUserPostList = [];
   // SharedPreferences sharedPreferences = SharedPreferences as SharedPreferences;
   bool isLikedPost(String postId) {
     return userLikedPostList.contains(postId);
@@ -85,8 +87,8 @@ class CommonVM extends GetxController {
     update();
   }
 
-  void getComments(String postId) async {
-    isLoading = true;
+  void getComments({required String postId, String? type}) async {
+    isLoading = type == null ? true : false;
     update();
     try {
       var response = await commonRepoImp.getAndAddComments(postId, null);
@@ -170,6 +172,7 @@ class CommonVM extends GetxController {
       createdAt: DateTime.now(),
       id: '',
       text: text,
+      postId: postId,
       name: await getSharedPref('name', "String"),
       isEdited: false,
       userImage: 'https://www.w3schools.com/howto/img_avatar.png',
@@ -195,5 +198,48 @@ class CommonVM extends GetxController {
     }
     // isLoading = false;
     update();
+  }
+
+  void commentFuntionality(String postId, String type, String commentId) async {
+    try {
+      bool response =
+          await commonRepoImp.commentFunctionality(postId, type, commentId);
+      print("response $response");
+      Get.snackbar("success", "$type success");
+      // commentList.removeLast();
+      // if (response != null) {
+      //   commentList = response;
+      //   update();
+      // }
+      getComments(postId: postId, type: type);
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong");
+      print(e);
+    }
+  }
+
+  bool userDataLoading = false;
+  void otherUsersData(String userId) async {
+    userDataLoading = true;
+    update();
+    try {
+      Map<String, dynamic>? otherUser =
+          await commonRepoImp.otherUsersData(userId);
+      userDataLoading = false;
+      update();
+      if (otherUser != null) {
+        otherUserData = UserData.fromMap(otherUser["data"]);
+        print(otherUser["posts"]);
+        otherUserPostList = otherUser["posts"]
+            .map((e) => PostData.fromMap(e))
+            .toList()
+            .cast<PostData>();
+        update();
+      }
+    } catch (e) {
+      userDataLoading = false;
+      update();
+      print(e);
+    }
   }
 }

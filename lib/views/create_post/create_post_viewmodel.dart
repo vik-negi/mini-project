@@ -164,6 +164,7 @@ class CreatePostVM extends GetxController {
     return res;
   }
 
+  clearAllFields() {}
   PostApiServices postApiServices = PostApiServices();
 
   Future<void> createPost() async {
@@ -180,6 +181,11 @@ class CreatePostVM extends GetxController {
       //   "text": descriptionController.text,
       //   "user_id": "1",
       // });
+      // String tagString = "";
+      // List tagList = jsonDecode(tagsMap.body)["data"];
+      // jsonDecode(tagsMap.body)["data"].forEach((element) {
+      // tagString += "$element,";
+      // });
       String tagString = "";
       // List tagList = jsonDecode(tagsMap.body)["data"];
       // jsonDecode(tagsMap.body)["data"].forEach((element) {
@@ -189,36 +195,35 @@ class CreatePostVM extends GetxController {
       // tagString = tagString.substring(0, tagString.length - 1);
       var request = http.MultipartRequest(
           "POST", Uri.parse("$baseUrl/api/user/create-post/"));
+      request.headers["Authorization"] =
+          "Bearer ${sharedPreferences.getString("token")}";
       request.fields["title"] = titleController.text;
-
       request.fields["description"] = descriptionController.text;
-
-      request.fields["location"] = locationController.text;
-
+      // request.fields["eventLocation"] = locationController.text;
+      // request.fields["eventLocation"] = {
+      //   'coordinates': [80.3319, 26.4499],
+      // }.toString();
+      request.fields["eventLocation"] = [80.3319, 26.4499].toString();
       request.fields["eventDescription"] = eventDescriptionController.text;
-
       request.fields["eventStartAt"] = startAndEndDate[0].toString();
-
-      request.fields["isRegistrationRequired"] =
+      request.fields["registrationRequired"] =
           isRegistrationRequired.toString();
-
       request.fields["eventEndAt"] = startAndEndDate[1].toString();
-
       request.fields["eventCategory"] = 'sports';
-      request.fields["tags"] = tagString;
+      // request.fields["tags"] = [];
       request.fields["userId"] = sharedPreferences.getString("user_id")!;
       for (var element in selectedImages) {
         request.files
             .add(await http.MultipartFile.fromPath("image", element.path));
       }
+
+      print(request.fields.entries);
       // debugPrint("printing");
-      for (var i in request.fields.entries) {
-        debugPrint("${i.key} : ${i.value}");
-      }
+      // for (var i in request.fields.entries) {
+      // }
       // debugPrint("printed");
 
       String? response = await postRepoImp.createPost(request);
-      print("ssssssssssssssssssssssssss");
       print(response);
       if (response != null) {
         Get.snackbar('Success', 'Post Created Successfully');

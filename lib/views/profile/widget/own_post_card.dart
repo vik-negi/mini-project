@@ -106,14 +106,12 @@ class OwnPostCard extends StatelessWidget {
                             text: UtilFunctions.suffixBigNumber(
                                 postData.noOfComments.toString()),
                           ),
-                          postData.registration == null ||
-                                  postData.registration!.isEmpty
-                              ? SizedBox()
-                              : showIconAndTextOnPost(
-                                  icon: Icons.receipt_long_sharp,
-                                  text: UtilFunctions.suffixBigNumber(
-                                      postData.registration!.length.toString()),
-                                ),
+                          if (postData.registrationRequired!)
+                            showIconAndTextOnPost(
+                              icon: Icons.receipt_long_sharp,
+                              text: UtilFunctions.suffixBigNumber(
+                                  postData.registration!.length.toString()),
+                            ),
                         ],
                       ),
                     ),

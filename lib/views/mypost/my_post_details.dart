@@ -6,6 +6,7 @@ import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/views/create_post/selected_image_crousel_page.dart';
 import 'package:evika/views/mypost/fullViewImage.dart';
 import 'package:evika/views/mypost/my_post_comments.dart';
+import 'package:evika/views/mypost/my_post_registrations.dart';
 import 'package:evika/views/mypost/my_post_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -192,65 +193,98 @@ class MyPostDetails extends StatelessWidget {
                       onTap: () {
                         vm.toggleCommentVisibility();
                       },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        margin: const EdgeInsets.only(
-                          top: 10,
-                          bottom: 0,
-                          right: 10,
-                          left: 10,
-                        ),
-                        width: Get.width,
-                        padding: const EdgeInsets.all(20),
-                        // height: vm.fullCommentShown,
-                        constraints: BoxConstraints(
-                          maxHeight: vm.fullCommentShown,
-                        ),
-                        curve: Curves.easeInOutCubic,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                              color: AppColors.accentColor,
+                            ),
+                            margin: const EdgeInsets.only(
+                              top: 10,
+                              bottom: 0,
+                              right: 10,
+                              left: 10,
+                            ),
+                            width: Get.width,
+                            padding: const EdgeInsets.all(20),
+                            child: Text(
+                              commonVM.individualPostData!.description
+                                  .toString(),
+                              // overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
                           ),
-                          color: AppColors.accentColor,
-                        ),
-                        child: Text(
-                          commonVM.individualPostData!.description.toString(),
-                          // overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 14,
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            margin: const EdgeInsets.only(
+                              top: 0,
+                              bottom: 0,
+                              right: 10,
+                              left: 10,
+                            ),
+                            width: Get.width,
+                            padding: const EdgeInsets.all(20),
+                            // height: vm.fullCommentShown,
+                            constraints: BoxConstraints(
+                              maxHeight: vm.fullCommentShown,
+                            ),
+                            curve: Curves.easeInOutCubic,
+                            decoration: const BoxDecoration(
+                              // borderRadius: BorderRadius.only(
+                              //   topLeft: Radius.circular(20),
+                              //   topRight: Radius.circular(20),
+                              // ),
+                              color: AppColors.accentColor,
+                            ),
+                            child: Text(
+                              commonVM.individualPostData!.eventDescription
+                                  .toString(),
+                              // overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 0,
-                        bottom: 10,
-                        right: 10,
-                        left: 10,
-                      ),
-                      padding: const EdgeInsets.only(
-                        top: 0,
-                        left: 20,
-                        right: 20,
-                        bottom: 20,
-                      ),
-                      decoration: const BoxDecoration(
-                        color: AppColors.accentColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                      ),
-                      width: Get.width,
-                      child: Text(
-                        vm.fullCommentShown == 120 ? "Show More" : "Show Less",
-                        textAlign: TextAlign.right,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 0,
+                              bottom: 10,
+                              right: 10,
+                              left: 10,
+                            ),
+                            padding: const EdgeInsets.only(
+                              top: 0,
+                              left: 20,
+                              right: 20,
+                              bottom: 20,
+                            ),
+                            decoration: const BoxDecoration(
+                              color: AppColors.accentColor,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                              ),
+                            ),
+                            width: Get.width,
+                            child: Text(
+                              vm.fullCommentShown == 0
+                                  ? "Show More"
+                                  : "Show Less",
+                              textAlign: TextAlign.right,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     statsPageButton(
@@ -274,7 +308,7 @@ class MyPostDetails extends StatelessWidget {
                                 .individualPostData!.registration!.length,
                             onTap: () {
                               Get.to(
-                                const MyPostComments(),
+                                const MyPostRegistrations(),
                                 transition: Transition.cupertino,
                                 duration: const Duration(milliseconds: 150),
                               );

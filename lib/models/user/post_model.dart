@@ -53,6 +53,7 @@ class PostData {
   final String? id;
 
   final String? description;
+  final String? eventDescription;
   final String? eventCategory;
   final String? eventEndAt;
 
@@ -83,6 +84,7 @@ class PostData {
     this.profileImage,
     this.createdAt,
     this.description,
+    this.eventDescription,
     this.eventCategory,
     this.eventEndAt,
     this.eventId,
@@ -108,6 +110,7 @@ class PostData {
       'profileImage': profileImage,
       'createdAt': createdAt,
       'description': description,
+      'eventDescription': eventDescription,
       'eventCategory': eventCategory,
       'eventEndAt': eventEndAt,
       'eventId': eventId,
@@ -131,7 +134,8 @@ class PostData {
       registrationRequired: map['registrationRequired'] != null
           ? map['registrationRequired'] as bool
           : false,
-      registration: map['registration'] != null ? map['registration'] : [],
+      registration: map['registration'] ?? [],
+      eventDescription: map['eventDescription'] ?? [],
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : "null",
       description:
           map['description'] != null ? map['description'] as String : "null",
@@ -187,12 +191,13 @@ class Comment {
   final String userId; //
   final String id; //
   final List? replies; //
+  final String postId;
   bool isEdited; //
   final String text; //
   final List? images; //
   final DateTime createdAt; //
   final DateTime? updatedAt;
-  final List? likes; //
+  final int? likes; //
 
   Comment({
     required this.userId,
@@ -200,6 +205,7 @@ class Comment {
     this.likes,
     required this.username, //
     required this.id,
+    required this.postId,
     required this.userImage, //
     required this.name, //
     required this.isEdited,
@@ -215,6 +221,7 @@ class Comment {
       'isEdited': isEdited,
       'text': text,
       'images': images,
+      'postId': postId,
       'createdAt': createdAt.millisecondsSinceEpoch,
       'updatedAt': updatedAt!.millisecondsSinceEpoch,
       '_id': id,
@@ -233,6 +240,7 @@ class Comment {
           ? List<dynamic>.from((map['image'] as List<dynamic>))
           : [],
       createdAt: DateTime.parse(map['createdAt']),
+      postId: map['postId'] as String,
       updatedAt:
           map['updatedAt'] != null ? DateTime.parse(map['updatedAt']) : null,
       id: map['_id'] as String,
@@ -241,9 +249,7 @@ class Comment {
       replies: map['image'] != null && map['replies'] != []
           ? List<String>.from((map['replies'] as List))
           : [],
-      likes: map['image'] != null && map['likes'] != []
-          ? List<String>.from((map['likes'] as List))
-          : [],
+      likes: map['likes'] != null ? map["likes"] : 0,
       userId: map['userId'] as String,
     );
   }
