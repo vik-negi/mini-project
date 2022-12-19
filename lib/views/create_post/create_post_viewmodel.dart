@@ -6,6 +6,7 @@ import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
 import 'package:evika/utils/colors.dart';
+import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/views/create_post/registrationFilelds.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
@@ -174,8 +175,8 @@ class CreatePostVM extends GetxController {
     }
     try {
       debugPrint("chala");
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+      // SharedPrefs sharedPreferences =
+      //     await SharedPrefs.getInstance();
       // http.Response tagsMap =
       //     await http.post(Uri.parse("$mlBaseUrl/api/keywords"), body: {
       //   "text": descriptionController.text,
@@ -196,7 +197,7 @@ class CreatePostVM extends GetxController {
       var request = http.MultipartRequest(
           "POST", Uri.parse("$baseUrl/api/user/create-post/"));
       request.headers["Authorization"] =
-          "Bearer ${sharedPreferences.getString("token")}";
+          "Bearer ${await SharedPrefs.getString("token")}";
       request.fields["title"] = titleController.text;
       request.fields["description"] = descriptionController.text;
       // request.fields["eventLocation"] = locationController.text;
@@ -211,7 +212,7 @@ class CreatePostVM extends GetxController {
       request.fields["eventEndAt"] = startAndEndDate[1].toString();
       request.fields["eventCategory"] = 'sports';
       // request.fields["tags"] = [];
-      request.fields["userId"] = sharedPreferences.getString("user_id")!;
+      request.fields["userId"] = (await SharedPrefs.getString("user_id"))!;
       for (var element in selectedImages) {
         request.files
             .add(await http.MultipartFile.fromPath("image", element.path));

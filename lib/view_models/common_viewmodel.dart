@@ -77,9 +77,12 @@ class CommonVM extends GetxController {
   }
 
   likedPost() async {
+    debugPrint("User liked fetch funciton called");
     List? response = await commonRepoImp.userLikedPost();
     if (response != null) {
       userLikedPostList = response;
+      debugPrint(
+          "Liked Post fetch funciton: " + userLikedPostList[0].toString());
       update();
     } else {
       userLikedPostList = response ?? [];

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:evika/data/remote/api_services/api_services.dart';
 import 'package:evika/models/user/post_model.dart';
+import 'package:evika/utils/sharedPreferenced.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -33,6 +35,8 @@ class PostApiServices {
   }
 
   Future<String?> createPost(MultipartRequest request) async {
+    String? x = await SharedPrefs.getString('token');
+    debugPrint("Current Token: ${x ?? "No Token Found!"}");
     const api = '$baseUrl/api/user/create-post';
     try {
       print("pppppppppppppppppppppp");
