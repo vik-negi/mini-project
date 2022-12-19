@@ -26,6 +26,7 @@ class CommonVM extends GetxController {
   ProfileRepoImp profileRepoImp = ProfileRepoImp();
   bool tapOnLikedButton = false;
   List<PostData> userPostList = [];
+  PostData? individualPostData;
   List<PostData> otherUserPostList = [];
   // SharedPreferences sharedPreferences = SharedPreferences as SharedPreferences;
   bool isLikedPost(String postId) {
@@ -76,9 +77,12 @@ class CommonVM extends GetxController {
   }
 
   likedPost() async {
+    debugPrint("User liked fetch funciton called");
     List? response = await commonRepoImp.userLikedPost();
     if (response != null) {
       userLikedPostList = response;
+      debugPrint(
+          "Liked Post fetch funciton: " + userLikedPostList[0].toString());
       update();
     } else {
       userLikedPostList = response ?? [];

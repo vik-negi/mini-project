@@ -165,7 +165,7 @@ class UserData {
       mobile: map['mobile'] != null ? map['mobile'] as String : null,
       username: map['username'],
       location: map['location'] != null
-          ? List<double>.from(map['location'])
+          ? List<double>.from(map['location']['coordinates'])
           : [00, 00],
       password: map['password'],
       id: map['_id'],

@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
     return GetBuilder<CommonVM>(builder: (commonVM) {
       return GetBuilder<PostVM>(builder: (vm) {
         return ListView.separated(
+            reverse: true,
             physics: const BouncingScrollPhysics(),
             // physics: const NeverScrollableScrollPhysics(),
             itemCount: vm.postList.length,
@@ -567,50 +568,72 @@ class Suggessions extends StatefulWidget {
 
 class _SuggessionsState extends State<Suggessions> {
   List<String> suggession = [
-    "Plantation",
-    "Education",
-    "Food",
-    "Health",
-    "Sports",
-    "Environment"
+    "Global",
+    "India",
+    "Your State",
+    "Your City",
+    "Your Town",
   ];
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 45,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 5,
-          itemBuilder: ((context, index) {
-            return Container(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-              // style: TextButton.styleFrom(
-              //   padding: const EdgeInsets.all(0),
-              //   backgroundColor: Colors.grey.shade800,
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(20),
-              //   ),
-              // ),
-              // onPressed: () {},
+    return GetBuilder<PostVM>(builder: (vm) {
+      return Container(
+        height: 45,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 5,
+            itemBuilder: ((context, index) {
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                // style: TextButton.styleFrom(
+                //   padding: const EdgeInsets.all(0),
+                //   backgroundColor: Colors.grey.shade800,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(20),
+                //   ),
+                // ),
+                // onPressed: () {},
 
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.grey.shade700,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(0),
-                child: Text(
-                  suggession[index],
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.grey.shade700,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: InkWell(
+                    onTap: () {
+                      if (suggession[index] == 'Global') {
+                        vm.postFilterRange = "500000000000000000";
+                        vm.filterPost();
+                      } else if (suggession[index] == 'India') {
+                        vm.postFilterRange = "5000000000";
+                        vm.filterPost();
+                      } else if (suggession[index] == 'Your State') {
+                        vm.postFilterRange = "500000";
+                        vm.filterPost();
+                      } else if (suggession[index] == 'Your City') {
+                        vm.postFilterRange = "100000";
+                        vm.filterPost();
+                      } else {
+                        vm.postFilterRange = "5000";
+                        vm.filterPost();
+                      }
+                    },
+                    child: Text(
+                      suggession[index],
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            );
-          })),
-    );
+              );
+            })),
+      );
+    });
   }
 }

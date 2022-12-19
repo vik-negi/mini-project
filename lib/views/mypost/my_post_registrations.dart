@@ -5,8 +5,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
-class MyPostComments extends StatelessWidget {
-  const MyPostComments({super.key});
+class MyPostRegistrations extends StatelessWidget {
+  const MyPostRegistrations({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class MyPostComments extends StatelessWidget {
           foregroundColor: Colors.black,
           elevation: 1,
           title: Text(
-            "Comments: ${commonVM.individualPostData!.title ?? 'You Post'}",
+            "Registrations: ${commonVM.individualPostData!.title ?? 'You Post'}",
             style: const TextStyle(
               color: Colors.black,
               fontSize: 17,

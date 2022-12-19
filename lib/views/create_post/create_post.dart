@@ -260,7 +260,7 @@ class CreatePostPage extends StatelessWidget {
                                       vm.isRegistrationRequired =
                                           !vm.isRegistrationRequired;
                                       if (vm.isRegistrationRequired) {
-                                        vm.attentionHeight = 70;
+                                        vm.attentionHeight = 100;
                                       } else {
                                         vm.attentionHeight = 0;
                                       }
@@ -274,6 +274,7 @@ class CreatePostPage extends StatelessWidget {
                             ),
                           ),
                           AnimatedContainer(
+                            curve: Curves.easeInOut,
                             duration: const Duration(milliseconds: 300),
                             width: Get.width,
                             padding: EdgeInsets.all(10),
@@ -284,7 +285,7 @@ class CreatePostPage extends StatelessWidget {
                             ),
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: const Text(
-                              "ATTENTION : You will reciece the NAME, EMAIL and PHONE NO. of the registered user",
+                              "ATTENTION : You can see the registered users inside the post by clicking on the registrations  button ",
                               style: TextStyle(
                                 wordSpacing: -0.5,
                                 fontSize: 13,

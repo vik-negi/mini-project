@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:evika/data/remote/api_services/api_services.dart';
 import 'package:evika/models/user/post_model.dart';
+import 'package:evika/utils/sharedPreferenced.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -32,7 +34,36 @@ class PostApiServices {
     return {};
   }
 
+  Future<Map<String, dynamic>> filterPosts(Map range) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token")!;
+    try {
+      print("fetched filtered posts");
+      final response = await http
+          .post(Uri.parse('$baseUrl/api/user/filter-posts'), headers: {
+        "authorization": "Bearer $token",
+      }, body: {
+        "maxrange": range['maxrange']
+      });
+
+      // print(response.statusCode);
+      // print(response);
+      if (response.statusCode == 200) {
+        // print(response.body);
+        Map<String, dynamic> body = apiServices.returnResponse(response);
+        return body;
+      } else {
+        throw Exception('Failed to load post');
+      }
+    } catch (err) {
+      print(err);
+    }
+    return {};
+  }
+
   Future<String?> createPost(MultipartRequest request) async {
+    String? x = await SharedPrefs.getString('token');
+    debugPrint("Current Token: ${x ?? "No Token Found!"}");
     const api = '$baseUrl/api/user/create-post';
     try {
       print("pppppppppppppppppppppp");

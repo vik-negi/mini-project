@@ -454,25 +454,7 @@ class OtherProfilePage extends StatelessWidget {
                                       // itemCount: 1,
                                       itemBuilder: (context, index) {
                                         return OwnPostCard(
-                                          title: vm
-                                              .otherUserPostList[index].title
-                                              .toString(),
-                                          imgUrl: vm.otherUserPostList[index]
-                                              .image![0]
-                                              .toString(),
-                                          // imgUrl:
-                                          //     "https://media.istockphoto.com/id/1038727610/photo/liquid-shapes-abstract-holographic-3d-wavy-background.jpg?s=612x612&w=0&k=20&c=OSfb3DuCHkjERNJTpK4GzMN851GhHQA6Evn9DKc-kw4=",
-                                          likes: vm
-                                              .otherUserPostList[index].likes
-                                              .toString(),
-                                          // likes: "266034",
-                                          comments: vm.otherUserPostList[index]
-                                              .noOfComments
-                                              .toString(),
-                                          registrations: vm
-                                              .otherUserPostList[index].likes
-                                              .toString(),
-                                          date: DateTime(2022, 11, 12),
+                                          postData: vm.otherUserPostList[index],
                                           route: AppRotutes.myPostDetails,
                                         );
                                       },
