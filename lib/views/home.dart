@@ -8,6 +8,7 @@ import 'package:evika/views/demo.dart';
 import 'package:evika/views/feed/show_files.dart';
 import 'package:evika/views/profile/other_user_profile.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     return GetBuilder<CommonVM>(builder: (commonVM) {
       return GetBuilder<PostVM>(builder: (vm) {
         return ListView.separated(
-            reverse: true,
+            // reverse: true,
             physics: const BouncingScrollPhysics(),
             // physics: const NeverScrollableScrollPhysics(),
             itemCount: vm.postList.length,
@@ -70,23 +71,16 @@ class _HomePageState extends State<HomePage> {
                                 backgroundColor: Colors.white,
                                 child: IconButton(
                                     onPressed: () async {
-                                      commonVM.tapOnLikedButton =
-                                          !commonVM.tapOnLikedButton;
-                                      commonVM.tapOnLikedButtonFun();
-                                      commonVM.update();
-                                      await vm.likePost(vm.postList[i].id);
-                                      await commonVM.likedPost();
+                                      vm.likePost(vm.postList[i].id);
+                                      // await commonVM.likedPost();
                                       // commonVM.update();
                                     },
                                     icon: Icon(
-                                      commonVM.isLikedPost(
-                                                  vm.postList[i].id!) ||
-                                              commonVM.tapOnLikedButton
+                                      commonVM.isLikedPost(vm.postList[i].id!)
                                           ? CupertinoIcons.heart_fill
                                           : Icons.favorite_border,
-                                      color: commonVM.isLikedPost(
-                                                  vm.postList[i].id!) ||
-                                              commonVM.tapOnLikedButton
+                                      color: commonVM
+                                              .isLikedPost(vm.postList[i].id!)
                                           ? Colors.pink
                                           : Colors.grey.shade600,
                                       size: 30,
@@ -181,8 +175,8 @@ class _HomePageState extends State<HomePage> {
                                   text: TextSpan(
                                     // text: 'The FIFA World Cup Qatar 2022™',
                                     text: vm.postList[i].title,
-                                    style: const TextStyle(
-                                      color: Colors.black,
+                                    style: TextStyle(
+                                      color: Theme.of(context).shadowColor,
                                       fontSize: 17,
                                     ),
                                   ),
@@ -205,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                                                 .toString(),
                                         softWrap: true,
                                         style: const TextStyle(
-                                          color: Colors.black,
+                                          // color: Colors.black,
                                           fontSize: 15,
                                         ),
                                       ),
@@ -270,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
-                                  color: Colors.red,
+                                  color: Colors.black,
                                 ),
                                 child: InkWell(
                                   onTap: () {

@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 import 'package:evika/data/remote/api_interface.dart';
 import 'package:evika/data/remote/api_services/api_services.dart';
-import 'package:evika/models/chat/chat_model.dart';
-import 'package:evika/models/chat/chat_page_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,9 +20,6 @@ class ChatApiServices extends ChatApiInterface {
       return {};
     }
     Map<String, dynamic> res = jsonDecode(response.body);
-    // if (response.statusCode == 200 && res.isNotEmpty) {
-    //   return res;
-    // }
     return res;
   }
 

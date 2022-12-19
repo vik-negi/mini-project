@@ -3,11 +3,8 @@ import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.
 import 'package:evika/views/otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:location/location.dart';
 
 class FurtherDetails extends StatefulWidget {
   const FurtherDetails({super.key});
@@ -24,9 +21,9 @@ class _FurtherDetailsState extends State<FurtherDetails> {
   SignupVM vm = Get.put(SignupVM());
 
   void sendOtp() async {
-    Get.to(() => MyOtp());
+    Get.to(() => const MyOtp());
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: "+91" + vm.mobileController.text,
+      phoneNumber: "+91${vm.mobileController.text}",
       verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) {
@@ -69,8 +66,8 @@ class _FurtherDetailsState extends State<FurtherDetails> {
                     Get.snackbar("Alert", "Location is required!");
                   }
                 } else if (currentStep == 0) {
-                  print("ssssssssssssss");
-                  print(vm.selectedValue);
+                  debugPrint("ssssssssssssss");
+                  debugPrint(vm.selectedValue);
                   if (vm.selectedValue != "") {
                     setState(() {
                       currentStep += 1;

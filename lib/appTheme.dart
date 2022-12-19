@@ -47,4 +47,4 @@ const kErrorColor = Color(0xFFF03738);
 
 const kDefaultPadding = 20.0;
 
-final appBarTheme = const AppBarTheme(centerTitle: false, elevation: 0);
+const appBarTheme = AppBarTheme(centerTitle: false, elevation: 0);
