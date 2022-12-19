@@ -224,13 +224,14 @@ class CreatePostVM extends GetxController {
       // debugPrint("printed");
 
       String? response = await postRepoImp.createPost(request);
-      print(response);
+      debugPrint(response.toString());
       if (response != null) {
         Get.snackbar('Success', 'Post Created Successfully');
-        print('Post Created Successfully');
+        debugPrint('Post Created Successfully');
+        clearAllFields();
       } else {
         Get.snackbar('Error', 'Something went wrong');
-        print("something went wrong");
+        debugPrint("something went wrong");
       }
     } catch (err) {
       print("err : $err");
