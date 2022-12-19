@@ -5,6 +5,7 @@ import 'package:evika/data/remote/api_services/api_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginApiServices extends LoginApiInterface {
   dynamic returnResponse(http.Response? response) {
@@ -57,6 +58,21 @@ class LoginApiServices extends LoginApiInterface {
       Uri.parse('$baseUrl/api/account/signup/'),
       body: data,
     );
+    return returnResponse(response);
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateUserLocation(Map updateLocation) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token")!;
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/account/update-user-location/'),
+      headers: {
+        "authorization": "Bearer $token",
+      },
+      body: updateLocation,
+    );
+    print("response :::::::::: ${response.body}");
     return returnResponse(response);
   }
 }

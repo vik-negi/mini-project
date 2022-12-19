@@ -6,6 +6,7 @@ import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
+import 'package:evika/view_models/location.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,8 @@ class PostVM extends GetxController {
   ApiResponce<Map<dynamic, dynamic>?> response = ApiResponce.loading();
   PostData postData = PostData();
   List<PostData> postList = <PostData>[].obs;
+  String? postFilterRange;
+  GetLocation getLocation = GetLocation();
 
   late final Future? futurePosts;
   RxBool isPostFetched = false.obs;
@@ -69,6 +72,11 @@ class PostVM extends GetxController {
   void onInit() {
     super.onInit();
     futurePosts = getAllPost();
+    updateUserLocation();
+  }
+
+  updateUserLocation() async {
+    await getLocation.updateUserLocation();
   }
 
   PostApiServices postApiServices = PostApiServices();
@@ -105,6 +113,48 @@ class PostVM extends GetxController {
         }
         print(postList.length);
 
+        return postList;
+      } else {
+        isPostFetched.value = false;
+        isErrorOnFetchingData.value = true;
+        response = ApiResponce.error("No data found");
+        update();
+        return null;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      isPostFetched.value = false;
+      isErrorOnFetchingData.value = true;
+      response = ApiResponce.error("No data found");
+      update();
+      return null;
+    }
+  }
+
+  Future<List<PostData>?> filterPost() async {
+    response = ApiResponce.loading();
+    isErrorOnFetchingData(false);
+    isPostFetched(false);
+    update();
+    Map range = {"maxrange": postFilterRange};
+    Map<dynamic, dynamic>? data = await postRepoImp.filterPost(range);
+
+    debugPrint(data.toString());
+    try {
+      if (data != null) {
+        List<dynamic> list = data['posts'];
+        response = ApiResponce.completed(data);
+        update();
+        postList = [];
+        for (int i = 0; i < list.length; i++) {
+          String postdataStr = jsonEncode(list[i]);
+          PostData postData = PostData.fromJson(postdataStr);
+
+          postList.add(postData);
+          isPostFetched.value = true;
+
+          update();
+        }
         return postList;
       } else {
         isPostFetched.value = false;

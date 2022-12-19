@@ -9,6 +9,7 @@ import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/views/create_post/registrationFilelds.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -89,6 +90,22 @@ class CreatePostVM extends GetxController {
       }
     }
     update();
+  }
+
+  var first1;
+  List<double> coordinatesPoints = [];
+
+  Future findPositionByAddress() async {
+    coordinatesPoints = [];
+    //changing entered user address to coordinates
+    final query = "${locationController.text}";
+    var address1 = await Geocoder.local.findAddressesFromQuery(query);
+    first1 = address1.first;
+    coordinatesPoints.add(first1.coordinates.longitude);
+    coordinatesPoints.add(first1.coordinates.latitude);
+    update();
+    debugPrint(coordinatesPoints.toString());
+    debugPrint("coordinates : ${first1.coordinates}");
   }
 
   List<Widget> showImageRowList() {
@@ -175,6 +192,8 @@ class CreatePostVM extends GetxController {
     }
     try {
       debugPrint("chala");
+
+      await findPositionByAddress();
       // SharedPrefs sharedPreferences =
       //     await SharedPrefs.getInstance();
       // http.Response tagsMap =
@@ -200,11 +219,9 @@ class CreatePostVM extends GetxController {
           "Bearer ${await SharedPrefs.getString("token")}";
       request.fields["title"] = titleController.text;
       request.fields["description"] = descriptionController.text;
-      // request.fields["eventLocation"] = locationController.text;
-      // request.fields["eventLocation"] = {
-      //   'coordinates': [80.3319, 26.4499],
-      // }.toString();
-      request.fields["eventLocation"] = [80.3319, 26.4499].toString();
+      request.fields["eventLocation"] = locationController.text;
+      request.fields["eventLocation"] = coordinatesPoints.toString();
+      // request.fields["eventLocation"] = [80.3319, 26.4499].toString();
       request.fields["eventDescription"] = eventDescriptionController.text;
       request.fields["eventStartAt"] = startAndEndDate[0].toString();
       request.fields["registrationRequired"] =
@@ -212,7 +229,7 @@ class CreatePostVM extends GetxController {
       request.fields["eventEndAt"] = startAndEndDate[1].toString();
       request.fields["eventCategory"] = 'sports';
       // request.fields["tags"] = [];
-      request.fields["userId"] = (await SharedPrefs.getString("user_id"))!;
+      request.fields["userId"] = (await SharedPrefs.getString("userId"))!;
       for (var element in selectedImages) {
         request.files
             .add(await http.MultipartFile.fromPath("image", element.path));
