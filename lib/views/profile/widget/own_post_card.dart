@@ -53,7 +53,7 @@ class OwnPostCard extends StatelessWidget {
             bottom: 20,
           ),
           margin: EdgeInsets.symmetric(
-            vertical: 2,
+            vertical: 5,
             horizontal: 0,
           ),
           child: Column(
@@ -162,15 +162,15 @@ class OwnPostCard extends StatelessWidget {
 
   Widget showIconAndTextOnPost({IconData? icon, String? text}) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       padding: EdgeInsets.symmetric(
-        horizontal: 10,
+        horizontal: 20,
         vertical: 2,
       ),
-      // decoration: BoxDecoration(
-      //     // color: AppColors.accentColor,
-      //     // borderRadius: BorderRadius.circular(10),
-      //     ),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(216, 255, 255, 255),
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

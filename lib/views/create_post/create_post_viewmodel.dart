@@ -70,11 +70,6 @@ class CreatePostVM extends GetxController {
     'Dec'
   ];
 
-  logout() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
-  }
-
   void pickImage() async {
     final List<XFile>? images = await picker.pickMultiImage(
       imageQuality: 25,
@@ -108,80 +103,6 @@ class CreatePostVM extends GetxController {
     debugPrint("coordinates : ${first1.coordinates}");
   }
 
-  List<Widget> showImageRowList() {
-    List<Widget> res = [];
-    for (var image in selectedImages) {
-      res.add(
-        Stack(
-          children: [
-            InkWell(
-              onTap: () {
-                viewImageIndex = selectedImages.indexOf(image);
-                update();
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                height: 60,
-                width: 60,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.file(
-                    File(image.path),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              right: 10,
-              top: 5,
-              child: InkWell(
-                onTap: () {
-                  if (viewImageIndex == selectedImages.indexOf(image)) {
-                    viewImageIndex = 0;
-                    update();
-                    selectedImages.remove(image);
-                    update();
-                  }
-                  selectedImages.remove(image);
-                  update();
-                },
-                child: const Icon(
-                  CupertinoIcons.multiply_circle_fill,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    }
-
-    if (selectedImages.length < 4) {
-      res.add(
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5),
-          decoration: BoxDecoration(
-            color: AppColors.accentColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          width: 60,
-          height: 60,
-          child: Center(
-            child: IconButton(
-              onPressed: () {
-                pickImage();
-              },
-              icon: const Icon(Icons.add),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return res;
-  }
-
   clearAllFields() {}
   PostApiServices postApiServices = PostApiServices();
 
@@ -194,25 +115,7 @@ class CreatePostVM extends GetxController {
       debugPrint("chala");
 
       await findPositionByAddress();
-      // SharedPrefs sharedPreferences =
-      //     await SharedPrefs.getInstance();
-      // http.Response tagsMap =
-      //     await http.post(Uri.parse("$mlBaseUrl/api/keywords"), body: {
-      //   "text": descriptionController.text,
-      //   "user_id": "1",
-      // });
-      // String tagString = "";
-      // List tagList = jsonDecode(tagsMap.body)["data"];
-      // jsonDecode(tagsMap.body)["data"].forEach((element) {
-      // tagString += "$element,";
-      // });
       String tagString = "";
-      // List tagList = jsonDecode(tagsMap.body)["data"];
-      // jsonDecode(tagsMap.body)["data"].forEach((element) {
-      //   tagString += "$element,";
-      // });
-
-      // tagString = tagString.substring(0, tagString.length - 1);
       var request = http.MultipartRequest(
           "POST", Uri.parse("$baseUrl/api/user/create-post/"));
       request.headers["Authorization"] =
@@ -236,11 +139,6 @@ class CreatePostVM extends GetxController {
       }
 
       print(request.fields.entries);
-      // debugPrint("printing");
-      // for (var i in request.fields.entries) {
-      // }
-      // debugPrint("printed");
-
       String? response = await postRepoImp.createPost(request);
       debugPrint(response.toString());
       if (response != null) {
@@ -253,18 +151,6 @@ class CreatePostVM extends GetxController {
       }
     } catch (err) {
       print("err : $err");
-    }
-  }
-
-  Future<bool?>? likePost(id) async {
-    Map<String, dynamic>? response = await postRepoImp.likePost(id);
-    if (response != null) {
-      print("uuuuuuuuuuuuuuu");
-      print("Liked Post response : $response");
-      List<String> likedPosts = [];
-      return true;
-    } else {
-      return false;
     }
   }
 
