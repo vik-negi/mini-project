@@ -130,6 +130,7 @@ class CommonApiServices extends CommoApiInterface {
     return false;
   }
 
+  @override
   Future<Map<String, dynamic>> getUserPost(String userId) async {
     try {
       debugPrint("fetched");
@@ -142,11 +143,11 @@ class CommonApiServices extends CommoApiInterface {
         },
       );
 
-      debugPrint("get user url: $baseUrl/api/user/get-posts/$userId");
-      debugPrint('get user status code: ${response.statusCode.toString()}');
+      // debugPrint("get user url: $baseUrl/api/user/get-posts/$userId");
+      // debugPrint('get user status code: ${response.statusCode.toString()}');
       debugPrint("get user post response: $response");
       if (response.statusCode == 200) {
-        debugPrint(response.body);
+        // debugPrint(response.body);
         Map<String, dynamic> body = apiServices.returnResponse(response);
         return body;
       } else {

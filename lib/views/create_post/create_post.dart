@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:evika/utils/colors.dart';
-import 'package:evika/utils/utility_functions.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/views/create_post/create_post_viewmodel.dart';
 import 'package:evika/views/create_post/selected_image_crousel_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -233,7 +233,7 @@ class CreatePostPage extends StatelessWidget {
                               ? showPickedDates(context, vm.startAndEndDate[0],
                                   vm.startAndEndDate[1])
                               : const SizedBox(),
-                          UtilFunctions.gapy(20),
+                          UtilWidgetsAndFunctions.gapy(20),
                           const Divider(),
                           InkWell(
                             onTap: () {
@@ -294,7 +294,7 @@ class CreatePostPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          UtilFunctions.gapy(10),
+                          UtilWidgetsAndFunctions.gapy(10),
                           Container(
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: const Text(
@@ -307,7 +307,7 @@ class CreatePostPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          UtilFunctions.gapy(20),
+                          UtilWidgetsAndFunctions.gapy(20),
                           ElevatedButton(
                             onPressed: () async {
                               debugPrint("tapped");

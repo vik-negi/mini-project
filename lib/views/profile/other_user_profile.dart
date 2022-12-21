@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
-import 'package:evika/utils/utility_functions.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/views/chat_view/user_Chat_page.dart';
 import 'package:evika/views/profile/widget/own_post_card.dart';
@@ -390,7 +390,7 @@ class OtherProfilePage extends StatelessWidget {
                                     CupertinoIcons.collections_solid,
                                     size: 18,
                                   ),
-                                  UtilFunctions.gapx(5),
+                                  UtilWidgetsAndFunctions.gapx(5),
                                   Text(
                                     "${vm.otherUserData!.name}'s Events",
                                     style: const TextStyle(
@@ -432,7 +432,7 @@ class OtherProfilePage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          UtilFunctions.gapy(10),
+                                          UtilWidgetsAndFunctions.gapy(10),
                                           const Text(
                                             "Tap to add your first event",
                                             style: TextStyle(
@@ -454,6 +454,7 @@ class OtherProfilePage extends StatelessWidget {
                                       // itemCount: 1,
                                       itemBuilder: (context, index) {
                                         return OwnPostCard(
+                                          tag: index.toString(),
                                           postData: vm.otherUserPostList[index],
                                           route: AppRotutes.myPostDetails,
                                         );
@@ -487,7 +488,7 @@ class OtherProfilePage extends StatelessWidget {
                   size: 18,
                 )
               : const SizedBox(),
-          icon != null ? UtilFunctions.gapx(4) : const SizedBox(),
+          icon != null ? UtilWidgetsAndFunctions.gapx(4) : const SizedBox(),
           text != null ? Text(text) : const SizedBox(),
         ],
       ),

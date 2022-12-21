@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:evika/utils/colors.dart';
-import 'package:evika/utils/utility_functions.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -55,7 +55,7 @@ class _SelectedImageCrouselState extends State<SelectedImageCrousel> {
                     )
                     .toList(),
               ),
-              UtilFunctions.gapy(20),
+              UtilWidgetsAndFunctions.gapy(20),
               Container(
                 padding: const EdgeInsets.symmetric(
                   vertical: 8,
