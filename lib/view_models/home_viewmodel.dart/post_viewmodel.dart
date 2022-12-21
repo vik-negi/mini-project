@@ -129,6 +129,7 @@ class PostVM extends GetxController {
       print("chala");
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
+          
       // http.Response tagsMap =
       //     await http.post(Uri.parse("$mlBaseUrl/api/keywords"), body: {
       //   "text": descriptionController.text,
@@ -144,6 +145,7 @@ class PostVM extends GetxController {
           "POST", Uri.parse("$baseUrl/api/user/create-post/"));
       request.headers["Authorization"] =
           "Bearer ${sharedPreferences.getString("token")}";
+     
       request.fields["title"] = titleController.text;
       request.fields["description"] = descriptionController.text;
       request.fields["location"] = locationController.text;
@@ -155,7 +157,8 @@ class PostVM extends GetxController {
           '${endDateController.text} ${endTimeController.text}';
       request.fields["eventCategory"] = 'sports';
       // request.fields["tags"] = tagString;
-      request.fields["userId"] = sharedPreferences.getString("user_id")!;
+      
+      request.fields["userId"] = sharedPreferences.getString("userId")!;
       request.files
           .add(await http.MultipartFile.fromPath("image", selectedImage!.path));
 

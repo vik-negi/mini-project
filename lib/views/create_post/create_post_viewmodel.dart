@@ -198,7 +198,7 @@ class CreatePostVM extends GetxController {
           "Bearer ${sharedPreferences.getString("token")}";
       request.fields["title"] = titleController.text;
       request.fields["description"] = descriptionController.text;
-      request.fields["location"] = locationController.text;
+      request.fields["eventLocation"] = locationController.text;
       request.fields["eventDescription"] = eventDescriptionController.text;
       request.fields["eventStartAt"] = startAndEndDate[0].toString();
       request.fields["isRegistrationRequired"] =
@@ -206,7 +206,7 @@ class CreatePostVM extends GetxController {
       request.fields["eventEndAt"] = startAndEndDate[1].toString();
       request.fields["eventCategory"] = 'sports';
       // request.fields["tags"] = [];
-      request.fields["userId"] = sharedPreferences.getString("user_id")!;
+      request.fields["userId"] = sharedPreferences.getString("userId")!;
       for (var element in selectedImages) {
         request.files
             .add(await http.MultipartFile.fromPath("image", element.path));

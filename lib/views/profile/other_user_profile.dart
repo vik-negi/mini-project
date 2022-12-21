@@ -433,9 +433,9 @@ class OtherProfilePage extends StatelessWidget {
                                             ),
                                           ),
                                           UtilFunctions.gapy(10),
-                                          const Text(
-                                            "Tap to add your first event",
-                                            style: TextStyle(
+                                          Text(
+                                            "${vm.otherUserData!.name} has not added any event yet}",
+                                            style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w300,
@@ -473,7 +473,7 @@ class OtherProfilePage extends StatelessWidget {
                                               .otherUserPostList[index].likes
                                               .toString(),
                                           date: DateTime(2022, 11, 12),
-                                          route: AppRotutes.myPostDetails,
+                                          route: AppRotutes.postDescription,
                                         );
                                       },
                                     ),
