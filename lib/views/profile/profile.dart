@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
-import 'package:evika/utils/utility_functions.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/views/profile/widget/own_post_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -164,7 +164,7 @@ class ProfilePage extends StatelessWidget {
                                           ],
                                         ),
                                         Text(
-                                          vm.userData!.username,
+                                          "@${vm.userData!.username}",
                                           style: TextStyle(
                                             color: Colors.grey.shade700,
                                             fontSize: 14,
@@ -296,7 +296,7 @@ class ProfilePage extends StatelessWidget {
                                             color: Colors.grey.shade700,
                                           ),
                                         ),
-                                        UtilFunctions.gapy(10),
+                                        UtilWidgetsAndFunctions.gapy(10),
                                         const Text("Add to your Bio"),
                                       ],
                                     ),
@@ -354,7 +354,7 @@ class ProfilePage extends StatelessWidget {
                                                 fontSize: 12,
                                               ),
                                             ),
-                                            UtilFunctions.gapy(10),
+                                            UtilWidgetsAndFunctions.gapy(10),
                                             const Icon(
                                               Icons.edit_note_sharp,
                                               size: 18,
@@ -424,7 +424,7 @@ class ProfilePage extends StatelessWidget {
                               CupertinoIcons.collections_solid,
                               size: 18,
                             ),
-                            UtilFunctions.gapx(5),
+                            UtilWidgetsAndFunctions.gapx(5),
                             const Text(
                               "Your Events",
                               style: TextStyle(
@@ -464,7 +464,7 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    UtilFunctions.gapy(10),
+                                    UtilWidgetsAndFunctions.gapy(10),
                                     const Text(
                                       "Create Your first Event",
                                       style: TextStyle(
@@ -490,6 +490,7 @@ class ProfilePage extends StatelessWidget {
                                     itemBuilder: (context, index) {
                                       return OwnPostCard(
                                         postData: vm.userPostList[index],
+                                        tag: index.toString(),
                                         // imgUrl:
                                         //     "https://media.istockphoto.com/id/1038727610/photo/liquid-shapes-abstract-holographic-3d-wavy-background.jpg?s=612x612&w=0&k=20&c=OSfb3DuCHkjERNJTpK4GzMN851GhHQA6Evn9DKc-kw4=",
 
@@ -547,7 +548,7 @@ class ProfilePage extends StatelessWidget {
                   size: 18,
                 )
               : const SizedBox(),
-          icon != null ? UtilFunctions.gapx(4) : const SizedBox(),
+          icon != null ? UtilWidgetsAndFunctions.gapx(4) : const SizedBox(),
           text != null ? Text(text) : const SizedBox(),
         ],
       ),

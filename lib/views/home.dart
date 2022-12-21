@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/auth/signup.dart';
 import 'package:evika/utils/placeHolderImage.dart';
+import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
@@ -139,158 +140,171 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      vm.postList[i].name!,
-                                      style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    const Icon(
-                                      Icons.verified,
-                                      size: 22,
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      '@${vm.postList[i].username}',
-                                      style: const TextStyle(fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    // text: 'The FIFA World Cup Qatar 2022™',
-                                    text: vm.postList[i].title,
-                                    style: TextStyle(
-                                      color: Theme.of(context).shadowColor,
-                                      fontSize: 17,
-                                    ),
-                                  ),
-                                  // style: TextStyle(fontSize: 18),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                SizedBox(
-                                  width: Get.width - 80,
-                                  child: Stack(
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(
+                            AppRotutes.postDescription,
+                            arguments: {
+                              "post": vm.postList[i],
+                              "tag": i.toString(),
+                            },
+                          );
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
                                       Text(
-                                        // "This is a record of France's results at the FIFA World Cup.",
-                                        vm.postList[i].description!.length > 50
-                                            ? vm.postList[i].description
-                                                .toString()
-                                                .substring(0, 50)
-                                            : vm.postList[i].description
-                                                .toString(),
-                                        softWrap: true,
+                                        vm.postList[i].name!,
                                         style: const TextStyle(
-                                          // color: Colors.black,
-                                          fontSize: 15,
-                                        ),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                      showMore
-                                          ? Text(
-                                              vm.postList[i].description!
-                                                          .length >
-                                                      50
-                                                  ? vm.postList[i].description
-                                                      .toString()
-                                                      .substring(
-                                                          50,
-                                                          vm
-                                                                  .postList[i]
-                                                                  .description!
-                                                                  .length -
-                                                              1)
-                                                  : "",
-                                              style:
-                                                  const TextStyle(fontSize: 15),
-                                            )
-                                          // ? const Text(
-                                          //     "This is a record of France's results at the FIFA World Cup. France was one of the four European teams that participated at the inaugural World Cup in 1930 and have appeared in 15 FIFA World Cups, tied for the sixth most of any country.",
-                                          //     style: TextStyle(fontSize: 15),
-                                          //   )
-                                          : const SizedBox(),
-                                      Positioned(
-                                        bottom: 0,
-                                        right: 15,
-                                        child: InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              showMore = !showMore;
-                                            });
-                                          },
-                                          child: Text(
-                                            showMore ? 'less' : "more",
-                                            style: const TextStyle(
-                                              color: Colors.blue,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                        ),
+                                      const SizedBox(
+                                        width: 4,
+                                      ),
+                                      const Icon(
+                                        Icons.verified,
+                                        size: 22,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        '@${vm.postList[i].username}',
+                                        style: const TextStyle(fontSize: 15),
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Column(children: [
-                              Container(
-                                width: Get.width * 0.82,
-                                constraints: const BoxConstraints(
-                                  // minHeight: 5.0,
-                                  // minWidth: 5.0,
-                                  maxHeight: 500.0,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: Colors.black,
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.to(
-                                      () => ShowFiles(
-                                        tag: i.toString(),
-                                        file: vm.postList[i].image![0],
+                                  RichText(
+                                    text: TextSpan(
+                                      // text: 'The FIFA World Cup Qatar 2022™',
+                                      text: vm.postList[i].title,
+                                      style: TextStyle(
+                                        color: Theme.of(context).shadowColor,
+                                        fontSize: 17,
                                       ),
-                                    );
-                                  },
-                                  child: Hero(
-                                    tag: i.toString(),
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(16),
-                                        child: CachedNetworkImage(
-                                          imageUrl: vm.postList[i].image![0],
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              showPlaceHolderImage(),
-                                        )),
+                                    ),
+                                    // style: TextStyle(fontSize: 18),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  SizedBox(
+                                    width: Get.width - 80,
+                                    child: Stack(
+                                      children: [
+                                        Text(
+                                          // "This is a record of France's results at the FIFA World Cup.",
+                                          vm.postList[i].description!.length >
+                                                  50
+                                              ? vm.postList[i].description
+                                                  .toString()
+                                                  .substring(0, 50)
+                                              : vm.postList[i].description
+                                                  .toString(),
+                                          softWrap: true,
+                                          style: const TextStyle(
+                                            // color: Colors.black,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        showMore
+                                            ? Text(
+                                                vm.postList[i].description!
+                                                            .length >
+                                                        50
+                                                    ? vm.postList[i].description
+                                                        .toString()
+                                                        .substring(
+                                                            50,
+                                                            vm
+                                                                    .postList[i]
+                                                                    .description!
+                                                                    .length -
+                                                                1)
+                                                    : "",
+                                                style: const TextStyle(
+                                                    fontSize: 15),
+                                              )
+                                            // ? const Text(
+                                            //     "This is a record of France's results at the FIFA World Cup. France was one of the four European teams that participated at the inaugural World Cup in 1930 and have appeared in 15 FIFA World Cups, tied for the sixth most of any country.",
+                                            //     style: TextStyle(fontSize: 15),
+                                            //   )
+                                            : const SizedBox(),
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 15,
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                showMore = !showMore;
+                                              });
+                                            },
+                                            child: Text(
+                                              showMore ? 'less' : "more",
+                                              style: const TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Column(children: [
+                                Container(
+                                  width: Get.width * 0.82,
+                                  constraints: const BoxConstraints(
+                                    // minHeight: 5.0,
+                                    // minWidth: 5.0,
+                                    maxHeight: 500.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    color: Colors.black,
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.to(
+                                        () => ShowFiles(
+                                          tag: i.toString(),
+                                          file: vm.postList[i].image![0],
+                                        ),
+                                      );
+                                    },
+                                    child: Hero(
+                                      tag: i.toString(),
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          child: CachedNetworkImage(
+                                            imageUrl: vm.postList[i].image![0],
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) =>
+                                                showPlaceHolderImage(),
+                                          )),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ]),
-                          ),
-                        ],
+                              ]),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ));
@@ -528,12 +542,11 @@ class _HomePageState extends State<HomePage> {
                                                   : const Text(
                                                       "No Comments",
                                                       style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w400),
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
                                                     );
-                                          // ],
-                                          // );
                                         },
                                       )
                                     : const Center(

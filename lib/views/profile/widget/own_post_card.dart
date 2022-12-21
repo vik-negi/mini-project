@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
-import 'package:evika/utils/utility_functions.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,12 @@ import 'package:get/get.dart';
 class OwnPostCard extends StatelessWidget {
   final String route;
   final PostData postData;
-  const OwnPostCard({super.key, required this.route, required this.postData});
+  final String tag;
+  const OwnPostCard(
+      {super.key,
+      required this.route,
+      required this.postData,
+      required this.tag});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +29,9 @@ class OwnPostCard extends StatelessWidget {
           vm.update();
           Get.toNamed(
             route,
+            arguments: {
+              "tag": tag,
+            },
             // parameters: {
             //   "data": postData.toMap().toString(),
             // },
@@ -72,19 +80,19 @@ class OwnPostCard extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   // borderRadius: BorderRadius.circular(5),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.fitWidth,
-                    imageUrl: postData.image![0],
-                    width: Get.width,
-                    alignment: Alignment.bottomCenter,
-                    placeholder: (context, url) => showPlaceHolderImage(),
+                  child: Hero(
+                    tag: tag,
+                    child: CachedNetworkImage(
+                      fit: BoxFit.fitWidth,
+                      imageUrl: postData.image![0],
+                      width: Get.width,
+                      alignment: Alignment.bottomCenter,
+                      placeholder: (context, url) => showPlaceHolderImage(),
+                    ),
                   ),
                 ),
               ),
               Container(
-                // margin: EdgeInsets.symmetric(
-                //   horizontal: 10,
-                // ),
                 child: Column(
                   children: [
                     Container(
@@ -98,18 +106,18 @@ class OwnPostCard extends StatelessWidget {
                         children: [
                           showIconAndTextOnPost(
                             icon: Icons.favorite_border,
-                            text: UtilFunctions.suffixBigNumber(
+                            text: UtilWidgetsAndFunctions.suffixBigNumber(
                                 postData.likes!.toString()),
                           ),
                           showIconAndTextOnPost(
                             icon: CupertinoIcons.conversation_bubble,
-                            text: UtilFunctions.suffixBigNumber(
+                            text: UtilWidgetsAndFunctions.suffixBigNumber(
                                 postData.noOfComments.toString()),
                           ),
                           if (postData.registrationRequired!)
                             showIconAndTextOnPost(
                               icon: Icons.receipt_long_sharp,
-                              text: UtilFunctions.suffixBigNumber(
+                              text: UtilWidgetsAndFunctions.suffixBigNumber(
                                   postData.registration!.length.toString()),
                             ),
                         ],
@@ -143,7 +151,7 @@ class OwnPostCard extends StatelessWidget {
                 width: Get.width,
                 margin: EdgeInsets.only(left: 20, top: 10, right: 20),
                 child: Text(
-                  UtilFunctions.getTimeAgo(
+                  UtilWidgetsAndFunctions.getTimeAgo(
                     DateTime.parse(postData.createdAt!),
                   ),
                   style: TextStyle(
@@ -180,7 +188,7 @@ class OwnPostCard extends StatelessWidget {
                   size: 20,
                 )
               : SizedBox(),
-          icon != null ? UtilFunctions.gapx(4) : SizedBox(),
+          icon != null ? UtilWidgetsAndFunctions.gapx(4) : SizedBox(),
           text != null
               ? Text(
                   text,

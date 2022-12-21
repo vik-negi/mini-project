@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
-import 'package:evika/utils/utility_functions.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
+import 'package:evika/views/Individual%20_user_details.dart';
 import 'package:evika/views/create_post/selected_image_crousel_page.dart';
 import 'package:evika/views/mypost/fullViewImage.dart';
 import 'package:evika/views/mypost/my_post_comments.dart';
@@ -30,41 +31,62 @@ class MyPostDetails extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: commonVM.individualPostData == null
-              ? const Center(
-                  child: Text("Some Error Occured"),
+              ? SizedBox(
+                  height: Get.height,
+                  child: const Center(
+                    child: Text("Some Error Occured"),
+                  ),
                 )
               : Column(
                   children: [
                     Stack(
                       children: [
                         commonVM.individualPostData!.image != null
-                            ? CarouselSlider(
-                                options: CarouselOptions(
-                                  initialPage: 0,
-                                  enableInfiniteScroll: false,
-                                  height: Get.width * (9 / 16),
-                                  autoPlay: true,
-                                  onPageChanged: (index, reason) {
-                                    vm.activeImageNumber = index;
-                                    vm.update();
-                                  },
-                                  viewportFraction: 1,
-                                ),
-                                items: commonVM.individualPostData!.image!
-                                    .map(
-                                      (e) => SizedBox(
-                                        width: Get.width,
-                                        child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          imageUrl: e,
-                                          placeholder: (context, url) =>
-                                              showPlaceHolderImage(),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
+                            ? InkWell(
+                                onTap: () {
+                                  Get.to(
+                                      () => FullViewImageCarousel(
+                                            images: commonVM
+                                                .individualPostData!.image!
+                                                .map((e) => e.toString())
+                                                .toList(),
+                                          ),
+                                      transition: Transition.cupertino,
+                                      duration:
+                                          const Duration(milliseconds: 150));
+                                },
+                                child: CarouselSlider(
+                                  options: CarouselOptions(
+                                    initialPage: 0,
+                                    enableInfiniteScroll: false,
+                                    height: Get.width * (9 / 16),
+                                    autoPlay: true,
+                                    onPageChanged: (index, reason) {
+                                      vm.activeImageNumber = index;
+                                      vm.update();
+                                    },
+                                    viewportFraction: 1,
+                                  ),
+                                  items: commonVM.individualPostData!.image!
+                                      .map(
+                                        (e) => SizedBox(
+                                          width: Get.width,
+                                          child: Hero(
+                                            tag: "index",
+                                            child: CachedNetworkImage(
+                                              fit: BoxFit.cover,
+                                              imageUrl: e,
+                                              placeholder: (context, url) =>
+                                                  showPlaceHolderImage(),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      const Icon(Icons.error),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    )
-                                    .toList(),
+                                      )
+                                      .toList(),
+                                ),
                               )
                             : Image.asset("assets/placeholderimageloading.gif"),
                         Positioned(
@@ -96,52 +118,6 @@ class MyPostDetails extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Positioned(
-                          top: 10,
-                          right: 25,
-                          child: InkWell(
-                            onTap: () {
-                              Get.to(
-                                  () => FullViewImageCarousel(
-                                        images: commonVM
-                                            .individualPostData!.image!
-                                            .map((e) => e.toString())
-                                            .toList(),
-                                      ),
-                                  transition: Transition.cupertino,
-                                  duration: const Duration(milliseconds: 150));
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 12,
-                              ),
-                              decoration: const BoxDecoration(
-                                color: AppColors.accentColor,
-                                // shape: BoxShape.circle,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20),
-                                ),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.zoom_out_map_rounded,
-                                    size: 13,
-                                  ),
-                                  UtilFunctions.gapx(5),
-                                  const Text(
-                                    "Full Image",
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                     Container(
@@ -163,14 +139,14 @@ class MyPostDetails extends StatelessWidget {
                         children: [
                           showIconAndTextOnPost(
                             icon: Icons.favorite_border,
-                            text: UtilFunctions.suffixBigNumber(
+                            text: UtilWidgetsAndFunctions.suffixBigNumber(
                                 commonVM.individualPostData!.likes.toString()),
                           ),
                           showIconAndTextOnPost(
                             icon: CupertinoIcons.conversation_bubble,
-                            text: UtilFunctions.suffixBigNumber(commonVM
-                                .individualPostData!.noOfComments
-                                .toString()),
+                            text: UtilWidgetsAndFunctions.suffixBigNumber(
+                                commonVM.individualPostData!.noOfComments
+                                    .toString()),
                           ),
                           // showIconAndTextOnPost(
                           //   icon: Icons.share,
@@ -181,13 +157,23 @@ class MyPostDetails extends StatelessWidget {
                               ? Container()
                               : showIconAndTextOnPost(
                                   icon: Icons.receipt_long_sharp,
-                                  text: UtilFunctions.suffixBigNumber(commonVM
-                                      .individualPostData!.registration!.length
-                                      .toString()),
+                                  text: UtilWidgetsAndFunctions.suffixBigNumber(
+                                      commonVM.individualPostData!.registration!
+                                          .length
+                                          .toString()),
                                 )
                         ],
                       ),
                     ),
+                    UtilWidgetsAndFunctions.gapy(10),
+                    UtilWidgetsAndFunctions.showStartAndEndDate(
+                        context,
+                        UtilWidgetsAndFunctions.getCorrectDateTimeFormat(
+                            commonVM.individualPostData!.eventStartAt
+                                .toString()),
+                        UtilWidgetsAndFunctions.getCorrectDateTimeFormat(
+                            commonVM.individualPostData!.eventEndAt
+                                .toString())),
                     const Divider(),
                     InkWell(
                       onTap: () {
@@ -291,7 +277,10 @@ class MyPostDetails extends StatelessWidget {
                       lable: "View Comments",
                       icon: Icons.comment,
                       count: commonVM.individualPostData!.noOfComments,
-                      onTap: () {
+                      onTap: () async {
+                        commonVM.fetchIndivudualPostComments(
+                          commonVM.individualPostData!.id!,
+                        );
                         Get.to(
                           const MyPostComments(),
                           transition: Transition.cupertino,
@@ -353,7 +342,7 @@ class MyPostDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(icon),
-                  UtilFunctions.gapx(10),
+                  UtilWidgetsAndFunctions.gapx(10),
                   Text(
                     "$lable(${count ?? 0})",
                     style: const TextStyle(
@@ -393,7 +382,7 @@ class MyPostDetails extends StatelessWidget {
                   size: 18,
                 )
               : const SizedBox(),
-          icon != null ? UtilFunctions.gapx(4) : const SizedBox(),
+          icon != null ? UtilWidgetsAndFunctions.gapx(4) : const SizedBox(),
           text != null ? Text(text) : const SizedBox(),
         ],
       ),

@@ -28,6 +28,7 @@ class CommonVM extends GetxController {
   List<PostData> userPostList = [];
   PostData? individualPostData;
   List<PostData> otherUserPostList = [];
+  bool individualPostLoading = false;
   bool isLikedPost(String postId) {
     return userLikedPostList.contains(postId);
   }
@@ -48,6 +49,10 @@ class CommonVM extends GetxController {
     await getUserFromSharedPrefes();
     likedPost();
   }
+
+  // DateTime getCorrectDateTimeFormat(String dateTime) {
+
+  // }
 
   Future getUserFromSharedPrefes() async {
     isProfileLoading = true;
@@ -89,12 +94,22 @@ class CommonVM extends GetxController {
     update();
     try {
       var response = await commonRepoImp.getAndAddComments(postId, null);
-      print("response $response");
+      debugPrint("Get Comments: response $response");
       commentList = response;
     } catch (e) {
-      print(e);
+      debugPrint("Get Comments: $e");
     }
     isLoading = false;
+    update();
+  }
+
+  void fetchIndivudualPostComments(String postID) {
+    commentList = [];
+    debugPrint("$checkBase Fetch Individual Post Comments function called");
+    individualPostLoading = true;
+    update();
+    getComments(postId: postID);
+    individualPostLoading = false;
     update();
   }
 
@@ -136,14 +151,14 @@ class CommonVM extends GetxController {
         for (int i = 0; i < list.length; i++) {
           String postdataStr = jsonEncode(list[i]);
           PostData postData = PostData.fromJson(postdataStr);
-
           userPostList.add(postData);
-          // print("llllllllllllll");
-          // print(userPostList[i].eventId);
           isPostFetched = true;
           update();
+          debugPrint(
+              "UserPost List no. of comments: ${userPostList[i].noOfComments}");
         }
-        print("UserPost Length: ${userPostList.length}");
+        debugPrint("UserPost Length: ${userPostList.length}");
+
         update();
         // return userPostList;
       } else {

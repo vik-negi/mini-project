@@ -1,3 +1,5 @@
+import 'package:dotted_border/dotted_border.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/utils/widgets/followWidget.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/views/trending_view/trending_post_card.dart';
@@ -287,10 +289,30 @@ class _TrandingPageState extends State<TrandingPage> {
                 width: Get.width,
                 height: Get.height,
                 color: Color.fromARGB(230, 255, 255, 255),
-                child: Center(
-                  child: Container(
-                    child: Icon(Icons.lock),
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DottedBorder(
+                      borderType: BorderType.RRect,
+                      radius: const Radius.circular(30),
+                      dashPattern: [4, 2, 2, 2],
+                      strokeWidth: 2,
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          // color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: const Icon(
+                          Icons.lock,
+                        ),
+                      ),
+                    ),
+                    UtilWidgetsAndFunctions.gapy(10),
+                    const Text(
+                      "Locked",
+                    ),
+                  ],
                 ),
               ),
             ),

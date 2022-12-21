@@ -168,7 +168,7 @@ class PostData {
       name: map['name'] != null ? map['name'] as String : "null",
       userId: map['userId'] != null ? map['userId'] as String : "null",
       noOfComments:
-          map['noOfComments'] != null ? map['noOfComments'] as int : 0,
+          map['noOfComments'] != null ? (map['noOfComments']) as int : 0,
       id: map['_id'] != null ? map['_id'] as String : "null",
     );
   }
