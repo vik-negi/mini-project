@@ -33,6 +33,36 @@ class CommonVM extends GetxController {
     return userLikedPostList.contains(postId);
   }
 
+  void onFollowBtnClick() {
+    if (otherUserData!.follower!.contains(userId)) {
+      otherUserData!.follower!.remove(userId);
+    } else {
+      otherUserData!.follower!.add(userId);
+    }
+    update();
+  }
+
+  bool isFollow() {
+    return otherUserData!.follower!.contains(userId);
+  }
+
+  String? userId;
+
+  setUserData() async {
+    userId = await SharedPrefs.getString("userId");
+  }
+
+  void followUser(String otherUserId) async {
+    onFollowBtnClick();
+    debugPrint("Follow user function called");
+    bool response = await commonRepoImp.followUser(otherUserId);
+    if (!response) {
+      debugPrint("Follow user function completed");
+      // otherUserData?.isFollow = true;
+      update();
+    }
+  }
+
   void tapOnLikeButtonFun(String id) async {
     if (isLikedPost(id)) {
       userLikedPostList.remove(id);
@@ -45,6 +75,7 @@ class CommonVM extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    setUserData();
     debugPrint("Common VM oninit function called");
     await getUserFromSharedPrefes();
     likedPost();
@@ -77,11 +108,11 @@ class CommonVM extends GetxController {
   }
 
   likedPost() async {
-    debugPrint("$checkBase User liked fetch funciton called");
+    // debugPrint("$checkBase User liked fetch funciton called");
     List? response = await commonRepoImp.userLikedPost();
     if (response != null) {
       userLikedPostList = response;
-      debugPrint("Liked Post fetch funciton: ${userLikedPostList[0]}");
+      // debugPrint("Liked Post fetch funciton: ${userLikedPostList[0]}");
       update();
     } else {
       userLikedPostList = response ?? [];
@@ -94,7 +125,7 @@ class CommonVM extends GetxController {
     update();
     try {
       var response = await commonRepoImp.getAndAddComments(postId, null);
-      debugPrint("Get Comments: response $response");
+      // debugPrint("Get Comments: response $response");
       commentList = response;
     } catch (e) {
       debugPrint("Get Comments: $e");
@@ -139,7 +170,7 @@ class CommonVM extends GetxController {
     update();
     Map<dynamic, dynamic>? data = await profileRepoImp.getUserPost(id);
     debugPrint("Get user post data printing");
-    debugPrint(data.toString());
+    // debugPrint(data.toString());
 
     try {
       if (data != null) {
@@ -157,7 +188,7 @@ class CommonVM extends GetxController {
           debugPrint(
               "UserPost List no. of comments: ${userPostList[i].noOfComments}");
         }
-        debugPrint("UserPost Length: ${userPostList.length}");
+        // debugPrint("UserPost Length: ${userPostList.length}");
 
         update();
         // return userPostList;

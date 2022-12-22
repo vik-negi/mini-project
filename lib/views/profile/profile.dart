@@ -5,7 +5,9 @@ import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
+import 'package:evika/views/profile/profile_update_screen.dart';
 import 'package:evika/views/profile/widget/own_post_card.dart';
+import 'package:evika/views/settings/setting_Screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -70,6 +72,13 @@ class ProfilePage extends StatelessWidget {
                     });
               },
             ),
+            IconButton(
+                onPressed: () {
+                  Get.to(() => SettingScreen());
+                },
+                icon: Icon(
+                  Icons.settings,
+                )),
           ],
         ),
         body: SingleChildScrollView(
@@ -190,7 +199,7 @@ class ProfilePage extends StatelessWidget {
                               SizedBox(
                                 height: 25,
                                 child: Text(
-                                  vm.userData?.following?.length.toString() ??
+                                  vm.userData?.follower?.length.toString() ??
                                       "0",
                                   style: const TextStyle(
                                     color: Colors.black,
@@ -231,11 +240,12 @@ class ProfilePage extends StatelessWidget {
                           ),
                           Column(
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 height: 25,
                                 child: Text(
-                                  "0",
-                                  style: TextStyle(
+                                  vm.userData!.likedPosts?.length.toString() ??
+                                      "0",
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -368,7 +378,9 @@ class ProfilePage extends StatelessWidget {
 
                                   // Edit Profile Button
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Get.to(() => ProfileEditScreen());
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 30,

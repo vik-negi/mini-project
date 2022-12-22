@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/auth/signup.dart';
+import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
@@ -67,14 +68,34 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(
                                 height: 50,
                               ),
+                              // CircleAvatar(
+                              //   radius: 25,
+                              //   backgroundColor: Colors.white,
+                              //   child: IconButton(
+                              //       onPressed: () async {
+                              //         vm.likePost(vm.postList[i].id);
+                              //         // commonVM.update();
+                              //       },
+                              //       icon: Icon(
+                              //         commonVM.isLikedPost(vm.postList[i].id!)
+                              //             ? CupertinoIcons.heart_fill
+                              //             : CupertinoIcons.heart_fill,
+                              //         color: commonVM
+                              //                 .isLikedPost(vm.postList[i].id!)
+                              //             ? Colors.red
+                              //             : Colors.grey.shade300,
+                              //         size: 30,
+                              //       )),
+                              // ),
+                              // const SizedBox(
+                              //   height: 10,
+                              // ),
                               CircleAvatar(
                                 radius: 25,
                                 backgroundColor: Colors.white,
                                 child: IconButton(
                                     onPressed: () async {
                                       vm.likePost(vm.postList[i].id);
-                                      // await commonVM.likedPost();
-                                      // commonVM.update();
                                     },
                                     icon: Icon(
                                       commonVM.isLikedPost(vm.postList[i].id!)
@@ -200,62 +221,122 @@ class _HomePageState extends State<HomePage> {
                                     width: Get.width - 80,
                                     child: Stack(
                                       children: [
-                                        Text(
-                                          // "This is a record of France's results at the FIFA World Cup.",
-                                          vm.postList[i].description!.length >
-                                                  50
-                                              ? vm.postList[i].description
-                                                  .toString()
-                                                  .substring(0, 50)
-                                              : vm.postList[i].description
-                                                  .toString(),
-                                          softWrap: true,
-                                          style: const TextStyle(
-                                            // color: Colors.black,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        showMore
-                                            ? Text(
-                                                vm.postList[i].description!
-                                                            .length >
-                                                        50
-                                                    ? vm.postList[i].description
-                                                        .toString()
-                                                        .substring(
-                                                            50,
-                                                            vm
-                                                                    .postList[i]
-                                                                    .description!
-                                                                    .length -
-                                                                1)
+                                        RichText(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: showMore ? 100 : 3,
+                                          text: TextSpan(
+                                            text: vm.postList[i].description!
+                                                        .length >
+                                                    117
+                                                ? "${vm.postList[i].description.toString().substring(0, 117)}..."
+                                                : vm.postList[i].description
+                                                    .toString(),
+                                            children: [
+                                              TextSpan(
+                                                text: showMore
+                                                    ? vm
+                                                                .postList[i]
+                                                                .description!
+                                                                .length >
+                                                            117
+                                                        ? vm.postList[i]
+                                                            .description
+                                                            .toString()
+                                                            .substring(
+                                                                117,
+                                                                vm
+                                                                        .postList[
+                                                                            i]
+                                                                        .description!
+                                                                        .length -
+                                                                    1)
+                                                        : ""
                                                     : "",
                                                 style: const TextStyle(
-                                                    fontSize: 15),
-                                              )
-                                            // ? const Text(
-                                            //     "This is a record of France's results at the FIFA World Cup. France was one of the four European teams that participated at the inaugural Wo  rld Cup in 1930 and have appeared in 15 FIFA World Cups, tied for the sixth most of any country.",
-                                            //     style: TextStyle(fontSize: 15),
-                                            //   )
-                                            : const SizedBox(),
-                                        Positioned(
-                                          bottom: 0,
-                                          right: 15,
-                                          child: InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                showMore = !showMore;
-                                              });
-                                            },
-                                            child: Text(
-                                              showMore ? 'less' : "more",
-                                              style: const TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 15,
+                                                  // color: Colors.black,
+                                                  fontSize: 15,
+                                                ),
                                               ),
+                                            ],
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              // fontWeight: FontWeight.w500,
                                             ),
                                           ),
+                                          // style: TextStyle(fontSize: 18),
                                         ),
+                                        // Text(
+                                        //   // "This is a record of France's results at the FIFA World Cup.",
+                                        //   vm.postList[i].description!.length > 50
+                                        //       ? vm.postList[i].description
+                                        //           .toString()
+                                        //           .substring(0, 50)
+                                        //       : vm.postList[i].description
+                                        //           .toString(),
+                                        //   softWrap: true,
+                                        //   style: const TextStyle(
+                                        //     color: Colors.black,
+                                        //     fontSize: 17,
+                                        //   ),
+                                        // ),
+                                        // showMore
+                                        // ? Text(
+                                        //     vm.postList[i].description!
+                                        //                 .length >
+                                        //             50
+                                        //         ? vm.postList[i].description
+                                        //             .toString()
+                                        //             .substring(
+                                        //                 50,
+                                        //                 vm
+                                        //                         .postList[i]
+                                        //                         .description!
+                                        //                         .length -
+                                        //                     1)
+                                        //         : "",
+                                        //     style:
+                                        //         const TextStyle(fontSize: 15),
+                                        //   )
+                                        // ? const Text(
+                                        //     "This is a record of France's results at the FIFA World Cup. France was one of the four European teams that participated at the inaugural World Cup in 1930 and have appeared in 15 FIFA World Cups, tied for the sixth most of any country.",
+                                        //     style: TextStyle(fontSize: 15),
+                                        //   )
+                                        // : const SizedBox(),
+                                        vm.postList[i].description!.length > 90
+                                            ? Positioned(
+                                                bottom: -5,
+                                                right: 15,
+                                                child: Container(
+                                                  // color: Colors.white,
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  height: 24,
+                                                  width: 65,
+                                                  child: Container(
+                                                    color: Colors.white24,
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          showMore = !showMore;
+                                                        });
+                                                      },
+                                                      child: Text(
+                                                        showMore
+                                                            ? 'less'
+                                                            : "more",
+                                                        style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : const SizedBox(),
                                       ],
                                     ),
                                   ),
@@ -581,11 +662,19 @@ class _SuggessionsState extends State<Suggessions> {
     "Your City",
     "Your Town",
   ];
+
+  List<String> icons = [
+    "assets/icons/globe.png",
+    "assets/icons/country.png",
+    "assets/icons/state.png",
+    "assets/icons/town.png",
+    "assets/icons/town.png",
+  ];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PostVM>(builder: (vm) {
       return Container(
-        height: 45,
+        height: 50,
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 5,
@@ -605,10 +694,12 @@ class _SuggessionsState extends State<Suggessions> {
 
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.grey.shade700,
+                  // color: Colors.grey.shade700,
+                  color: Colors.grey.shade900,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(0),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: InkWell(
                     onTap: () {
                       if (suggession[index] == 'Global') {
@@ -628,13 +719,19 @@ class _SuggessionsState extends State<Suggessions> {
                         vm.filterPost();
                       }
                     },
-                    child: Text(
-                      suggession[index],
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    child: Row(
+                      children: [
+                        Image.asset(icons[index]),
+                        const SizedBox(width: 5),
+                        Text(
+                          suggession[index],
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

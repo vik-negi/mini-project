@@ -152,7 +152,7 @@ class OtherProfilePage extends StatelessWidget {
                                     SizedBox(
                                       height: 25,
                                       child: Text(
-                                        vm.otherUserData?.following?.length
+                                        vm.otherUserData!.follower?.length
                                                 .toString() ??
                                             "0",
                                         style: const TextStyle(
@@ -195,11 +195,13 @@ class OtherProfilePage extends StatelessWidget {
                                 ),
                                 Column(
                                   children: [
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 25,
                                       child: Text(
-                                        "0",
-                                        style: TextStyle(
+                                        vm.otherUserData!.likedPosts?.length
+                                                .toString() ??
+                                            "0",
+                                        style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
@@ -272,9 +274,10 @@ class OtherProfilePage extends StatelessWidget {
                                         // Create Post Button
                                         TextButton(
                                           onPressed: () {
-                                            Get.toNamed(
-                                              AppRotutes.createPost,
-                                            );
+                                            // Get.toNamed(
+                                            // AppRotutes.createPost,
+                                            // );
+                                            vm.followUser(vm.otherUserData!.id);
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
@@ -293,19 +296,23 @@ class OtherProfilePage extends StatelessWidget {
                                                     CrossAxisAlignment.center,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
-                                                children: const [
+                                                children: [
                                                   Text(
-                                                    "Add Event",
-                                                    style: TextStyle(
+                                                    vm.isFollow()
+                                                        ? "UnFollow"
+                                                        : "Follow",
+                                                    style: const TextStyle(
                                                       // color: Colors.black,
                                                       fontSize: 12,
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 5,
                                                   ),
                                                   Icon(
-                                                    Icons.edit_note_sharp,
+                                                    vm.isFollow()
+                                                        ? Icons.person_off_sharp
+                                                        : Icons.person_add,
                                                     size: 18,
                                                     color: Colors.blue,
                                                   ),

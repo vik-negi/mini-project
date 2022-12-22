@@ -56,6 +56,27 @@ class GetLocation {
     };
   }
 
+  Future<postModel.Address> findAdressByPosition(
+      double latitude, double longitude) async {
+    final coordinates = Coordinates(latitude, longitude);
+    var address =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+
+    var first = address.first;
+    List<double> coordinatesPots = [];
+    coordinatesPots.add(first.coordinates.longitude);
+    coordinatesPots.add(first.coordinates.latitude);
+    // debugPrint(
+    //     "coordinates : ${first.subAdminArea} ${first.adminArea} ${first.postalCode} looooo ${first.locality} ffffnnnn ${first.featureName} addline ${first.addressLine} subb ${first.subLocality}");
+    return postModel.Address(
+      coordinates: coordinatesPots,
+      country: "india",
+      state: first.adminArea.toString(),
+      zipcode: first.postalCode.toString(),
+      address1: first.addressLine.toString(),
+    );
+  }
+
   Future<postModel.Address> findPositionByAddress(
       String locality1, String adminArea1, String postalCode1) async {
     //changing entered user address to coordinates

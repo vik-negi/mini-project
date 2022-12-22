@@ -98,7 +98,7 @@ class _UserChatPageState extends State<UserChatPage> {
               color: Colors.white.withOpacity(0.9),
             ),
             Scaffold(
-              backgroundColor: Colors.transparent,
+              // backgroundColor: Colors.transparent,
               appBar: userChatAppBar(context),
               body: SizedBox(
                 width: MediaQuery.of(context).size.width,
@@ -223,7 +223,8 @@ class _UserChatPageState extends State<UserChatPage> {
     return AppBar(
       backgroundColor: widget.isWeb!
           ? const Color(0xfff0f2f5)
-          : Theme.of(context).primaryColor,
+          // : Theme.of(context).primaryColor,
+          : Colors.grey.shade900,
       leadingWidth: widget.isWeb! ? 55 : 75,
       toolbarHeight: widget.isWeb! ? 65 : 55,
       titleSpacing: 0,
@@ -266,14 +267,15 @@ class _UserChatPageState extends State<UserChatPage> {
       title: userChatTitle(),
       actions: [
         if (!widget.isWeb!)
-          IconButton(onPressed: () {}, icon: const Icon(Icons.videocam)),
-        !widget.isWeb!
-            ? IconButton(onPressed: () async {}, icon: const Icon(Icons.call))
-            : IconButton(
-                onPressed: () async {},
-                icon: Icon(Icons.search,
-                    color:
-                        widget.isWeb! ? Colors.grey.shade800 : Colors.white)),
+          // IconButton(onPressed: () {}, icon: const Icon(Icons.videocam)),
+          !widget.isWeb!
+              ? IconButton(onPressed: () async {}, icon: const Icon(Icons.call))
+              : IconButton(
+                  onPressed: () async {},
+                  icon: Icon(
+                    Icons.search,
+                    color: widget.isWeb! ? Colors.grey.shade800 : Colors.white,
+                  )),
         GetBuilder<UserChatVM>(builder: (vm) {
           return PopupMenuBtn(items: vm.userChatMenuBtn);
         })
@@ -296,9 +298,10 @@ class _UserChatPageState extends State<UserChatPage> {
             Text(
               widget.receiverName,
               style: TextStyle(
-                  fontSize: 18.5,
-                  fontWeight: widget.isWeb! ? FontWeight.w100 : FontWeight.bold,
-                  color: widget.isWeb! ? Colors.black : Colors.white),
+                fontSize: 18.5,
+                fontWeight: widget.isWeb! ? FontWeight.w100 : FontWeight.bold,
+                color: widget.isWeb! ? Colors.black : Colors.white,
+              ),
             ),
             Text(
               widget.isWeb!
@@ -306,9 +309,10 @@ class _UserChatPageState extends State<UserChatPage> {
                   : "Last seen today at ",
               // ${vm.chatUsersList[widget.i].lastMessageTime}",
               style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: widget.isWeb! ? FontWeight.w200 : FontWeight.w400,
-                  color: widget.isWeb! ? Colors.black : Colors.white),
+                fontSize: 13,
+                fontWeight: widget.isWeb! ? FontWeight.w200 : FontWeight.w400,
+                color: widget.isWeb! ? Colors.black : Colors.white,
+              ),
             ),
           ],
         ),

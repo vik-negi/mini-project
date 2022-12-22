@@ -63,6 +63,7 @@ dependencies:
   cached_network_image: ^3.2.3
   modal_progress_hud_nsn: ^0.1.0-nullsafety-1
   dotted_border: ^2.0.0+3
+  settings_ui: ^2.0.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -85,6 +86,7 @@ flutter:
     - assets/img/
     - assets/svgs/
     - assets/gif/
+    - assets/icons/
 
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

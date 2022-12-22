@@ -80,8 +80,8 @@ class UserData {
   List<SocialMedia>? socialMedia;
   List<String>? interest;
   int? profileViews;
-  List<String>? likedPost;
-  List<String>? savedPost;
+  List<dynamic>? likedPosts;
+  List<dynamic>? savedPost;
   UserData({
     this.personId,
     required this.name,
@@ -113,7 +113,7 @@ class UserData {
     this.socialMedia,
     this.interest,
     this.profileViews,
-    this.likedPost,
+    this.likedPosts,
     this.savedPost,
   });
 
@@ -149,7 +149,7 @@ class UserData {
       'socialMedia': socialMedia?.map((x) => x.toMap()).toList() ?? [],
       'interest': interest,
       'profileViews': profileViews,
-      'likedPost': likedPost?.map((x) => x).toList() ?? [],
+      'likedPosts': likedPosts?.map((x) => x).toList() ?? [],
       'savedPost': savedPost?.map((x) => x).toList() ?? [],
     };
   }
@@ -217,10 +217,10 @@ class UserData {
           : null,
       profileViews:
           map['profileViews'] != null ? map['profileViews'] as int : null,
-      likedPost:
-          map['likedPost'] != null ? map['likedPost'] as List<String> : [],
+      likedPosts:
+          map['likedPosts'] != null ? map['likedPosts'] as List<dynamic> : [],
       savedPost:
-          map['savedPost'] != null ? map['savedPost'] as List<String> : [],
+          map['savedPosts'] != null ? map['savedPosts'] as List<dynamic> : [],
     );
   }
 

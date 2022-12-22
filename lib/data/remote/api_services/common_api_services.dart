@@ -131,6 +131,25 @@ class CommonApiServices extends CommoApiInterface {
   }
 
   @override
+  Future<bool> followUser(String otherUserId) async {
+    String token = await getToken();
+    String? userId = await SharedPrefs.getString("userId");
+    // debugPrint("userId : $userId and otherUSerId : $otherUserId");
+    final response = await http.get(
+        Uri.parse('$baseUrl/api/account/follow/$userId/$otherUserId'),
+        headers: <String, String>{
+          "authorization": "Bearer $token",
+        });
+    print("response :::: ${response.body}");
+    if (response != null && response.statusCode == 200) {
+      Map<String, dynamic> res = jsonDecode(response.body);
+      print("add comment res : $res");
+      return res["success"] == "success" ? true : false;
+    }
+    return false;
+  }
+
+  @override
   Future<Map<String, dynamic>> getUserPost(String userId) async {
     try {
       debugPrint("fetched");
@@ -145,7 +164,7 @@ class CommonApiServices extends CommoApiInterface {
 
       // debugPrint("get user url: $baseUrl/api/user/get-posts/$userId");
       // debugPrint('get user status code: ${response.statusCode.toString()}');
-      debugPrint("get user post response: $response");
+      // debugPrint("get user post response: $response");
       if (response.statusCode == 200) {
         // debugPrint(response.body);
         Map<String, dynamic> body = apiServices.returnResponse(response);

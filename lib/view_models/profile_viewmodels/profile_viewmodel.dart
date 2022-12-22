@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:evika/models/user/post_model.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
+import 'package:evika/view_models/location.dart';
 import 'package:flutter/cupertino.dart';
 // import 'package:evika/utils/sharedPreferenced.dart';
 // import 'package:evika/utils/sharedPreferenced.dart';
@@ -14,6 +16,8 @@ class ProfileVM extends GetxController {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
   }
+
+  GetLocation getLocation = GetLocation();
 
   UserData? userData;
   bool isLoading = false;
@@ -31,6 +35,7 @@ class ProfileVM extends GetxController {
     if (user != null) {
       var userDataMap = jsonDecode(user);
       userData = UserData.fromMap(userDataMap);
+      await getUserDataToControllers();
     }
     setLoading(false);
   }
@@ -39,12 +44,33 @@ class ProfileVM extends GetxController {
   onInit() async {
     debugPrint("onint in profile vm is running");
     super.onInit();
-    // await getUserFromSharedPrefes();
+    await getUserFromSharedPrefes();
   }
 
-  hii() {
-    debugPrint("onint in profile vm is running");
-    // await getUserFromSharedPrefes();
+  GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController pinController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+
+  getUserDataToControllers() async {
+    debugPrint(
+        "get user data to controllers is running ${userData!.location}}");
+    Address address = await getLocation.findAdressByPosition(28.7041, 77.1025);
+    print("address is ${address.state}");
+    nameController.text = userData?.name ?? "";
+    bioController.text = userData?.bio ?? "";
+    addressController.text = address.address1 ?? address.state;
+    pinController.text = address.zipcode;
+    stateController.text = (address.state);
+    countryController.text = address.country;
+    emailController.text = userData?.email ?? "";
+    mobileController.text = userData?.mobile ?? "";
+    update();
   }
 
   // var userData = UserData(

@@ -42,6 +42,7 @@ ThemeData darkThemeData(BuildContext context) {
 }
 
 const kPrimaryColor = Color(0xffF76C6C);
+const PrimaryColor = Color(0xffffffff);
 const kWarningColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 

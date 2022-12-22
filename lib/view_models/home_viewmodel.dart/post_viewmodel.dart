@@ -106,7 +106,7 @@ class PostVM extends GetxController {
       if (data != null) {
         debugPrint("getAllpost function Called");
         List<dynamic> list = data['data'];
-        debugPrint(data.toString());
+        // debugPrint(data.toString());
 
         response = ApiResponce.completed(data);
         update();
@@ -136,7 +136,7 @@ class PostVM extends GetxController {
     Map range = {"maxrange": postFilterRange};
     Map<dynamic, dynamic>? data = await postRepoImp.filterPost(range);
 
-    debugPrint(checkBase + data.toString());
+    // debugPrint(checkBase + data.toString());
     try {
       if (data != null) {
         List<dynamic> list = data['posts'];
@@ -168,7 +168,7 @@ class PostVM extends GetxController {
     if (!response) {
       commonVM.tapOnLikeButtonFun(id);
     }
-    debugPrint("$checkBase Liked Post response : $response");
+    // debugPrint("$checkBase Liked Post response : $response");
   }
 
   selectDateTime(context, String type) async {
