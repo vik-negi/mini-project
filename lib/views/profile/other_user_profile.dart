@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
-import 'package:evika/utils/utility_functions.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/views/chat_view/user_Chat_page.dart';
 import 'package:evika/views/profile/widget/own_post_card.dart';
@@ -152,7 +152,7 @@ class OtherProfilePage extends StatelessWidget {
                                     SizedBox(
                                       height: 25,
                                       child: Text(
-                                        vm.otherUserData?.following?.length
+                                        vm.otherUserData!.follower?.length
                                                 .toString() ??
                                             "0",
                                         style: const TextStyle(
@@ -195,11 +195,13 @@ class OtherProfilePage extends StatelessWidget {
                                 ),
                                 Column(
                                   children: [
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 25,
                                       child: Text(
-                                        "0",
-                                        style: TextStyle(
+                                        vm.otherUserData!.likedPosts?.length
+                                                .toString() ??
+                                            "0",
+                                        style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
@@ -272,9 +274,10 @@ class OtherProfilePage extends StatelessWidget {
                                         // Create Post Button
                                         TextButton(
                                           onPressed: () {
-                                            Get.toNamed(
-                                              AppRotutes.createPost,
-                                            );
+                                            // Get.toNamed(
+                                            // AppRotutes.createPost,
+                                            // );
+                                            vm.followUser(vm.otherUserData!.id);
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
@@ -293,19 +296,23 @@ class OtherProfilePage extends StatelessWidget {
                                                     CrossAxisAlignment.center,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
-                                                children: const [
+                                                children: [
                                                   Text(
-                                                    "Add Event",
-                                                    style: TextStyle(
+                                                    vm.isFollow()
+                                                        ? "UnFollow"
+                                                        : "Follow",
+                                                    style: const TextStyle(
                                                       // color: Colors.black,
                                                       fontSize: 12,
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 5,
                                                   ),
                                                   Icon(
-                                                    Icons.edit_note_sharp,
+                                                    vm.isFollow()
+                                                        ? Icons.person_off_sharp
+                                                        : Icons.person_add,
                                                     size: 18,
                                                     color: Colors.blue,
                                                   ),
@@ -390,7 +397,7 @@ class OtherProfilePage extends StatelessWidget {
                                     CupertinoIcons.collections_solid,
                                     size: 18,
                                   ),
-                                  UtilFunctions.gapx(5),
+                                  UtilWidgetsAndFunctions.gapx(5),
                                   Text(
                                     "${vm.otherUserData!.name}'s Events",
                                     style: const TextStyle(
@@ -432,10 +439,10 @@ class OtherProfilePage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          UtilFunctions.gapy(10),
-                                          Text(
-                                            "${vm.otherUserData!.name} has not added any event yet}",
-                                            style: const TextStyle(
+                                          UtilWidgetsAndFunctions.gapy(10),
+                                          const Text(
+                                            "Tap to add your first event",
+                                            style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w300,
@@ -454,26 +461,9 @@ class OtherProfilePage extends StatelessWidget {
                                       // itemCount: 1,
                                       itemBuilder: (context, index) {
                                         return OwnPostCard(
-                                          title: vm
-                                              .otherUserPostList[index].title
-                                              .toString(),
-                                          imgUrl: vm.otherUserPostList[index]
-                                              .image![0]
-                                              .toString(),
-                                          // imgUrl:
-                                          //     "https://media.istockphoto.com/id/1038727610/photo/liquid-shapes-abstract-holographic-3d-wavy-background.jpg?s=612x612&w=0&k=20&c=OSfb3DuCHkjERNJTpK4GzMN851GhHQA6Evn9DKc-kw4=",
-                                          likes: vm
-                                              .otherUserPostList[index].likes
-                                              .toString(),
-                                          // likes: "266034",
-                                          comments: vm.otherUserPostList[index]
-                                              .noOfComments
-                                              .toString(),
-                                          registrations: vm
-                                              .otherUserPostList[index].likes
-                                              .toString(),
-                                          date: DateTime(2022, 11, 12),
-                                          route: AppRotutes.postDescription,
+                                          tag: index.toString(),
+                                          postData: vm.otherUserPostList[index],
+                                          route: AppRotutes.myPostDetails,
                                         );
                                       },
                                     ),
@@ -505,7 +495,7 @@ class OtherProfilePage extends StatelessWidget {
                   size: 18,
                 )
               : const SizedBox(),
-          icon != null ? UtilFunctions.gapx(4) : const SizedBox(),
+          icon != null ? UtilWidgetsAndFunctions.gapx(4) : const SizedBox(),
           text != null ? Text(text) : const SizedBox(),
         ],
       ),

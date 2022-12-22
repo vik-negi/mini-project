@@ -53,6 +53,7 @@ class PostData {
   final String? id;
 
   final String? description;
+  final String? eventDescription;
   final String? eventCategory;
   final String? eventEndAt;
 
@@ -73,12 +74,17 @@ class PostData {
   final String? userId;
   final String? name;
   final String? profileImage;
+  final List<dynamic>? registration;
+  final bool? registrationRequired;
 
   PostData({
+    this.registrationRequired,
+    this.registration,
     this.name,
     this.profileImage,
     this.createdAt,
     this.description,
+    this.eventDescription,
     this.eventCategory,
     this.eventEndAt,
     this.eventId,
@@ -98,10 +104,13 @@ class PostData {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'registrationRequired': registrationRequired,
+      'registration': registration,
       'name': name,
       'profileImage': profileImage,
       'createdAt': createdAt,
       'description': description,
+      'eventDescription': eventDescription,
       'eventCategory': eventCategory,
       'eventEndAt': eventEndAt,
       'eventId': eventId,
@@ -122,6 +131,11 @@ class PostData {
 
   factory PostData.fromMap(Map<String, dynamic> map) {
     return PostData(
+      registrationRequired: map['registrationRequired'] != null
+          ? map['registrationRequired'] as bool
+          : false,
+      registration: map['registration'] ?? [],
+      eventDescription: map['eventDescription'] ?? [],
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : "null",
       description:
           map['description'] != null ? map['description'] as String : "null",
@@ -154,7 +168,7 @@ class PostData {
       name: map['name'] != null ? map['name'] as String : "null",
       userId: map['userId'] != null ? map['userId'] as String : "null",
       noOfComments:
-          map['noOfComments'] != null ? map['noOfComments'] as int : 0,
+          map['noOfComments'] != null ? (map['noOfComments']) as int : 0,
       id: map['_id'] != null ? map['_id'] as String : "null",
     );
   }

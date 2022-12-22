@@ -6,4 +6,5 @@ abstract class CommonRepo {
   Future<Map<String, dynamic>?> otherUsersData(String userId);
   Future<bool> commentFunctionality(
       String postId, String type, String commentId);
+  Future<bool> followUser(String otherUserId);
 }

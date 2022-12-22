@@ -41,12 +41,28 @@ class _ChatHomeViewState extends State<ChatHomeView>
       builder: (vm) {
         return Scaffold(
             body: DefaultTabController(
-                length: 4,
+                length: 2,
                 child: NestedScrollView(
                     headerSliverBuilder: (context, value) {
                       return [
                         SliverAppBar(
-                          title: const Text("Evika Chat"),
+                          flexibleSpace: Container(
+                            decoration: BoxDecoration(
+                              // LinearGradient
+                              gradient: LinearGradient(
+                                // colors for gradient
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.grey.shade900,
+                                  Colors.grey.shade500,
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          // backgroundColor: Colors.purple,
+                          // backgroundColor: LinearGradient(colors: [Colors.blue, Colors.purple, Colors.red])
                           elevation: 0,
                           pinned: true,
                           floating: true,

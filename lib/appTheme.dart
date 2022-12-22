@@ -42,9 +42,10 @@ ThemeData darkThemeData(BuildContext context) {
 }
 
 const kPrimaryColor = Color(0xffF76C6C);
+const PrimaryColor = Color(0xffffffff);
 const kWarningColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 
 const kDefaultPadding = 20.0;
 
-final appBarTheme = const AppBarTheme(centerTitle: false, elevation: 0);
+const appBarTheme = AppBarTheme(centerTitle: false, elevation: 0);

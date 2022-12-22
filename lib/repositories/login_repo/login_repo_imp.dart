@@ -22,4 +22,11 @@ class LoginRepoImp extends LoginRepo {
     debugPrint("signup Repo Imp $response");
     return response;
   }
+
+  @override
+  Future<Map>? updateUserLocation(Map updateLocation) {
+    dynamic response = loginApiServices.updateUserLocation(updateLocation);
+    debugPrint("signup Repo Imp $response");
+    return response;
+  }
 }

@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 5), () {
       isUserAuthenticated();
     });
   }
@@ -39,7 +39,13 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Container(
-          child: const Image(image: AssetImage('assets/sss.gif')),
+          color: Colors.white,
+          width: Get.width,
+          height: Get.height,
+          child: Image.asset(
+            'assets/gif/splashlogo.gif',
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );

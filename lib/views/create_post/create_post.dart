@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:evika/utils/colors.dart';
-import 'package:evika/utils/utility_functions.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/views/create_post/create_post_viewmodel.dart';
 import 'package:evika/views/create_post/selected_image_crousel_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -147,7 +148,7 @@ class CreatePostPage extends StatelessWidget {
                           mainAxisAlignment: vm.selectedImages.length == 4
                               ? MainAxisAlignment.spaceEvenly
                               : MainAxisAlignment.start,
-                          children: vm.showImageRowList(),
+                          children: showImageRowList(),
                         ),
                       )
                     : const SizedBox(),
@@ -232,7 +233,7 @@ class CreatePostPage extends StatelessWidget {
                               ? showPickedDates(context, vm.startAndEndDate[0],
                                   vm.startAndEndDate[1])
                               : const SizedBox(),
-                          UtilFunctions.gapy(20),
+                          UtilWidgetsAndFunctions.gapy(20),
                           const Divider(),
                           InkWell(
                             onTap: () {
@@ -260,7 +261,7 @@ class CreatePostPage extends StatelessWidget {
                                       vm.isRegistrationRequired =
                                           !vm.isRegistrationRequired;
                                       if (vm.isRegistrationRequired) {
-                                        vm.attentionHeight = 70;
+                                        vm.attentionHeight = 100;
                                       } else {
                                         vm.attentionHeight = 0;
                                       }
@@ -274,6 +275,7 @@ class CreatePostPage extends StatelessWidget {
                             ),
                           ),
                           AnimatedContainer(
+                            curve: Curves.easeInOut,
                             duration: const Duration(milliseconds: 300),
                             width: Get.width,
                             padding: EdgeInsets.all(10),
@@ -284,7 +286,7 @@ class CreatePostPage extends StatelessWidget {
                             ),
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: const Text(
-                              "ATTENTION : You will reciece the NAME, EMAIL and PHONE NO. of the registered user",
+                              "ATTENTION : You can see the registered users inside the post by clicking on the registrations  button ",
                               style: TextStyle(
                                 wordSpacing: -0.5,
                                 fontSize: 13,
@@ -292,7 +294,7 @@ class CreatePostPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          UtilFunctions.gapy(10),
+                          UtilWidgetsAndFunctions.gapy(10),
                           Container(
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: const Text(
@@ -305,7 +307,7 @@ class CreatePostPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          UtilFunctions.gapy(20),
+                          UtilWidgetsAndFunctions.gapy(20),
                           ElevatedButton(
                             onPressed: () async {
                               debugPrint("tapped");
@@ -350,6 +352,80 @@ class CreatePostPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> showImageRowList() {
+    List<Widget> res = [];
+    for (var image in vm.selectedImages) {
+      res.add(
+        Stack(
+          children: [
+            InkWell(
+              onTap: () {
+                vm.viewImageIndex = vm.selectedImages.indexOf(image);
+                vm.update();
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                height: 60,
+                width: 60,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.file(
+                    File(image.path),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 10,
+              top: 5,
+              child: InkWell(
+                onTap: () {
+                  if (vm.viewImageIndex == vm.selectedImages.indexOf(image)) {
+                    vm.viewImageIndex = 0;
+                    vm.update();
+                    vm.selectedImages.remove(image);
+                    vm.update();
+                  }
+                  vm.selectedImages.remove(image);
+                  vm.update();
+                },
+                child: const Icon(
+                  CupertinoIcons.multiply_circle_fill,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
+    if (vm.selectedImages.length < 4) {
+      res.add(
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 5),
+          decoration: BoxDecoration(
+            color: AppColors.accentColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          width: 60,
+          height: 60,
+          child: Center(
+            child: IconButton(
+              onPressed: () {
+                vm.pickImage();
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return res;
   }
 
   Widget showPickedDates(context, DateTime start, DateTime end) {

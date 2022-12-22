@@ -21,7 +21,13 @@ class FeedView extends StatelessWidget {
                   pinned: true,
                   floating: true,
                   // foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                  backgroundColor: Colors.white,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(30),
+                    ),
+                  ),
+                  // backgroundColor: Colors.white,
+                  backgroundColor: Colors.primaries.first,
                   elevation: 0,
                   title: const Text(
                     "Feeds",
@@ -30,7 +36,7 @@ class FeedView extends StatelessWidget {
                   actions: [
                     IconButton(
                       onPressed: () {
-                        Get.to(ChatHomeView());
+                        Get.to(const ChatHomeView());
                       },
                       icon: Icon(Icons.message, color: Colors.grey.shade800),
                     ),
@@ -38,7 +44,7 @@ class FeedView extends StatelessWidget {
                       onPressed: () {
                         Get.to(ChatBot());
                       },
-                      icon: Icon(Icons.home),
+                      icon: const Icon(Icons.home),
                     ),
                     IconButton(
                       icon: Icon(Icons.logout, color: Colors.grey.shade800),
@@ -70,7 +76,21 @@ class FeedView extends StatelessWidget {
                     ),
                   ],
                   bottom: PreferredSize(
-                      preferredSize: Size(Get.width, 45), child: Suggessions()),
+                      preferredSize: Size(Get.width, 63),
+                      child: Column(
+                        children: [
+                          Suggessions(),
+                          Center(
+                              child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 4),
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade900,
+                                borderRadius: BorderRadius.circular(10)),
+                            width: 100,
+                            height: 5,
+                          ))
+                        ],
+                      )),
                 ),
               ];
             },
@@ -118,8 +138,8 @@ class FeedView extends StatelessWidget {
                                     onPressed: () {
                                       vm.getAllPost();
                                     },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(
                                           vertical: 8.0, horizontal: 16),
                                       child: Text(
                                         "Try again",

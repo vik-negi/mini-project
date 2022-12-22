@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:evika/data/remote/api_responce.dart';
+import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/repositories/common_repo/common_repo_imp.dart';
@@ -9,7 +10,6 @@ import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/views/profile/profile_pageRepo_imp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommonVM extends GetxController {
@@ -24,39 +24,70 @@ class CommonVM extends GetxController {
   bool isErrorOnFetchingData = false;
   bool isPostFetched = false;
   ProfileRepoImp profileRepoImp = ProfileRepoImp();
-  bool tapOnLikedButton = false;
+  List<bool> tapOnLikedButton = [];
   List<PostData> userPostList = [];
+  PostData? individualPostData;
   List<PostData> otherUserPostList = [];
-  // SharedPreferences sharedPreferences = SharedPreferences as SharedPreferences;
+  bool individualPostLoading = false;
   bool isLikedPost(String postId) {
     return userLikedPostList.contains(postId);
   }
 
-  void tapOnLikedButtonFun() async {
-    Timer(const Duration(seconds: 5), () {
-      tapOnLikedButton = false;
+  void onFollowBtnClick() {
+    if (otherUserData!.follower!.contains(userId)) {
+      otherUserData!.follower!.remove(userId);
+    } else {
+      otherUserData!.follower!.add(userId);
+    }
+    update();
+  }
+
+  bool isFollow() {
+    return otherUserData!.follower!.contains(userId);
+  }
+
+  String? userId;
+
+  setUserData() async {
+    userId = await SharedPrefs.getString("userId");
+  }
+
+  void followUser(String otherUserId) async {
+    onFollowBtnClick();
+    debugPrint("Follow user function called");
+    bool response = await commonRepoImp.followUser(otherUserId);
+    if (!response) {
+      debugPrint("Follow user function completed");
+      // otherUserData?.isFollow = true;
       update();
-    });
+    }
+  }
+
+  void tapOnLikeButtonFun(String id) async {
+    if (isLikedPost(id)) {
+      userLikedPostList.remove(id);
+    } else {
+      userLikedPostList.add(id);
+    }
+    update();
   }
 
   @override
   void onInit() async {
     super.onInit();
-
+    setUserData();
     debugPrint("Common VM oninit function called");
     await getUserFromSharedPrefes();
     likedPost();
   }
 
-  printing() {}
+  // DateTime getCorrectDateTimeFormat(String dateTime) {
 
-  setProfileLoading(bool value) {
-    isProfileLoading = value;
-    update();
-  }
+  // }
 
   Future getUserFromSharedPrefes() async {
-    setProfileLoading(true);
+    isProfileLoading = true;
+    update();
     debugPrint("function call getuserformsharedprefes");
     String? user = await SharedPrefs.getString("user");
     debugPrint(user);
@@ -67,7 +98,8 @@ class CommonVM extends GetxController {
         getUserPost(userData?.id);
       }
     }
-    setProfileLoading(false);
+    isProfileLoading = false;
+    update();
   }
 
   logout() async {
@@ -76,9 +108,11 @@ class CommonVM extends GetxController {
   }
 
   likedPost() async {
+    // debugPrint("$checkBase User liked fetch funciton called");
     List? response = await commonRepoImp.userLikedPost();
     if (response != null) {
       userLikedPostList = response;
+      // debugPrint("Liked Post fetch funciton: ${userLikedPostList[0]}");
       update();
     } else {
       userLikedPostList = response ?? [];
@@ -91,12 +125,22 @@ class CommonVM extends GetxController {
     update();
     try {
       var response = await commonRepoImp.getAndAddComments(postId, null);
-      print("response $response");
+      // debugPrint("Get Comments: response $response");
       commentList = response;
     } catch (e) {
-      print(e);
+      debugPrint("Get Comments: $e");
     }
     isLoading = false;
+    update();
+  }
+
+  void fetchIndivudualPostComments(String postID) {
+    commentList = [];
+    debugPrint("$checkBase Fetch Individual Post Comments function called");
+    individualPostLoading = true;
+    update();
+    getComments(postId: postID);
+    individualPostLoading = false;
     update();
   }
 
@@ -126,7 +170,7 @@ class CommonVM extends GetxController {
     update();
     Map<dynamic, dynamic>? data = await profileRepoImp.getUserPost(id);
     debugPrint("Get user post data printing");
-    debugPrint(data.toString());
+    // debugPrint(data.toString());
 
     try {
       if (data != null) {
@@ -138,14 +182,14 @@ class CommonVM extends GetxController {
         for (int i = 0; i < list.length; i++) {
           String postdataStr = jsonEncode(list[i]);
           PostData postData = PostData.fromJson(postdataStr);
-
           userPostList.add(postData);
-          // print("llllllllllllll");
-          // print(userPostList[i].eventId);
           isPostFetched = true;
           update();
+          debugPrint(
+              "UserPost List no. of comments: ${userPostList[i].noOfComments}");
         }
-        print("UserPost Length: ${userPostList.length}");
+        // debugPrint("UserPost Length: ${userPostList.length}");
+
         update();
         // return userPostList;
       } else {

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/auth/signup.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
+import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
@@ -9,6 +10,7 @@ import 'package:evika/views/demo.dart';
 import 'package:evika/views/feed/show_files.dart';
 import 'package:evika/views/profile/other_user_profile.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
@@ -27,139 +29,149 @@ class _HomePageState extends State<HomePage> {
   PostVM vm = Get.put(PostVM());
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.red,
-      child: GetBuilder<CommonVM>(builder: (commonVM) {
-        return GetBuilder<PostVM>(builder: (vm) {
-          return ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              // physics: const NeverScrollableScrollPhysics(),
-              itemCount: vm.postList.length,
-              separatorBuilder: ((context, i) {
-                return Container(
-                    height: i == vm.postList.length - 1 ? 75 : 20,
-                    color: Colors.grey.shade200);
-              }),
-              itemBuilder: (context, i) {
-                return Container(
-                    // color: Colors.black,
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    commonVM
-                                        .otherUsersData(vm.postList[i].userId!);
-                                    Get.to(() => const OtherProfilePage());
+    return GetBuilder<CommonVM>(builder: (commonVM) {
+      return GetBuilder<PostVM>(builder: (vm) {
+        return ListView.separated(
+            // reverse: true,
+            physics: const BouncingScrollPhysics(),
+            // physics: const NeverScrollableScrollPhysics(),
+            itemCount: vm.postList.length,
+            separatorBuilder: ((context, i) {
+              return SizedBox(
+                height: i == vm.postList.length - 1 ? 75 : 20,
+              );
+            }),
+            itemBuilder: (context, i) {
+              return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  commonVM
+                                      .otherUsersData(vm.postList[i].userId!);
+                                  Get.to(() => OtherProfilePage());
+                                },
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: NetworkImage(
+                                      // 'https://www.w3schools.com/howto/img_avatar.png'
+                                      vm.postList[i].profileImage ??
+                                          'https://www.w3schools.com/howto/img_avatar.png'),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              // CircleAvatar(
+                              //   radius: 25,
+                              //   backgroundColor: Colors.white,
+                              //   child: IconButton(
+                              //       onPressed: () async {
+                              //         vm.likePost(vm.postList[i].id);
+                              //         // commonVM.update();
+                              //       },
+                              //       icon: Icon(
+                              //         commonVM.isLikedPost(vm.postList[i].id!)
+                              //             ? CupertinoIcons.heart_fill
+                              //             : CupertinoIcons.heart_fill,
+                              //         color: commonVM
+                              //                 .isLikedPost(vm.postList[i].id!)
+                              //             ? Colors.red
+                              //             : Colors.grey.shade300,
+                              //         size: 30,
+                              //       )),
+                              // ),
+                              // const SizedBox(
+                              //   height: 10,
+                              // ),
+                              CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.white,
+                                child: IconButton(
+                                    onPressed: () async {
+                                      vm.likePost(vm.postList[i].id);
+                                    },
+                                    icon: Icon(
+                                      commonVM.isLikedPost(vm.postList[i].id!)
+                                          ? CupertinoIcons.heart_fill
+                                          : Icons.favorite_border,
+                                      color: commonVM
+                                              .isLikedPost(vm.postList[i].id!)
+                                          ? Colors.pink
+                                          : Colors.grey.shade600,
+                                      size: 30,
+                                    )),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.white,
+                                child: IconButton(
+                                  onPressed: () async {
+                                    await Share.share(
+                                        "Hii! I am Joining this Event I want you to be part of this");
                                   },
-                                  child: CircleAvatar(
-                                    radius: 30,
-                                    backgroundImage: NetworkImage(
-                                        // 'https://www.w3schools.com/howto/img_avatar.png'
-                                        vm.postList[i].profileImage ??
-                                            'https://www.w3schools.com/howto/img_avatar.png'),
+                                  icon: Icon(
+                                    CupertinoIcons.arrowshape_turn_up_right,
+                                    color: Colors.grey.shade600,
+                                    size: 30,
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Colors.white,
-                                  child: IconButton(
-                                      onPressed: () async {
-                                        commonVM.tapOnLikedButton =
-                                            !commonVM.tapOnLikedButton;
-                                        commonVM.tapOnLikedButtonFun();
-                                        commonVM.update();
-                                        await vm.likePost(vm.postList[i].id);
-                                        await commonVM.likedPost();
-                                        // commonVM.update();
-                                      },
-                                      icon: Icon(
-                                        commonVM.isLikedPost(
-                                                    vm.postList[i].id!) ||
-                                                commonVM.tapOnLikedButton
-                                            ? CupertinoIcons.heart_fill
-                                            : CupertinoIcons.heart_fill,
-                                        color: commonVM.isLikedPost(
-                                                    vm.postList[i].id!) ||
-                                                commonVM.tapOnLikedButton
-                                            ? Colors.red
-                                            : Colors.grey.shade300,
-                                        size: 30,
-                                      )),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Colors.white,
-                                  child: IconButton(
-                                    onPressed: () async {
-                                      await Share.share(
-                                          "Hii! I am Joining this Event I want you to be part of this");
-                                    },
-                                    icon: Icon(
-                                      CupertinoIcons.arrowshape_turn_up_right,
-                                      color: Colors.grey.shade600,
-                                      size: 30,
-                                    ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.white,
+                                child: IconButton(
+                                  onPressed: () async {
+                                    commonVM.getComments(
+                                        postId: vm.postList[i].id!);
+                                    bottomModelWidget(context, vm, i);
+                                  },
+                                  icon: Icon(
+                                    Icons.comment,
+                                    color: Colors.grey.shade600,
+                                    size: 30,
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Colors.white,
-                                  child: IconButton(
-                                    onPressed: () async {
-                                      commonVM.getComments(
-                                          postId: vm.postList[i].id!);
-                                      bottomModelWidget(context, vm, i);
-                                    },
-                                    icon: Icon(
-                                      Icons.comment,
-                                      color: Colors.grey.shade600,
-                                      size: 30,
-                                    ),
+                              ),
+                              CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.white,
+                                child: IconButton(
+                                  onPressed: () async {},
+                                  icon: Icon(
+                                    Icons.notifications_none_outlined,
+                                    color: Colors.grey.shade600,
+                                    size: 30,
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Colors.white,
-                                  child: IconButton(
-                                    onPressed: () async {},
-                                    icon: const Icon(
-                                      false
-                                          ? Icons.notifications_active
-                                          : Icons.notifications_outlined,
-                                      color: AppColors.accentTextColor,
-                                      size: 30,
-                                    ),
-                                    // Icon(
-                                    //   Icons.notifications_none_outlined,
-                                    //   color: Colors.grey.shade600,
-                                    //   size: 30,
-                                    // ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Column(
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(
+                            AppRotutes.postDescription,
+                            arguments: {
+                              "post": vm.postList[i],
+                              "tag": i.toString(),
+                            },
+                          );
+                        },
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
@@ -191,20 +203,16 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    width: Get.width - 80,
-                                    child: RichText(
-                                      text: TextSpan(
-                                        // text: 'The FIFA World Cup Qatar 2022™',
-                                        text: vm.postList[i].title,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                  RichText(
+                                    text: TextSpan(
+                                      // text: 'The FIFA World Cup Qatar 2022™',
+                                      text: vm.postList[i].title,
+                                      style: TextStyle(
+                                        color: Theme.of(context).shadowColor,
+                                        fontSize: 17,
                                       ),
-                                      // style: TextStyle(fontSize: 18),
                                     ),
+                                    // style: TextStyle(fontSize: 18),
                                   ),
                                   const SizedBox(
                                     height: 5,
@@ -349,7 +357,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16),
-                                    color: Colors.red,
+                                    color: Colors.black,
                                   ),
                                   child: InkWell(
                                     onTap: () {
@@ -378,12 +386,12 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                      ],
-                    ));
-              });
-        });
-      }),
-    );
+                      ),
+                    ],
+                  ));
+            });
+      });
+    });
   }
 
   Future<dynamic> bottomModelWidget(BuildContext context, PostVM vm, int i) {
@@ -615,12 +623,11 @@ class _HomePageState extends State<HomePage> {
                                                   : const Text(
                                                       "No Comments",
                                                       style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w400),
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
                                                     );
-                                          // ],
-                                          // );
                                         },
                                       )
                                     : const Center(
@@ -649,71 +656,88 @@ class Suggessions extends StatefulWidget {
 
 class _SuggessionsState extends State<Suggessions> {
   List<String> suggession = [
-    "Plantation",
-    "Education",
-    "Food",
-    "Health",
-    "Sports",
-    "Environment"
+    "Global",
+    "India",
+    "Your State",
+    "Your City",
+    "Your Town",
+  ];
+
+  List<String> icons = [
+    "assets/icons/globe.png",
+    "assets/icons/country.png",
+    "assets/icons/state.png",
+    "assets/icons/town.png",
+    "assets/icons/town.png",
   ];
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          width: Get.width - 30,
-          height: 45,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: ((context, index) {
-                return Container(
+    return GetBuilder<PostVM>(builder: (vm) {
+      return Container(
+        height: 50,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 5,
+            itemBuilder: ((context, index) {
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                // style: TextButton.styleFrom(
+                //   padding: const EdgeInsets.all(0),
+                //   backgroundColor: Colors.grey.shade800,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(20),
+                //   ),
+                // ),
+                // onPressed: () {},
+
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  // color: Colors.grey.shade700,
+                  color: Colors.grey.shade900,
+                ),
+                child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                  // style: TextButton.styleFrom(
-                  //   padding: const EdgeInsets.all(0),
-                  //   backgroundColor: Colors.grey.shade800,
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(20),
-                  //   ),
-                  // ),
-                  // onPressed: () {},
-
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade700,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(0),
-                    child: Text(
-                      suggession[index],
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  child: InkWell(
+                    onTap: () {
+                      if (suggession[index] == 'Global') {
+                        vm.postFilterRange = "500000000000000000";
+                        vm.filterPost();
+                      } else if (suggession[index] == 'India') {
+                        vm.postFilterRange = "5000000000";
+                        vm.filterPost();
+                      } else if (suggession[index] == 'Your State') {
+                        vm.postFilterRange = "500000";
+                        vm.filterPost();
+                      } else if (suggession[index] == 'Your City') {
+                        vm.postFilterRange = "100000";
+                        vm.filterPost();
+                      } else {
+                        vm.postFilterRange = "5000";
+                        vm.filterPost();
+                      }
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(icons[index]),
+                        const SizedBox(width: 5),
+                        Text(
+                          suggession[index],
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              })),
-        ),
-        Container(
-          width: 25,
-          height: 35,
-          margin: const EdgeInsets.only(right: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.grey.shade700,
-          ),
-          child: const Icon(
-            Icons.more_vert,
-            // color: Colors.white70,
-          ),
-        )
-      ],
-    );
+                ),
+              );
+            })),
+      );
+    });
   }
 }
