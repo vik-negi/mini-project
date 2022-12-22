@@ -246,4 +246,18 @@ class UtilWidgetsAndFunctions {
       height: x.toDouble(),
     );
   }
+
+  static appSnakBar(
+      {required String message, double? maxwidth, bool isError = true}) {
+    return Get.rawSnackbar(
+      icon: isError ? const Icon(Icons.error) : const Icon(Icons.check),
+      message: message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: isError ? Colors.red : Colors.green,
+      maxWidth: maxwidth ?? Get.width * 0.8,
+      margin: EdgeInsets.only(bottom: Get.height * 0.1),
+      borderRadius: 16,
+      duration: const Duration(seconds: 2),
+    );
+  }
 }

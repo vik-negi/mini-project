@@ -2,6 +2,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:evika/data/user_chat.dart';
 import 'package:evika/models/user/user_chat_model.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/utils/widgets/MoreOptionToSend.dart';
 import 'package:evika/utils/widgets/OtherSideMsg.dart';
 import 'package:evika/utils/widgets/OwnMsgCard.dart';
@@ -385,18 +386,10 @@ class bottomNavigationMsgOption extends StatelessWidget {
                                 );
                                 vm.showBottomNavigation = false;
                                 vm.update();
-                                Get.snackbar(
-                                  "Copied",
-                                  "",
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.white,
-                                  colorText: Colors.black,
-                                  maxWidth: 100,
-                                  margin:
-                                      EdgeInsets.only(bottom: Get.height * 0.1),
-                                  borderRadius: 16,
-                                  duration: const Duration(seconds: 2),
-                                );
+                                UtilWidgetsAndFunctions.appSnakBar(
+                                    message: "Copied to clipboard",
+                                    isError: false,
+                                    maxwidth: 220);
                               },
                             ),
                             ListTile(

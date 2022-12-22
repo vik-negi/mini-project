@@ -7,6 +7,7 @@ import 'package:evika/models/user/post_model.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/repositories/common_repo/common_repo_imp.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
+import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/views/profile/profile_pageRepo_imp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -188,6 +189,7 @@ class CommonVM extends GetxController {
           debugPrint(
               "UserPost List no. of comments: ${userPostList[i].noOfComments}");
         }
+        await SharedPrefs.setString("userPost", jsonEncode(userPostList));
         // debugPrint("UserPost Length: ${userPostList.length}");
 
         update();
@@ -209,8 +211,9 @@ class CommonVM extends GetxController {
     }
   }
 
-  void addComment(String postId, String text) async {
-    // isLoading = true;
+  Future<bool> addComment(String postId, String text) async {
+    update();
+
     Comment comment = Comment(
       createdAt: DateTime.now(),
       id: '',
@@ -223,6 +226,7 @@ class CommonVM extends GetxController {
       username: await getSharedPref('username', "String"),
     );
     commentList.add(comment);
+
     update();
     try {
       List<Comment>? response =
@@ -231,7 +235,10 @@ class CommonVM extends GetxController {
       commentList.removeLast();
       if (response != null) {
         commentList = response;
+
         update();
+
+        return true;
       }
     } catch (e) {
       commentList.removeLast();
@@ -241,6 +248,7 @@ class CommonVM extends GetxController {
     }
     // isLoading = false;
     update();
+    return false;
   }
 
   void commentFuntionality(String postId, String type, String commentId) async {

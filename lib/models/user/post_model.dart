@@ -145,10 +145,10 @@ class PostData {
       eventEndAt:
           map['eventEndAt'] != null ? map['eventEndAt'] as String : "null",
       eventId: map['eventId'] != null ? map['eventId'] as String : "null",
-      // eventLocation: map['eventLocation'] != null
-      //     ? EventLocation.fromMap(map['eventLocation'] as Map<String, dynamic>)
-      //     : null,
-
+      eventLocation: map['eventLocation'] != null &&
+              map['eventLocation']["coordinates"] != null
+          ? EventLocation.fromMap(map['eventLocation'])
+          : EventLocation(coordinates: [83.18594949999999, 26.0739138]),
       eventStartAt:
           map['eventStartAt'] != null ? map['eventStartAt'] as String : "null",
       image: map['image'] != null
@@ -311,25 +311,25 @@ class Reply {
 //     },
 //   }
 class EventLocation {
-  final String type;
-  final List<double> coordinates;
+  String type = "Point";
+  List<double>? coordinates;
 
   EventLocation({
-    required this.type,
-    required this.coordinates,
+    this.type = "Point",
+    this.coordinates,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'type': type,
       'coordinates': coordinates,
     };
   }
 
   factory EventLocation.fromMap(Map<String, dynamic> map) {
     return EventLocation(
-      type: map['type'] as String,
-      coordinates: List<double>.from(map['coordinates'] as List),
+      coordinates: map['coordinates'] != null
+          ? List<double>.from(map['coordinates'] as List)
+          : [83.18594949999999, 26.0739138],
     );
   }
 

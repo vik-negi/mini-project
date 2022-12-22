@@ -5,6 +5,7 @@ import 'package:evika/data/remote/api_services/api_services.dart';
 import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
+import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/location.dart';
 import 'package:file_picker/file_picker.dart';
@@ -24,6 +25,7 @@ class PostVM extends GetxController {
   late final Future? futurePosts;
   RxBool isPostFetched = false.obs;
   RxBool isErrorOnFetchingData = false.obs;
+  String? userId;
   String checkBase = "Post View Model: ";
 
   logout() async {
@@ -70,9 +72,10 @@ class PostVM extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     futurePosts = getAllPost();
+    userId = await SharedPrefs.getString("userId");
     updateUserLocation();
   }
 

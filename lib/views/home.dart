@@ -3,6 +3,7 @@ import 'package:evika/auth/signup.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
+import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
@@ -162,12 +163,14 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
                           Get.toNamed(
                             AppRotutes.postDescription,
                             arguments: {
                               "post": vm.postList[i],
                               "tag": i.toString(),
+                              "index": i,
+                              "userId": vm.userId,
                             },
                           );
                         },
@@ -416,11 +419,6 @@ class _HomePageState extends State<HomePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     child: Column(
                       children: [
-                        // Column(
-                        //   children: [
-                        //     const SizedBox(
-                        //       height: 30,
-                        //     ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: TextFormFieldContainer(
@@ -431,9 +429,19 @@ class _HomePageState extends State<HomePage> {
                               controller: vm.commentController,
                               isMobileNumber: false,
                               suffix: InkWell(
-                                onTap: () {
-                                  commonVM.addComment(vm.postList[i].id!,
-                                      vm.commentController.text.trim());
+                                onTap: () async {
+                                  if (vm.commentController.text
+                                      .trim()
+                                      .isNotEmpty) {
+                                    bool x = await CommonVM.addComment(
+                                        vm.postList[i].id!,
+                                        vm.commentController.text.trim());
+
+                                    if (x) {
+                                      vm.commentController.clear();
+                                      vm.update();
+                                    }
+                                  }
                                 },
                                 child: const Icon(
                                   Icons.send,

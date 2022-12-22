@@ -1,6 +1,7 @@
 import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/repositories/login_repo/login_repo_imp.dart';
+import 'package:evika/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:get/get.dart';
@@ -131,6 +132,7 @@ class SignupVM extends GetxController {
 
     if (response!["status"] == "success") {
       _isSignup.value = true;
+      Get.offAllNamed(AppRotutes.signin);
     }
     Get.snackbar(response["status"], response["message"]);
     return null;

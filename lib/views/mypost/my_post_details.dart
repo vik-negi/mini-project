@@ -296,6 +296,8 @@ class MyPostDetails extends StatelessWidget {
                             count: commonVM
                                 .individualPostData!.registration!.length,
                             onTap: () {
+                              vm.getRegisteredUsers(
+                                  commonVM.individualPostData!.id!);
                               Get.to(
                                 const MyPostRegistrations(),
                                 transition: Transition.cupertino,
