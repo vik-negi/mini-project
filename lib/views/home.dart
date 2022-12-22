@@ -234,7 +234,7 @@ class _HomePageState extends State<HomePage> {
                                                     fontSize: 15),
                                               )
                                             // ? const Text(
-                                            //     "This is a record of France's results at the FIFA World Cup. France was one of the four European teams that participated at the inaugural World Cup in 1930 and have appeared in 15 FIFA World Cups, tied for the sixth most of any country.",
+                                            //     "This is a record of France's results at the FIFA World Cup. France was one of the four European teams that participated at the inaugural Wo  rld Cup in 1930 and have appeared in 15 FIFA World Cups, tied for the sixth most of any country.",
                                             //     style: TextStyle(fontSize: 15),
                                             //   )
                                             : const SizedBox(),
