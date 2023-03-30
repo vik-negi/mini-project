@@ -20,7 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Timer(const Duration(seconds: 5), () {
-      isUserAuthenticated();
+      Get.offAllNamed(AppRotutes.screenNavigator);
+      // isUserAuthenticated();
     });
   }
 

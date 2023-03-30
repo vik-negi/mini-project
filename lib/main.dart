@@ -1,5 +1,6 @@
 import 'package:evika/appTheme.dart';
 import 'package:evika/utils/routes.dart';
+import 'package:evika/utils/widgets/login_first_dialogbox.dart';
 import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
 import 'package:evika/views/create_post/create_post.dart';
 import 'package:evika/views/profile/profile.dart';
@@ -51,7 +52,7 @@ class ScreenNavigate extends StatelessWidget {
       const FeedView(),
       const TrandingPage(),
       CreatePostPage(),
-      true ? ProfilePage() : SigninPage(),
+      const ProfilePage(),
     ];
     return GetBuilder<NavigationController>(builder: (nv) {
       return Scaffold(
@@ -65,6 +66,12 @@ class ScreenNavigate extends StatelessWidget {
           ],
           currentIndex: nv.index.value,
           onTap: (int index) {
+            if (index == 2 || index == 3) {
+              if (!nv.isUserLoggedIn) {
+                loginFirstDialog(context);
+                return;
+              }
+            }
             nv.changeIndex(index);
             nv.update();
           },

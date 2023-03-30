@@ -4,6 +4,7 @@ import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/utils/util_widgets_and_functions.dart';
+import 'package:evika/utils/widgets/login_first_dialogbox.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/views/chat_view/user_Chat_page.dart';
 import 'package:evika/views/profile/widget/own_post_card.dart';
@@ -277,6 +278,10 @@ class OtherProfilePage extends StatelessWidget {
                                             // Get.toNamed(
                                             // AppRotutes.createPost,
                                             // );
+                                            if (!vm.isUserLoggedIn) {
+                                              loginFirstDialog(context);
+                                              return;
+                                            }
                                             vm.followUser(vm.otherUserData!.id);
                                           },
                                           child: Container(
@@ -325,6 +330,10 @@ class OtherProfilePage extends StatelessWidget {
                                         // Edit Profile Button
                                         TextButton(
                                           onPressed: () {
+                                            if (!vm.isUserLoggedIn) {
+                                              loginFirstDialog(context);
+                                              return;
+                                            }
                                             Get.to(
                                                 () => UserChatPage(
                                                       receiverId:

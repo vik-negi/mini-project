@@ -6,8 +6,11 @@ import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/models/user/user_model.dart';
 import 'package:evika/repositories/common_repo/common_repo_imp.dart';
+import 'package:evika/utils/routes.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
+import 'package:evika/utils/user_functionality.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
+import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
 import 'package:evika/views/profile/profile_pageRepo_imp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -73,13 +76,21 @@ class CommonVM extends GetxController {
     update();
   }
 
+  bool isUserLoggedIn = false;
+
   @override
   void onInit() async {
     super.onInit();
     setUserData();
     debugPrint("Common VM oninit function called");
     await getUserFromSharedPrefes();
+    await isUserLoggedInFun();
     likedPost();
+  }
+
+  Future<void> isUserLoggedInFun() async {
+    isUserLoggedIn = await UserFunctions.isUserLoggedInFun();
+    update();
   }
 
   // DateTime getCorrectDateTimeFormat(String dateTime) {
@@ -103,9 +114,18 @@ class CommonVM extends GetxController {
     update();
   }
 
+  NavigationController navigationController = Get.put(NavigationController());
+
   logout() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
+    navigationController.index.value = 0;
+    navigationController.isUserLoggedIn = false;
+    PostVM().isUserLoggedIn = false;
+    PostVM().update();
+    isUserLoggedInFun();
+    navigationController.update();
+    Get.offAndToNamed(AppRotutes.screenNavigator);
   }
 
   likedPost() async {

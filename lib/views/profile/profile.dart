@@ -62,9 +62,7 @@ class ProfilePage extends StatelessWidget {
                               child: const Text("No")),
                           TextButton(
                               onPressed: () async {
-                                Get.back();
                                 await vm.logout();
-                                Get.offAndToNamed(AppRotutes.signin);
                               },
                               child: const Text("Yes")),
                         ],
