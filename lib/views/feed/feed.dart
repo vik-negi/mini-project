@@ -1,8 +1,11 @@
 import 'package:evika/utils/routes.dart';
+import 'package:evika/utils/user_functionality.dart';
+import 'package:evika/utils/widgets/login_first_dialogbox.dart';
 import 'package:evika/view_models/chat_bot.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/views/chat_view/chart_view_home.dart';
 import 'package:evika/views/home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,13 +24,9 @@ class FeedView extends StatelessWidget {
                   pinned: true,
                   floating: true,
                   // foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(30),
-                    ),
-                  ),
-                  // backgroundColor: Colors.white,
-                  backgroundColor: Colors.primaries.first,
+
+                  backgroundColor: Colors.white,
+                  // backgroundColor: Colors.primaries.first,
                   elevation: 0,
                   title: const Text(
                     "Feeds",
@@ -35,62 +34,37 @@ class FeedView extends StatelessWidget {
                   ),
                   actions: [
                     IconButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        if (!await UserFunctions.isUserLoggedInFun()) {
+                          loginFirstDialog(context);
+                          return;
+                        }
+                        // if (!vm.isUserLoggedIn) {
+                        //   loginFirstDialog(context);
+                        //   return;
+                        // }
                         Get.to(const ChatHomeView());
                       },
-                      icon: Icon(Icons.message, color: Colors.grey.shade800),
+                      icon: Icon(CupertinoIcons.chat_bubble_2_fill,
+                          color: Colors.grey.shade800),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        Get.to(ChatBot());
-                      },
-                      icon: const Icon(Icons.home),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.logout, color: Colors.grey.shade800),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: const Text("Log-out"),
-                                content: const Text(
-                                    "Are you sure you want to log-out?"),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Get.back();
-                                      },
-                                      child: const Text("No")),
-                                  TextButton(
-                                      onPressed: () async {
-                                        Get.back();
-                                        await vm.logout();
-                                        Get.offAndToNamed(AppRotutes.signin);
-                                      },
-                                      child: const Text("Yes")),
-                                ],
-                              );
-                            });
-                      },
-                    ),
+                    // IconButton(
+                    //   onPressed: () async {
+                    //     if (!await UserFunctions.isUserLoggedInFun()) {
+                    //       loginFirstDialog(context);
+                    //       return;
+                    //     }
+                    //     // if (!vm.isUserLoggedIn) {
+                    //     //   loginFirstDialog(context);
+                    //     //   return;
+                    //     // }
+                    //     Get.to(ChatBot());
+                    //   },
+                    //   icon: Icon(Icons.home, color: Colors.grey.shade800),
+                    // ),
                   ],
                   bottom: PreferredSize(
-                      preferredSize: Size(Get.width, 63),
-                      child: Column(
-                        children: [
-                          Suggessions(),
-                          Center(
-                              child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 4),
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade900,
-                                borderRadius: BorderRadius.circular(10)),
-                            width: 100,
-                            height: 5,
-                          ))
-                        ],
-                      )),
+                      preferredSize: Size(Get.width, 40), child: Suggessions()),
                 ),
               ];
             },

@@ -5,6 +5,8 @@ import 'package:evika/data/remote/api_services/api_services.dart';
 import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
+import 'package:evika/utils/user_functionality.dart';
+import 'package:evika/utils/widgets/login_first_dialogbox.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/location.dart';
 import 'package:file_picker/file_picker.dart';
@@ -14,6 +16,12 @@ import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+class FilterOption {
+  String name;
+  bool isSelected;
+  FilterOption({required this.name, required this.isSelected});
+}
 
 class PostVM extends GetxController {
   ApiResponce<Map<dynamic, dynamic>?> response = ApiResponce.loading();
@@ -73,7 +81,15 @@ class PostVM extends GetxController {
   void onInit() {
     super.onInit();
     futurePosts = getAllPost();
+    isUserLoggedInFun();
     updateUserLocation();
+  }
+
+  bool isUserLoggedIn = false;
+
+  Future<void> isUserLoggedInFun() async {
+    isUserLoggedIn = await UserFunctions.isUserLoggedInFun();
+    update();
   }
 
   updateUserLocation() async {
@@ -81,6 +97,13 @@ class PostVM extends GetxController {
   }
 
   PostApiServices postApiServices = PostApiServices();
+  List<FilterOption> suggession = [
+    FilterOption(name: "Global", isSelected: true),
+    FilterOption(name: "India", isSelected: false),
+    FilterOption(name: "Your State", isSelected: false),
+    FilterOption(name: "Your City", isSelected: false),
+    FilterOption(name: "Your Town", isSelected: false),
+  ];
 
   createPostList(List<dynamic> list) {
     postList = [];

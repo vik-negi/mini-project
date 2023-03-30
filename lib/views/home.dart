@@ -3,6 +3,8 @@ import 'package:evika/auth/signup.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
+import 'package:evika/utils/user_functionality.dart';
+import 'package:evika/utils/widgets/login_first_dialogbox.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
@@ -95,6 +97,11 @@ class _HomePageState extends State<HomePage> {
                                 backgroundColor: Colors.white,
                                 child: IconButton(
                                     onPressed: () async {
+                                      if (!await UserFunctions
+                                          .isUserLoggedInFun()) {
+                                        loginFirstDialog(context);
+                                        return;
+                                      }
                                       vm.likePost(vm.postList[i].id);
                                     },
                                     icon: Icon(
@@ -144,6 +151,9 @@ class _HomePageState extends State<HomePage> {
                                     size: 30,
                                   ),
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 10,
                               ),
                               CircleAvatar(
                                 radius: 25,
@@ -431,7 +441,12 @@ class _HomePageState extends State<HomePage> {
                               controller: vm.commentController,
                               isMobileNumber: false,
                               suffix: InkWell(
-                                onTap: () {
+                                onTap: () async {
+                                  if (!await UserFunctions
+                                      .isUserLoggedInFun()) {
+                                    loginFirstDialog(context);
+                                    return;
+                                  }
                                   commonVM.addComment(vm.postList[i].id!,
                                       vm.commentController.text.trim());
                                 },
@@ -655,88 +670,88 @@ class Suggessions extends StatefulWidget {
 }
 
 class _SuggessionsState extends State<Suggessions> {
-  List<String> suggession = [
-    "Global",
-    "India",
-    "Your State",
-    "Your City",
-    "Your Town",
-  ];
-
-  List<String> icons = [
-    "assets/icons/globe.png",
-    "assets/icons/country.png",
-    "assets/icons/state.png",
-    "assets/icons/town.png",
-    "assets/icons/town.png",
-  ];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PostVM>(builder: (vm) {
-      return Container(
-        height: 50,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: ((context, index) {
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                // style: TextButton.styleFrom(
-                //   padding: const EdgeInsets.all(0),
-                //   backgroundColor: Colors.grey.shade800,
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.circular(20),
-                //   ),
-                // ),
-                // onPressed: () {},
-
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  // color: Colors.grey.shade700,
-                  color: Colors.grey.shade900,
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: InkWell(
-                    onTap: () {
-                      if (suggession[index] == 'Global') {
-                        vm.postFilterRange = "500000000000000000";
-                        vm.filterPost();
-                      } else if (suggession[index] == 'India') {
-                        vm.postFilterRange = "5000000000";
-                        vm.filterPost();
-                      } else if (suggession[index] == 'Your State') {
-                        vm.postFilterRange = "500000";
-                        vm.filterPost();
-                      } else if (suggession[index] == 'Your City') {
-                        vm.postFilterRange = "100000";
-                        vm.filterPost();
-                      } else {
-                        vm.postFilterRange = "5000";
-                        vm.filterPost();
-                      }
-                    },
-                    child: Row(
-                      children: [
-                        Image.asset(icons[index]),
-                        const SizedBox(width: 5),
-                        Text(
-                          suggession[index],
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
+      return Row(
+        children: [
+          Container(
+            height: 40,
+            width: Get.width - 46,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: ((context, index) {
+                  return Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey.shade300,
+                      border: Border.all(
+                        color: vm.suggession[index].isSelected
+                            ? Colors.blue
+                            : Colors.grey.shade300,
+                      ),
+                      // color: Colors.grey.shade900,
                     ),
-                  ),
-                ),
-              );
-            })),
+                    child: InkWell(
+                      onTap: () async {
+                        if (!await UserFunctions.isUserLoggedInFun()) {
+                          loginFirstDialog(context);
+                          return;
+                        }
+                        vm.suggession.forEach((element) {
+                          element.isSelected = false;
+                        });
+                        vm.suggession[index].isSelected = true;
+                        vm.update();
+                        if (vm.suggession[index].name == 'Global') {
+                          vm.postFilterRange = "500000000000000000";
+                          vm.filterPost();
+                        } else if (vm.suggession[index].name == 'India') {
+                          vm.postFilterRange = "5000000000";
+                          vm.filterPost();
+                        } else if (vm.suggession[index].name == 'Your State') {
+                          vm.postFilterRange = "500000";
+                          vm.filterPost();
+                        } else if (vm.suggession[index].name == 'Your City') {
+                          vm.postFilterRange = "100000";
+                          vm.filterPost();
+                        } else {
+                          vm.postFilterRange = "5000";
+                          vm.filterPost();
+                        }
+                      },
+                      child: Text(
+                        vm.suggession[index].name,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  );
+                })),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            margin: const EdgeInsets.only(right: 3, left: 3),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.grey.shade300,
+              // color: Colors.grey.shade900,
+            ),
+            child: InkWell(
+                onTap: () {},
+                child: Icon(
+                  CupertinoIcons.slider_horizontal_3,
+                  size: 20,
+                )),
+          )
+        ],
       );
     });
   }

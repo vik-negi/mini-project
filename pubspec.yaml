@@ -50,7 +50,7 @@ dependencies:
   intl: ^0.17.0
   location: ^4.4.0
   permission_handler: ^10.0.1
-  pinput: ^2.2.16
+  pinput: ^2.2.31
   share_plus: ^6.0.1
   shared_preferences: ^2.0.15
   socket_io_client: ^2.0.0
