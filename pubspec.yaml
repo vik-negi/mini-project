@@ -65,6 +65,7 @@ dependencies:
   dotted_border: ^2.0.0+3
   settings_ui: ^2.0.2
   get_storage: ^2.0.3
+  mongo_dart: ^0.8.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

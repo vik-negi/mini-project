@@ -30,7 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
     if (status) {
       Get.offAllNamed(AppRotutes.screenNavigator);
     } else {
-      Get.offAllNamed(AppRotutes.signin);
+      // Get.offAllNamed(AppRotutes.signin);
+      Get.offAllNamed(AppRotutes.screenNavigator);
     }
   }
 
