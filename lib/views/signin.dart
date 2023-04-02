@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:evika/auth/signup.dart';
+import 'package:evika/utils/constants.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signin_viewmodel.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
@@ -80,7 +81,7 @@ class SigninPage extends StatelessWidget {
                           height: 15,
                         ),
                         SizedBox(
-                            width: Get.width - 70,
+                            width: 320,
                             child: TextFormFieldContainer(
                               isMobileNumber: false,
                               controller: vm.passwordController,
@@ -104,7 +105,9 @@ class SigninPage extends StatelessWidget {
                           height: 5.5,
                         ),
                         SizedBox(
-                          width: Get.width - 70,
+                          width: Get.width > Constants.mwidth
+                              ? 320
+                              : Get.width - 70,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

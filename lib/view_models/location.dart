@@ -58,6 +58,7 @@ class GetLocation {
 
   Future<postModel.Address> findAdressByPosition(
       double latitude, double longitude) async {
+    debugPrint("latitude : $latitude longitude : $longitude");
     final coordinates = Coordinates(latitude, longitude);
     var address =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);

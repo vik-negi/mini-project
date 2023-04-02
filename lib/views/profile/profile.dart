@@ -1,6 +1,7 @@
 import 'package:blur/blur.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evika/utils/colors.dart';
+import 'package:evika/utils/constants.dart';
 import 'package:evika/utils/placeHolderImage.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/utils/util_widgets_and_functions.dart';
@@ -20,65 +21,69 @@ class ProfilePage extends StatelessWidget {
     // final ProfileVM vm = Get.put(ProfileVM());
     return GetBuilder<CommonVM>(
       builder: (vm) => Scaffold(
-        appBar: AppBar(
-          elevation: 1,
-          title: const Text("My Profile"),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          actions: [
-            TextButton(
-              child: Row(
-                children: const [
-                  Text(
-                    "Log out",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: "Poppins",
-                        fontSize: 16),
+        appBar: Get.width > Constants.webWidth
+            ? AppBar(
+                toolbarHeight: 0,
+              )
+            : AppBar(
+                elevation: 1,
+                title: const Text("My Profile"),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                actions: [
+                  TextButton(
+                    child: Row(
+                      children: const [
+                        Text(
+                          "Log out",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: "Poppins",
+                              fontSize: 16),
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Icon(
+                          Icons.logout,
+                          size: 16,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text("Log-out"),
+                              content: const Text(
+                                  "Are you sure you want to log-out?"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text("No")),
+                                TextButton(
+                                    onPressed: () async {
+                                      await vm.logout();
+                                    },
+                                    child: const Text("Yes")),
+                              ],
+                            );
+                          });
+                    },
                   ),
-                  SizedBox(
-                    width: 4,
-                  ),
-                  Icon(
-                    Icons.logout,
-                    size: 16,
-                    color: Colors.black,
-                  ),
+                  IconButton(
+                      onPressed: () {
+                        Get.to(() => SettingScreen());
+                      },
+                      icon: Icon(
+                        Icons.settings,
+                      )),
                 ],
               ),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text("Log-out"),
-                        content:
-                            const Text("Are you sure you want to log-out?"),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: const Text("No")),
-                          TextButton(
-                              onPressed: () async {
-                                await vm.logout();
-                              },
-                              child: const Text("Yes")),
-                        ],
-                      );
-                    });
-              },
-            ),
-            IconButton(
-                onPressed: () {
-                  Get.to(() => SettingScreen());
-                },
-                icon: Icon(
-                  Icons.settings,
-                )),
-          ],
-        ),
         body: SingleChildScrollView(
           child: vm.userData == null
               ? const SizedBox(

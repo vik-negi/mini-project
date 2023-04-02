@@ -148,6 +148,7 @@ class CommonVM extends GetxController {
       var response = await commonRepoImp.getAndAddComments(postId, null);
       // debugPrint("Get Comments: response $response");
       commentList = response;
+      print("get commemts: ${commentList.length}}");
     } catch (e) {
       debugPrint("Get Comments: $e");
     }
@@ -209,6 +210,7 @@ class CommonVM extends GetxController {
           debugPrint(
               "UserPost List no. of comments: ${userPostList[i].noOfComments}");
         }
+        await SharedPrefs.setString("userPost", jsonEncode(userPostList));
         // debugPrint("UserPost Length: ${userPostList.length}");
 
         update();
@@ -230,8 +232,9 @@ class CommonVM extends GetxController {
     }
   }
 
-  void addComment(String postId, String text) async {
-    // isLoading = true;
+  Future<bool> addComment(String postId, String text) async {
+    update();
+
     Comment comment = Comment(
       createdAt: DateTime.now(),
       id: '',
@@ -244,6 +247,7 @@ class CommonVM extends GetxController {
       username: await getSharedPref('username', "String"),
     );
     commentList.add(comment);
+
     update();
     try {
       List<Comment>? response =
@@ -252,7 +256,10 @@ class CommonVM extends GetxController {
       commentList.removeLast();
       if (response != null) {
         commentList = response;
+
         update();
+
+        return true;
       }
     } catch (e) {
       commentList.removeLast();
@@ -262,6 +269,7 @@ class CommonVM extends GetxController {
     }
     // isLoading = false;
     update();
+    return false;
   }
 
   void commentFuntionality(String postId, String type, String commentId) async {

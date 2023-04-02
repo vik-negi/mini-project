@@ -7,6 +7,7 @@ import 'package:evika/models/user/post_model.dart';
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
 import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/views/create_post/registrationFilelds.dart';
 import 'package:geocoder/geocoder.dart';
@@ -103,8 +104,45 @@ class CreatePostVM extends GetxController {
     debugPrint("coordinates : ${first1.coordinates}");
   }
 
-  clearAllFields() {}
+  clearAllFields() {
+    titleController.clear();
+    descriptionController.clear();
+    locationController.clear();
+    eventDescriptionController.clear();
+    startAndEndDate.clear();
+    selectedImages.clear();
+    update();
+  }
+
   PostApiServices postApiServices = PostApiServices();
+
+  bool isValidSubmit() {
+    if (titleController.text.trim().isEmpty) {
+      Get.snackbar("Error", "Please enter title");
+      return false;
+    }
+    if (descriptionController.text.trim().isEmpty) {
+      Get.snackbar("Error", "Please enter description");
+      return false;
+    }
+    if (locationController.text.trim().isEmpty) {
+      Get.snackbar("Error", "Please enter location");
+      return false;
+    }
+    if (eventDescriptionController.text.trim().isEmpty) {
+      Get.snackbar("Error", "Please enter event description");
+      return false;
+    }
+    if (startAndEndDate.isEmpty) {
+      Get.snackbar("Error", "Please enter start and end date");
+      return false;
+    }
+    if (selectedImages.isEmpty) {
+      Get.snackbar("Error", "Please select images");
+      return false;
+    }
+    return true;
+  }
 
   Future<void> createPost() async {
     if (titleController.text.trim().isEmpty) {
@@ -112,6 +150,9 @@ class CreatePostVM extends GetxController {
       return;
     }
     try {
+      if (!isValidSubmit()) {
+        throw ("Some Fields are missing");
+      }
       debugPrint("chala");
 
       await findPositionByAddress();
@@ -142,14 +183,21 @@ class CreatePostVM extends GetxController {
       String? response = await postRepoImp.createPost(request);
       debugPrint(response.toString());
       if (response != null) {
-        Get.snackbar('Success', 'Post Created Successfully');
-        debugPrint('Post Created Successfully');
         clearAllFields();
       } else {
-        Get.snackbar('Error', 'Something went wrong');
+        UtilWidgetsAndFunctions.appSnakBar(
+          message: "Something went wrong",
+          isError: true,
+          maxwidth: 220,
+        );
         debugPrint("something went wrong");
       }
     } catch (err) {
+      UtilWidgetsAndFunctions.appSnakBar(
+        message: "Something went wrong",
+        isError: true,
+        maxwidth: 220,
+      );
       print("err : $err");
     }
   }

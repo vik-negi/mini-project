@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../utils/constants.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -46,8 +48,11 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context, i) {
               return Container(
                   // madd
-                  color: Colors.red,
-                  width: Get.width > 500 ? 440 : Get.width,
+                  width: Get.width < Constants.mwidth ? Get.width : 440,
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(40),
+                  //   color: Colors.red,
+                  // ),
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +151,15 @@ class _HomePageState extends State<HomePage> {
                                   onPressed: () async {
                                     commonVM.getComments(
                                         postId: vm.postList[i].id!);
-                                    bottomModelWidget(context, vm, i);
+                                    if (Get.width < Constants.webWidth) {
+                                      bottomModelWidget(context, vm, i);
+                                    } else {
+                                      vm.selectedPostForComment = i;
+                                      vm.showWebCommentSection =
+                                          !vm.showWebCommentSection;
+
+                                      vm.update();
+                                    }
                                   },
                                   icon: Icon(
                                     Icons.comment,
@@ -175,12 +188,14 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
                           Get.toNamed(
                             AppRotutes.postDescription,
                             arguments: {
                               "post": vm.postList[i],
                               "tag": i.toString(),
+                              "index": i,
+                              "userId": vm.userId,
                             },
                           );
                         },
@@ -231,8 +246,9 @@ class _HomePageState extends State<HomePage> {
                                     height: 5,
                                   ),
                                   SizedBox(
-                                    width:
-                                        Get.width > 500 ? 480 : Get.width - 80,
+                                    width: Get.width > Constants.mwidth
+                                        ? 480
+                                        : Get.width - 80,
                                     child: Stack(
                                       children: [
                                         RichText(
@@ -364,8 +380,10 @@ class _HomePageState extends State<HomePage> {
                               // color: Colors.red,
                               child: Column(children: [
                                 Container(
-                                  width:
-                                      Get.width > 500 ? 370 : Get.width * 0.82,
+                                  width: Get.width > Constants.mwidth
+                                      ? 440
+                                      : Get.width - 70,
+                                  // : Get.width * 0.82,
                                   constraints: const BoxConstraints(
                                     // minHeight: 5.0,
                                     // minWidth: 5.0,
@@ -411,15 +429,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<dynamic> bottomModelWidget(BuildContext context, PostVM vm, int i) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        constraints: BoxConstraints(
+            minHeight: Get.width < Constants.sizeBarWidth ? width : 560,
+            maxWidth: 560),
         isScrollControlled: true,
         builder: (context) {
           return
               // SizedBox.expand(
               // child:
-              GetBuilder<CommonVM>(builder: (CommonVM) {
+              GetBuilder<CommonVM>(builder: (commonVM) {
             return DraggableScrollableSheet(
               maxChildSize: 0.9,
               builder:
@@ -432,15 +455,12 @@ class _HomePageState extends State<HomePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     child: Column(
                       children: [
-                        // Column(
-                        //   children: [
-                        //     const SizedBox(
-                        //       height: 30,
-                        //     ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: TextFormFieldContainer(
-                              width: Get.width - 20,
+                              width: Get.width < Constants.mwidth
+                                  ? width
+                                  : Get.width - 20,
                               icon: Icons.add_reaction,
                               hintText: "Add Comment",
                               function: () {},
@@ -470,8 +490,10 @@ class _HomePageState extends State<HomePage> {
                         commonVM.isLoading
                             ? ConstrainedBox(
                                 constraints: BoxConstraints(
-                                  minHeight: Get.height,
-                                  minWidth: Get.width,
+                                  minHeight: height,
+                                  minWidth: Get.width < Constants.sizeBarWidth
+                                      ? width
+                                      : 500,
                                 ),
                                 child: const Center(
                                   child: CircularProgressIndicator(),
@@ -487,9 +509,9 @@ class _HomePageState extends State<HomePage> {
                                 child: !commonVM.isLoading
                                     ? ListView.builder(
                                         controller: scrollController,
-                                        itemCount: CommonVM.commentList.isEmpty
+                                        itemCount: commonVM.commentList.isEmpty
                                             ? 1
-                                            : CommonVM.commentList.length,
+                                            : commonVM.commentList.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return
@@ -530,7 +552,7 @@ class _HomePageState extends State<HomePage> {
                                               //         ],
                                               //       )
                                               //     : const SizedBox(),
-                                              CommonVM.commentList.isNotEmpty
+                                              commonVM.commentList.isNotEmpty
                                                   ? Container(
                                                       margin: const EdgeInsets
                                                               .symmetric(
@@ -547,7 +569,7 @@ class _HomePageState extends State<HomePage> {
                                                             CircleAvatar(
                                                               radius: 25,
                                                               backgroundImage:
-                                                                  NetworkImage(CommonVM
+                                                                  NetworkImage(commonVM
                                                                       .commentList[
                                                                           index]
                                                                       .userImage),
@@ -573,7 +595,7 @@ class _HomePageState extends State<HomePage> {
                                                                               child: const Text("No")),
                                                                           TextButton(
                                                                               onPressed: () {
-                                                                                commonVM.commentFuntionality(CommonVM.commentList[index].postId, "delete", CommonVM.commentList[index].id);
+                                                                                commonVM.commentFuntionality(commonVM.commentList[index].postId, "delete", commonVM.commentList[index].id);
                                                                                 Navigator.pop(context);
                                                                               },
                                                                               child: const Text("Yes")),
@@ -582,8 +604,13 @@ class _HomePageState extends State<HomePage> {
                                                                     });
                                                               },
                                                               child: Container(
-                                                                  width:
-                                                                      Get.width -
+                                                                  width: Get.width <
+                                                                          Constants
+                                                                              .webWidth
+                                                                      ? width -
+                                                                          80
+                                                                      : Constants
+                                                                              .commentSectionWidth -
                                                                           80,
                                                                   child: Column(
                                                                     crossAxisAlignment:
@@ -591,7 +618,7 @@ class _HomePageState extends State<HomePage> {
                                                                             .start,
                                                                     children: [
                                                                       Text(
-                                                                        CommonVM
+                                                                        commonVM
                                                                             .commentList[index]
                                                                             .username,
                                                                         style: const TextStyle(
@@ -603,7 +630,7 @@ class _HomePageState extends State<HomePage> {
                                                                       RichText(
                                                                           text:
                                                                               TextSpan(
-                                                                        text: CommonVM
+                                                                        text: commonVM
                                                                             .commentList[index]
                                                                             .text,
                                                                         style: const TextStyle(
@@ -617,9 +644,9 @@ class _HomePageState extends State<HomePage> {
                                                                       Row(
                                                                         children: [
                                                                           TextButton.icon(
-                                                                              label: Text("${CommonVM.commentList[index].likes}"),
+                                                                              label: Text("${commonVM.commentList[index].likes}"),
                                                                               onPressed: () {
-                                                                                CommonVM.commentFuntionality(CommonVM.commentList[index].postId, "likes", CommonVM.commentList[index].id);
+                                                                                commonVM.commentFuntionality(commonVM.commentList[index].postId, "likes", commonVM.commentList[index].id);
                                                                               },
                                                                               icon: Icon(
                                                                                 Icons.thumb_up,
@@ -631,7 +658,7 @@ class _HomePageState extends State<HomePage> {
                                                                               child: const Text("Reply")),
                                                                         ],
                                                                       ),
-                                                                      i == CommonVM.commentList.length - 1
+                                                                      i == commonVM.commentList.length - 1
                                                                           ? const SizedBox(
                                                                               height: 40,
                                                                             )
@@ -660,11 +687,547 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 );
+                // CommentSectionWidget(
+                //     width: width,
+                //     commonVM: commonVM,
+                //     height: height,
+                //     i: i,
+                //     scrollController: scrollController,
+                //     vm: vm);
               },
               // ),
             );
           });
         });
+  }
+}
+
+class CommentSectionWidget extends StatelessWidget {
+  CommentSectionWidget({
+    super.key,
+    required this.i,
+    required this.scrollController,
+    required this.vm,
+    required this.commonVM,
+    required this.height,
+  });
+
+  final PostVM vm;
+  CommonVM commonVM;
+  final int i;
+  final ScrollController scrollController;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        // physics: const NeverScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: TextFormFieldContainer(
+                  width: Get.width > Constants.webWidth
+                      ? Constants.commentSectionWidth - 20
+                      : Get.width - 20,
+                  icon: Icons.add_reaction,
+                  hintText: "Add Comment",
+                  function: () {},
+                  controller: vm.commentController,
+                  isMobileNumber: false,
+                  suffix: InkWell(
+                    onTap: () async {
+                      if (!await UserFunctions.isUserLoggedInFun()) {
+                        loginFirstDialog(context);
+                        return;
+                      }
+                      commonVM.addComment(
+                          vm.postList[i].id!, vm.commentController.text.trim());
+                    },
+                    child: const Icon(
+                      Icons.send,
+                      color: Colors.blue,
+                    ),
+                  )),
+            ),
+            //     const SizedBox(
+            //       height: 15,
+            //     ),
+            //   ],
+            // ),
+            commonVM.isLoading
+                ? ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: height,
+                      minWidth: width < Constants.webWidth
+                          ? width
+                          : Constants.commentSectionWidth,
+                    ),
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : Container(
+                    height: Get.height * 0.8,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),
+                    child: !commonVM.isLoading
+                        ? ListView.builder(
+                            controller: scrollController,
+                            itemCount: commonVM.commentList.isEmpty
+                                ? 1
+                                : commonVM.commentList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return
+                                  // Column(
+                                  // children: [
+                                  // index == 0
+                                  //     ? Column(
+                                  //         children: [
+                                  //           const SizedBox(
+                                  //             height: 30,
+                                  //           ),
+                                  //           TextFormFieldContainer(
+                                  //               width: Get.width - 20,
+                                  //               icon:
+                                  //                   Icons.add_reaction,
+                                  //               hintText: "Add Comment",
+                                  //               function: () {},
+                                  //               controller: vm
+                                  //                   .commentController,
+                                  //               isMobileNumber: false,
+                                  //               suffix: InkWell(
+                                  //                 onTap: () {
+                                  //                   commonVM.addComment(
+                                  //                       vm.postList[i]
+                                  //                           .id!,
+                                  //                       vm.commentController
+                                  //                           .text
+                                  //                           .trim());
+                                  //                 },
+                                  //                 child: const Icon(
+                                  //                   Icons.send,
+                                  //                   color: Colors.blue,
+                                  //                 ),
+                                  //               )),
+                                  //           const SizedBox(
+                                  //             height: 15,
+                                  //           ),
+                                  //         ],
+                                  //       )
+                                  //     : const SizedBox(),
+                                  commonVM.commentList.isNotEmpty
+                                      ? Container(
+                                          color: Colors.red,
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 10),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 25,
+                                                  backgroundImage: NetworkImage(
+                                                      commonVM
+                                                          .commentList[index]
+                                                          .userImage),
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                GestureDetector(
+                                                  onLongPress: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return AlertDialog(
+                                                            content: const Text(
+                                                                "Do you want to delete this comment?"),
+                                                            actions: [
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                          "No")),
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    commonVM.commentFuntionality(
+                                                                        commonVM
+                                                                            .commentList[
+                                                                                index]
+                                                                            .postId,
+                                                                        "delete",
+                                                                        commonVM
+                                                                            .commentList[index]
+                                                                            .id);
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                          "Yes")),
+                                                            ],
+                                                          );
+                                                        });
+                                                  },
+                                                  child: Container(
+                                                      width: Get.width <
+                                                              Constants.webWidth
+                                                          ? width - 80
+                                                          : Constants
+                                                                  .commentSectionWidth -
+                                                              80,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            commonVM
+                                                                .commentList[
+                                                                    index]
+                                                                .username,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                          ),
+                                                          RichText(
+                                                              text: TextSpan(
+                                                            text: commonVM
+                                                                .commentList[
+                                                                    index]
+                                                                .text,
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                          )),
+                                                          Row(
+                                                            children: [
+                                                              TextButton.icon(
+                                                                  label: Text(
+                                                                      "${commonVM.commentList[index].likes}"),
+                                                                  onPressed:
+                                                                      () {
+                                                                    commonVM.commentFuntionality(
+                                                                        commonVM
+                                                                            .commentList[
+                                                                                index]
+                                                                            .postId,
+                                                                        "likes",
+                                                                        commonVM
+                                                                            .commentList[index]
+                                                                            .id);
+                                                                  },
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .thumb_up,
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade600,
+                                                                    size: 20,
+                                                                  )),
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {},
+                                                                  child: const Text(
+                                                                      "Reply")),
+                                                            ],
+                                                          ),
+                                                          i ==
+                                                                  commonVM.commentList
+                                                                          .length -
+                                                                      1
+                                                              ? const SizedBox(
+                                                                  height: 40,
+                                                                )
+                                                              : const SizedBox()
+                                                        ],
+                                                      )),
+                                                )
+                                              ]),
+                                        )
+                                      : const Text(
+                                          "No Comments",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        );
+                            },
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.blue,
+                            ),
+                          )),
+          ],
+        ),
+      ),
+    );
+
+    // GestureDetector(
+    //   onTap: () {
+    //     FocusScope.of(context).unfocus();
+    //   },
+    //   child: Column(
+    //     children: [
+    //       // Padding(
+    //       //   padding: const EdgeInsets.symmetric(vertical: 20.0),
+    //       //   child: TextFormFieldContainer(
+    //       //       width: Constants.commentSectionWidth,
+    //       //       icon: Icons.add_reaction,
+    //       //       hintText: "Add Comment",
+    //       //       function: () {},
+    //       //       controller: vm.commentController,
+    //       //       isMobileNumber: false,
+    //       //       suffix: InkWell(
+    //       //         onTap: () async {
+    //       //           if (!await UserFunctions.isUserLoggedInFun()) {
+    //       //             loginFirstDialog(context);
+    //       //             return;
+    //       //           }
+    //       //           commonVM.addComment(
+    //       //               vm.postList[i].id!, vm.commentController.text.trim());
+    //       //         },
+    //       //         child: const Icon(
+    //       //           Icons.send,
+    //       //           color: Colors.blue,
+    //       //         ),
+    //       //       )),
+    //       // ),
+    //       //     const SizedBox(
+    //       //       height: 15,
+    //       //     ),
+    //       //   ],
+    //       // ),
+    //       commonVM.isLoading
+    //           ? ConstrainedBox(
+    //               constraints: BoxConstraints(
+    //                 minHeight: height,
+    //                 minWidth: 450,
+    //               ),
+    //               child: const Center(
+    //                 child: CircularProgressIndicator(),
+    //               ),
+    //             )
+    //           :
+    //           // Container(
+    //           //     height: Get.height * 0.8,
+    //           //     decoration: const BoxDecoration(
+    //           //         color: Colors.white,
+    //           //         borderRadius: BorderRadius.only(
+    //           //             topLeft: Radius.circular(20),
+    //           //             topRight: Radius.circular(20))),
+    //           //     child:
+    //           !commonVM.isLoading
+    //               ? ListView.builder(
+    //                   controller: scrollController,
+    //                   itemCount: commonVM.commentList.isEmpty
+    //                       ? 1
+    //                       : commonVM.commentList.length,
+    //                   itemBuilder: (BuildContext context, int index) {
+    //                     return
+    //                         // Column(
+    //                         // children: [
+    //                         // index == 0
+    //                         //     ? Column(
+    //                         //         children: [
+    //                         //           const SizedBox(
+    //                         //             height: 30,
+    //                         //           ),
+    //                         //           TextFormFieldContainer(
+    //                         //               width: Get.width - 20,
+    //                         //               icon:
+    //                         //                   Icons.add_reaction,
+    //                         //               hintText: "Add Comment",
+    //                         //               function: () {},
+    //                         //               controller: vm
+    //                         //                   .commentController,
+    //                         //               isMobileNumber: false,
+    //                         //               suffix: InkWell(
+    //                         //                 onTap: () {
+    //                         //                   commonVM.addComment(
+    //                         //                       vm.postList[i]
+    //                         //                           .id!,
+    //                         //                       vm.commentController
+    //                         //                           .text
+    //                         //                           .trim());
+    //                         //                 },
+    //                         //                 child: const Icon(
+    //                         //                   Icons.send,
+    //                         //                   color: Colors.blue,
+    //                         //                 ),
+    //                         //               )),
+    //                         //           const SizedBox(
+    //                         //             height: 15,
+    //                         //           ),
+    //                         //         ],
+    //                         //       )
+    //                         //     : const SizedBox(),
+    //                         commonVM.commentList.isNotEmpty
+    //                             ? Container(
+    //                                 margin: const EdgeInsets.symmetric(
+    //                                     vertical: 10, horizontal: 10),
+    //                                 child: Row(
+    //                                     mainAxisAlignment:
+    //                                         MainAxisAlignment.start,
+    //                                     crossAxisAlignment:
+    //                                         CrossAxisAlignment.start,
+    //                                     children: [
+    //                                       CircleAvatar(
+    //                                         radius: 25,
+    //                                         backgroundImage: NetworkImage(
+    //                                             commonVM.commentList[index]
+    //                                                 .userImage),
+    //                                       ),
+    //                                       const SizedBox(
+    //                                         width: 10,
+    //                                       ),
+    //                                       GestureDetector(
+    //                                         onLongPress: () {
+    //                                           showDialog(
+    //                                               context: context,
+    //                                               builder: (context) {
+    //                                                 return AlertDialog(
+    //                                                   content: const Text(
+    //                                                       "Do you want to delete this comment?"),
+    //                                                   actions: [
+    //                                                     TextButton(
+    //                                                         onPressed: () {
+    //                                                           Navigator.pop(
+    //                                                               context);
+    //                                                         },
+    //                                                         child: const Text(
+    //                                                             "No")),
+    //                                                     TextButton(
+    //                                                         onPressed: () {
+    //                                                           commonVM.commentFuntionality(
+    //                                                               commonVM
+    //                                                                   .commentList[
+    //                                                                       index]
+    //                                                                   .postId,
+    //                                                               "delete",
+    //                                                               commonVM
+    //                                                                   .commentList[
+    //                                                                       index]
+    //                                                                   .id);
+    //                                                           Navigator.pop(
+    //                                                               context);
+    //                                                         },
+    //                                                         child: const Text(
+    //                                                             "Yes")),
+    //                                                   ],
+    //                                                 );
+    //                                               });
+    //                                         },
+    //                                         child: Container(
+    //                                             width: 300 - 80,
+    //                                             child: Column(
+    //                                               crossAxisAlignment:
+    //                                                   CrossAxisAlignment.start,
+    //                                               children: [
+    //                                                 Text(
+    //                                                   commonVM
+    //                                                       .commentList[index]
+    //                                                       .username,
+    //                                                   style: const TextStyle(
+    //                                                       fontSize: 15,
+    //                                                       fontWeight:
+    //                                                           FontWeight.w400),
+    //                                                 ),
+    //                                                 RichText(
+    //                                                     text: TextSpan(
+    //                                                   text: commonVM
+    //                                                       .commentList[index]
+    //                                                       .text,
+    //                                                   style: const TextStyle(
+    //                                                       color: Colors.black,
+    //                                                       fontSize: 15,
+    //                                                       fontWeight:
+    //                                                           FontWeight.w400),
+    //                                                 )),
+    //                                                 Row(
+    //                                                   children: [
+    //                                                     TextButton.icon(
+    //                                                         label: Text(
+    //                                                             "${commonVM.commentList[index].likes}"),
+    //                                                         onPressed: () {
+    //                                                           commonVM.commentFuntionality(
+    //                                                               commonVM
+    //                                                                   .commentList[
+    //                                                                       index]
+    //                                                                   .postId,
+    //                                                               "likes",
+    //                                                               commonVM
+    //                                                                   .commentList[
+    //                                                                       index]
+    //                                                                   .id);
+    //                                                         },
+    //                                                         icon: Icon(
+    //                                                           Icons.thumb_up,
+    //                                                           color: Colors.grey
+    //                                                               .shade600,
+    //                                                           size: 20,
+    //                                                         )),
+    //                                                     TextButton(
+    //                                                         onPressed: () {},
+    //                                                         child: const Text(
+    //                                                             "Reply")),
+    //                                                   ],
+    //                                                 ),
+    //                                                 i ==
+    //                                                         commonVM.commentList
+    //                                                                 .length -
+    //                                                             1
+    //                                                     ? const SizedBox(
+    //                                                         height: 40,
+    //                                                       )
+    //                                                     : const SizedBox()
+    //                                               ],
+    //                                             )),
+    //                                       )
+    //                                     ]),
+    //                               )
+    //                             : const Text(
+    //                                 "No Comments",
+    //                                 style: TextStyle(
+    //                                   fontSize: 20,
+    //                                   fontWeight: FontWeight.w400,
+    //                                 ),
+    //                               );
+    //                   },
+    //                 )
+    //               : const Center(
+    //                   child: CircularProgressIndicator(
+    //                     color: Colors.blue,
+    //                   ),
+    //                 )
+    //       // ),
+    //     ],
+    //   ),
+    // );
   }
 }
 

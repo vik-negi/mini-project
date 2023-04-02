@@ -32,7 +32,11 @@ class PostVM extends GetxController {
   late final Future? futurePosts;
   RxBool isPostFetched = false.obs;
   RxBool isErrorOnFetchingData = false.obs;
+  String? userId;
   String checkBase = "Post View Model: ";
+  bool showWebCommentSection = false;
+  int selectedPostForComment = 0;
+  ScrollController commentScrollController = ScrollController();
 
   logout() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -78,7 +82,7 @@ class PostVM extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     futurePosts = getAllPost();
     isUserLoggedInFun();

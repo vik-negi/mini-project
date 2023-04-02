@@ -1,4 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:evika/utils/constants.dart';
 import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/utils/widgets/followWidget.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
@@ -21,18 +22,22 @@ class _TrandingPageState extends State<TrandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        title: Text(
-          "Evika",
-          style: TextStyle(
-              color: HexColor('#224957').withOpacity(0.7),
-              fontFamily: 'LexendDeca',
-              fontSize: 28,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
+      appBar: Get.width > Constants.webWidth
+          ? AppBar(
+              toolbarHeight: 0,
+            )
+          : AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+              title: Text(
+                "Evika",
+                style: TextStyle(
+                    color: HexColor('#224957').withOpacity(0.7),
+                    fontFamily: 'LexendDeca',
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
       body: RefreshIndicator(
         onRefresh: () {
           return Future(() => null);

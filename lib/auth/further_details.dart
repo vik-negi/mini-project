@@ -55,13 +55,13 @@ class _FurtherDetailsState extends State<FurtherDetails> {
                 if (isLastStep) {
                   if (vm.locationData != null) {
                     debugPrint("fetched by fetching location");
-                    sendOtp();
+                    vm.userSignup();
                   } else if (vm.locality1.text != "" &&
                       vm.adminArea1.text != "" &&
                       vm.postalCode1.text != "") {
                     vm.findPositionByAddress();
                     debugPrint("fetched by entering the location");
-                    sendOtp();
+                    vm.userSignup();
                   } else {
                     Get.snackbar("Alert", "Location is required!");
                   }

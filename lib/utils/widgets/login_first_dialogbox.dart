@@ -2,6 +2,8 @@ import 'package:evika/views/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../constants.dart';
+
 void loginFirstDialog(context) {
   showDialog(
       context: context,
@@ -10,7 +12,7 @@ void loginFirstDialog(context) {
           contentPadding:
               const EdgeInsets.only(top: 10, left: 10, bottom: 10, right: 10),
           content: Container(
-            width: Get.width,
+            width: Get.width > Constants.mwidth ? 440 : Get.width,
             height: 220,
             child: Column(
               children: [
