@@ -1,7 +1,7 @@
 import 'package:evika/auth/signup.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
 import 'package:evika/views/otp.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -21,16 +21,16 @@ class _FurtherDetailsState extends State<FurtherDetails> {
   SignupVM vm = Get.put(SignupVM());
 
   void sendOtp() async {
-    Get.to(() => const MyOtp());
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: "+91${vm.mobileController.text}",
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {
-        FurtherDetails.verify = verificationId;
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
+    // Get.to(() => const MyOtp());
+    // await FirebaseAuth.instance.verifyPhoneNumber(
+    //   phoneNumber: "+91${vm.mobileController.text}",
+    //   verificationCompleted: (PhoneAuthCredential credential) {},
+    //   verificationFailed: (FirebaseAuthException e) {},
+    //   codeSent: (String verificationId, int? resendToken) {
+    //     FurtherDetails.verify = verificationId;
+    //   },
+    //   codeAutoRetrievalTimeout: (String verificationId) {},
+    // );
   }
 
   final stepperKey = GlobalKey<FormState>();

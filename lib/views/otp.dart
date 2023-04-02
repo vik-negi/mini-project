@@ -1,7 +1,7 @@
 import 'package:evika/auth/further_details.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -17,7 +17,7 @@ class _MyOtpState extends State<MyOtp> {
   SignupVM signupvm = Get.put(SignupVM());
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth auth = FirebaseAuth.instance;
+    // final FirebaseAuth auth = FirebaseAuth.instance;
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
@@ -107,10 +107,10 @@ class _MyOtpState extends State<MyOtp> {
                   child: ElevatedButton(
                     onPressed: () async {
                       try {
-                        PhoneAuthCredential credential =
-                            PhoneAuthProvider.credential(
-                                verificationId: FurtherDetails.verify,
-                                smsCode: code);
+                        // PhoneAuthCredential credential =
+                        //     PhoneAuthProvider.credential(
+                        //         verificationId: FurtherDetails.verify,
+                        //         smsCode: code);
                         await vm.userSignup();
                         // Sign the user in (or link) with the credential
                         Get.offAllNamed(AppRotutes.signin);
