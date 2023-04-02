@@ -16,6 +16,7 @@ class PostApiServices {
     try {
       final response =
           await http.get(Uri.parse('$baseUrl/api/user/get-all-posts'));
+      // print("response get all post ${response}");
       if (response.statusCode == 200) {
         Map<String, dynamic> body = apiServices.returnResponse(response);
         return body;

@@ -61,6 +61,13 @@ class ProfileVM extends GetxController {
     debugPrint(
         "get user data to controllers is running ${userData!.location}}");
     Address address = await getLocation.findAdressByPosition(28.7041, 77.1025);
+    // Address address = Address(
+    //     address1: "abc address",
+    //     city: "abc address",
+    //     state: "abc address",
+    //     country: "abc address",
+    //     zipcode: "abc address",
+    //     coordinates: [28.7041, 77.1025]);
     print("address is ${address.state}");
     nameController.text = userData?.name ?? "";
     bioController.text = userData?.bio ?? "";

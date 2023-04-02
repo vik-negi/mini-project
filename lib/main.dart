@@ -6,7 +6,7 @@ import 'package:evika/views/create_post/create_post.dart';
 import 'package:evika/views/profile/profile.dart';
 import 'package:evika/views/signin.dart';
 import 'package:evika/views/trending_view/tranding.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:evika/views/feed/feed.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

@@ -1,3 +1,4 @@
+import 'package:evika/utils/constants.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:evika/utils/user_functionality.dart';
 import 'package:evika/utils/widgets/login_first_dialogbox.dart';
@@ -63,8 +64,12 @@ class FeedView extends StatelessWidget {
                     //   icon: Icon(Icons.home, color: Colors.grey.shade800),
                     // ),
                   ],
-                  bottom: PreferredSize(
-                      preferredSize: Size(Get.width, 40), child: Suggessions()),
+                  bottom: Get.width > Constants.mwidth
+                      ? const PreferredSize(
+                          child: SizedBox(), preferredSize: Size(0, 0))
+                      : PreferredSize(
+                          preferredSize: Size(Get.width, 40),
+                          child: Suggessions()),
                 ),
               ];
             },
@@ -77,7 +82,14 @@ class FeedView extends StatelessWidget {
                   //   children: [
                   // Suggessions(),
                   vm.isPostFetched.value
-                      ? HomePage()
+                      ? Center(
+                          child: Container(
+                              // color: Colors.red,
+                              width: Get.width < Constants.mwidth
+                                  ? Get.width
+                                  : 500,
+                              child: HomePage()),
+                        )
                       // Expanded(child: HomePage())
                       : vm.isErrorOnFetchingData.value
                           ? Center(

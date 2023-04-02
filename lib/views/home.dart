@@ -45,6 +45,9 @@ class _HomePageState extends State<HomePage> {
             }),
             itemBuilder: (context, i) {
               return Container(
+                  // madd
+                  color: Colors.red,
+                  width: Get.width > 500 ? 440 : Get.width,
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,7 +231,8 @@ class _HomePageState extends State<HomePage> {
                                     height: 5,
                                   ),
                                   SizedBox(
-                                    width: Get.width - 80,
+                                    width:
+                                        Get.width > 500 ? 480 : Get.width - 80,
                                     child: Stack(
                                       children: [
                                         RichText(
@@ -357,9 +361,11 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Container(
+                              // color: Colors.red,
                               child: Column(children: [
                                 Container(
-                                  width: Get.width * 0.82,
+                                  width:
+                                      Get.width > 500 ? 370 : Get.width * 0.82,
                                   constraints: const BoxConstraints(
                                     // minHeight: 5.0,
                                     // minWidth: 5.0,
