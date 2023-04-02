@@ -34,6 +34,9 @@ class PostVM extends GetxController {
   RxBool isErrorOnFetchingData = false.obs;
   String? userId;
   String checkBase = "Post View Model: ";
+  bool showWebCommentSection = false;
+  int selectedPostForComment = 0;
+  ScrollController commentScrollController = ScrollController();
 
   logout() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

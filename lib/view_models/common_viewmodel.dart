@@ -148,6 +148,7 @@ class CommonVM extends GetxController {
       var response = await commonRepoImp.getAndAddComments(postId, null);
       // debugPrint("Get Comments: response $response");
       commentList = response;
+      print("get commemts: ${commentList.length}}");
     } catch (e) {
       debugPrint("Get Comments: $e");
     }

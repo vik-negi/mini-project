@@ -221,10 +221,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: d8e9ca7e5d1983365c277f12c21b4362df6cf659c99af146ad4d04eb33033013
+      sha256: "39cfee7e5b7cafdfba94222174212b0990b011f32ababb7ec0547a9cd224677c"
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.6"
+    version: "5.2.0+1"
   fixnum:
     dependency: transitive
     description:

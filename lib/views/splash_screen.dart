@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:evika/utils/constants.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,8 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void isUserAuthenticated() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var status = prefs.getBool('isLoggedIn') ?? false;
-    if (status) {
-      Get.offAllNamed(AppRotutes.screenNavigator);
+    if (Get.width > Constants.webWidth) {
+      Get.offAllNamed(AppRotutes.feed);
     } else {
       // Get.offAllNamed(AppRotutes.signin);
       Get.offAllNamed(AppRotutes.screenNavigator);

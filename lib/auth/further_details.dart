@@ -21,16 +21,16 @@ class _FurtherDetailsState extends State<FurtherDetails> {
   SignupVM vm = Get.put(SignupVM());
 
   void sendOtp() async {
-    // Get.to(() => const MyOtp());
-    // await FirebaseAuth.instance.verifyPhoneNumber(
-    //   phoneNumber: "+91${vm.mobileController.text}",
-    //   verificationCompleted: (PhoneAuthCredential credential) {},
-    //   verificationFailed: (FirebaseAuthException e) {},
-    //   codeSent: (String verificationId, int? resendToken) {
-    //     FurtherDetails.verify = verificationId;
-    //   },
-    //   codeAutoRetrievalTimeout: (String verificationId) {},
-    // );
+    //   Get.to(() => const MyOtp());
+    //   await FirebaseAuth.instance.verifyPhoneNumber(
+    //     phoneNumber: "+91${vm.mobileController.text}",
+    //     verificationCompleted: (PhoneAuthCredential credential) {},
+    //     verificationFailed: (FirebaseAuthException e) {},
+    //     codeSent: (String verificationId, int? resendToken) {
+    //       FurtherDetails.verify = verificationId;
+    //     },
+    //     codeAutoRetrievalTimeout: (String verificationId) {},
+    //   );
   }
 
   final stepperKey = GlobalKey<FormState>();
@@ -332,7 +332,9 @@ class _FurtherDetailsState extends State<FurtherDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ElevatedButton(
-                        onPressed: vm.determinePosition,
+                        onPressed: () {
+                          // vm.determinePosition
+                        },
                         child: const Text('Allow Location')),
                     const SizedBox(
                       height: 20.0,

@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-// const String baseUrl = 'http://evika.herokuapp.com';
-// const String baseUrl = 'http://172.11.11.60:8000';
-// const String baseUrl = 'http://192.168.149.65:8000';
-const String baseUrl = 'http://172.11.11.48:8000';
+const String baseUrl = 'https://evika.vercel.app';
 // const String baseUrl = "http://192.168.56.1:8000";
 const mlBaseUrl = "https://evika-ml.herokuapp.com";
 
