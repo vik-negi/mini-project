@@ -50,6 +50,7 @@ class ScreenNavigate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     List<Widget> screens = <Widget>[
       const FeedView(),
       WebFilterWidget(pageWidget: const TrandingPage()),
@@ -59,31 +60,34 @@ class ScreenNavigate extends StatelessWidget {
     return GetBuilder<NavigationController>(builder: (nv) {
       return Scaffold(
         body: screens.elementAt(nv.index.value),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            navbarItem(icon: Icons.home, label: "Home"),
-            navbarItem(icon: Icons.trending_up_outlined, label: "Trending"),
-            navbarItem(icon: Icons.add, label: "Post"),
-            navbarItem(icon: Icons.account_box, label: "Accounts"),
-          ],
-          currentIndex: nv.index.value,
-          onTap: (int index) {
-            if (index == 2 || index == 3) {
-              if (!nv.isUserLoggedIn) {
-                loginFirstDialog(context);
-                return;
-              }
-            }
-            nv.changeIndex(index);
-            nv.update();
-          },
-          unselectedItemColor: const Color(0xffa1a1a1),
-          selectedItemColor: const Color(0xff415859),
-          showUnselectedLabels: true,
-          selectedIconTheme: const IconThemeData(size: 30),
-          unselectedIconTheme: const IconThemeData(size: 25),
-          type: BottomNavigationBarType.fixed,
-        ),
+        bottomNavigationBar: width > Constants.webWidth
+            ? null
+            : BottomNavigationBar(
+                items: <BottomNavigationBarItem>[
+                  navbarItem(icon: Icons.home, label: "Home"),
+                  navbarItem(
+                      icon: Icons.trending_up_outlined, label: "Trending"),
+                  navbarItem(icon: Icons.add, label: "Post"),
+                  navbarItem(icon: Icons.account_box, label: "Accounts"),
+                ],
+                currentIndex: nv.index.value,
+                onTap: (int index) {
+                  if (index == 2 || index == 3) {
+                    if (!nv.isUserLoggedIn) {
+                      loginFirstDialog(context);
+                      return;
+                    }
+                  }
+                  nv.changeIndex(index);
+                  nv.update();
+                },
+                unselectedItemColor: const Color(0xffa1a1a1),
+                selectedItemColor: const Color(0xff415859),
+                showUnselectedLabels: true,
+                selectedIconTheme: const IconThemeData(size: 30),
+                unselectedIconTheme: const IconThemeData(size: 25),
+                type: BottomNavigationBarType.fixed,
+              ),
       );
     });
   }
@@ -105,7 +109,7 @@ class WebFilterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: width > Constants.webWidth
+      appBar: width < Constants.webWidth
           ? AppBar(
               toolbarHeight: 0,
             )

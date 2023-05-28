@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
     return GetBuilder<CommonVM>(builder: (commonVM) {
       return GetBuilder<PostVM>(builder: (vm) {
         return ListView.separated(
+
             // reverse: true,
             physics: const BouncingScrollPhysics(),
             // physics: const NeverScrollableScrollPhysics(),

@@ -7,6 +7,7 @@ class NavigationController extends GetxController {
 
   void changeIndex(int index) {
     this.index.value = index;
+    update();
   }
 
   @override
