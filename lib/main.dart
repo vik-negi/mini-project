@@ -109,7 +109,7 @@ class WebFilterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: width < Constants.webWidth
+      appBar: width > Constants.webWidth
           ? AppBar(
               toolbarHeight: 0,
             )
