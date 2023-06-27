@@ -1,14 +1,12 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
 import 'package:evika/models/user/post_model.dart' as postModel;
 import 'package:evika/repositories/login_repo/login_repo_imp.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
+import 'package:geocoding_resolver/geocoding_resolver.dart';
 import 'package:location/location.dart';
 
 class GetLocation {
   var first1;
-
+  GeoCoder geoCoder = GeoCoder();
   final LoginRepoImp loginRepo = LoginRepoImp();
   List<double> coordinatesPoints = [];
   LocationData? locationData;
@@ -38,43 +36,43 @@ class GetLocation {
 
     locationData = await location.getLocation();
 
-    // Passed the coordinates of latitude and longitude
     coordinatesPoints.add(locationData!.longitude!);
     coordinatesPoints.add(locationData!.latitude!);
-    final coordinates =
-        Coordinates(locationData!.latitude, locationData!.longitude);
-    var address =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = address.first;
-    // on below line we have set the address to string
+    var address = await geoCoder.getAddressFromLatLng(
+        latitude: locationData!.latitude!, longitude: locationData!.longitude!);
+    var addressDetails = address.addressDetails;
     return {
       "coordinates": coordinatesPoints,
-      "country": "india",
-      "state": first.adminArea.toString(),
-      "zipcode": first.postalCode.toString(),
-      "address1": first.locality.toString(),
+      "country": addressDetails.country.toString(),
+      "state": addressDetails.state.toString(),
+      "zipcode": addressDetails.postcode.toString(),
+      "address1": addressDetails.city.toString(),
     };
   }
 
   Future<postModel.Address> findAdressByPosition(
       double latitude, double longitude) async {
     debugPrint("latitude : $latitude longitude : $longitude");
-    final coordinates = Coordinates(latitude, longitude);
-    var address =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    // final coordinates = Coordinates(latitude, longitude);
+    // var address =
+    //     await Geocoder.local.findAddressesFromCoordinates(coordinates);
 
-    var first = address.first;
+    var address = await geoCoder.getAddressFromLatLng(
+      latitude: latitude,
+      longitude: longitude,
+    );
+
+    var addressDetails = address.addressDetails;
     List<double> coordinatesPots = [];
-    coordinatesPots.add(first.coordinates.longitude);
-    coordinatesPots.add(first.coordinates.latitude);
-    // debugPrint(
-    //     "coordinates : ${first.subAdminArea} ${first.adminArea} ${first.postalCode} looooo ${first.locality} ffffnnnn ${first.featureName} addline ${first.addressLine} subb ${first.subLocality}");
+    coordinatesPots.add(double.parse(address.lon));
+    coordinatesPots.add(double.parse(address.lat));
+
     return postModel.Address(
       coordinates: coordinatesPots,
-      country: "india",
-      state: first.adminArea.toString(),
-      zipcode: first.postalCode.toString(),
-      address1: first.addressLine.toString(),
+      country: addressDetails.country.toString(),
+      state: addressDetails.state.toString(),
+      zipcode: addressDetails.postcode.toString(),
+      address1: addressDetails.city.toString(),
     );
   }
 
@@ -82,11 +80,12 @@ class GetLocation {
       String locality1, String adminArea1, String postalCode1) async {
     //changing entered user address to coordinates
     final query = "${locality1} ${adminArea1} ${postalCode1}";
-    var address1 = await Geocoder.local.findAddressesFromQuery(query);
-    first1 = address1.first;
-    coordinatesPoints.add(first1.coordinates.longitude);
-    coordinatesPoints.add(first1.coordinates.latitude);
-    debugPrint("coordinates : ${first1.coordinates.latitude}");
+    // LookupAddress
+    var address1 = await geoCoder.getAddressSuggestions(address: query);
+    var first1 = address1.first;
+    coordinatesPoints.add(double.parse(first1.longitude));
+    coordinatesPoints.add(double.parse(first1.latitude));
+    debugPrint("coordinates : ${first1.latitude}");
     postModel.Address address = postModel.Address(
       coordinates: coordinatesPoints,
       country: "india",

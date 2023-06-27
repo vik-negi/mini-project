@@ -54,7 +54,7 @@ class AppRotutes {
     ),
     GetPage(
       name: AppRotutes.profile,
-      page: () => ProfilePage(),
+      page: () => const ProfilePage(),
       binding: ProfileBinding(),
     ),
     GetPage(

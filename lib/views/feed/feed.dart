@@ -1,9 +1,7 @@
 import 'package:evika/auth/signup.dart';
 import 'package:evika/utils/constants.dart';
-import 'package:evika/utils/routes.dart';
 import 'package:evika/utils/user_functionality.dart';
 import 'package:evika/utils/widgets/login_first_dialogbox.dart';
-import 'package:evika/view_models/chat_bot.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
 import 'package:evika/view_models/home_viewmodel.dart/post_viewmodel.dart';
 import 'package:evika/view_models/navigation.dart/navigation_viewmodel.dart';
@@ -11,7 +9,6 @@ import 'package:evika/views/chat_view/chart_view_home.dart';
 import 'package:evika/views/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -71,7 +68,7 @@ class FeedView extends StatelessWidget {
                   await vm.getAllPost();
                 },
                 child: vm.isPostFetched.value
-                    ? Container(
+                    ? SizedBox(
                         width: width,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,7 +84,7 @@ class FeedView extends StatelessWidget {
                                       )
                                     ],
                                   ),
-                            Container(
+                            SizedBox(
                               width: Get.width < Constants.webWidth
                                   ? width
                                   : vm.showWebCommentSection
@@ -110,7 +107,7 @@ class FeedView extends StatelessWidget {
                             ),
                             (!vm.showWebCommentSection || width < 1260)
                                 ? const SizedBox()
-                                : Container(
+                                : SizedBox(
                                     width: Constants.commentSectionWidth,
                                     child: commonVM.isLoading
                                         ? ConstrainedBox(
@@ -185,7 +182,7 @@ class FeedView extends StatelessWidget {
                                                   child: !commonVM.isLoading
                                                       ? ListView.builder(
                                                           physics:
-                                                              BouncingScrollPhysics(),
+                                                              const BouncingScrollPhysics(),
                                                           itemCount: commonVM
                                                                   .commentList
                                                                   .isEmpty
@@ -248,7 +245,7 @@ class FeedView extends StatelessWidget {
                                                                                     );
                                                                                   });
                                                                             },
-                                                                            child: Container(
+                                                                            child: SizedBox(
                                                                                 width: Get.width < Constants.webWidth ? width - 80 : Constants.commentSectionWidth - 80,
                                                                                 child: Column(
                                                                                   crossAxisAlignment: CrossAxisAlignment.start,

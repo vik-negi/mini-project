@@ -3,7 +3,7 @@ import 'package:evika/models/user/user_model.dart';
 import 'package:evika/repositories/login_repo/login_repo_imp.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
+import 'package:geocoding_resolver/geocoding_resolver.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 
@@ -49,6 +49,7 @@ class SignupVM extends GetxController {
 
   var first1;
   LocationData? locationData;
+  GeoCoder geoCoder = GeoCoder();
 
   void _determinePosition() async {
     Location location = Location();
@@ -73,7 +74,6 @@ class SignupVM extends GetxController {
         return;
       }
     }
-    // location fetching
 
     locationData = await location.getLocation();
     update();
@@ -81,15 +81,19 @@ class SignupVM extends GetxController {
     // Passed the coordinates of latitude and longitude
     coordinatesPoints.add(locationData!.longitude!);
     coordinatesPoints.add(locationData!.longitude!);
-    final coordinates =
-        Coordinates(locationData!.latitude, locationData!.longitude);
-    var address =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = address.first;
+    // final coordinates =
+    //     Coordinates(locationData!.latitude, locationData!.longitude);
+    var address = await geoCoder.getAddressFromLatLng(
+        latitude: locationData!.longitude!,
+        longitude: locationData!.longitude!);
+    var first = address.addressDetails;
     // on below line we have set the address to string
-    locality1.text = first.locality.toString();
-    adminArea1.text = first.adminArea.toString();
-    postalCode1.text = first.postalCode.toString();
+    // locality1.text = first.locality.toString();
+    // adminArea1.text = first.adminArea.toString();
+    // postalCode1.text = first.postalCode.toString();
+    locality1.text = first.city.toString();
+    adminArea1.text = first.state.toString();
+    postalCode1.text = first.postcode.toString();
 
     /// update ui
 
@@ -105,7 +109,7 @@ class SignupVM extends GetxController {
   void _findPositionByAddress() async {
     //changing entered user address to coordinates
     final query = "${locality1.text} ${adminArea1.text} ${postalCode1.text}";
-    var address1 = await Geocoder.local.findAddressesFromQuery(query);
+    var address1 = await geoCoder.getAddressSuggestions(address: query);
     first1 = address1.first;
     update();
     coordinatesPoints.add(first1.coordinates.longitude);
