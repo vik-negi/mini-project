@@ -4,7 +4,6 @@ import 'package:evika/utils/constants.dart';
 import 'package:evika/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // i have chnaged somthing
 
