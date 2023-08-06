@@ -9,8 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // i have chnaged somthing
 
 class SplashScreen extends StatefulWidget {
-  SplashScreen({Key? key}) : super(key: key);
-
+  const SplashScreen({Key? key}) : super(key: key);
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -18,7 +17,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Timer(const Duration(seconds: 5), () {
       Get.offAllNamed(AppRotutes.screenNavigator);
@@ -27,8 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void isUserAuthenticated() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var status = prefs.getBool('isLoggedIn') ?? false;
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // var status = prefs.getBool('isLoggedIn') ?? false;
     if (Get.width > Constants.webWidth) {
       Get.offAllNamed(AppRotutes.feed);
     } else {
