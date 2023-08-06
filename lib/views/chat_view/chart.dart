@@ -38,7 +38,8 @@ class _ChatsState extends State<Chats> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          // backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.background,
           child: const Icon(Icons.message),
           onPressed: () {
             // Get.to(() => ForwardView());

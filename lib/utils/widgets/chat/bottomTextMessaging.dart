@@ -68,45 +68,11 @@ class BottomTextMessaging extends StatelessWidget {
                             contentPadding: const EdgeInsets.all(5),
                             suffixIcon: Padding(
                               padding: const EdgeInsets.only(right: 10.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.09,
-                                    child: IconBtn(
-                                      icon: Icons.attach_file,
-                                      iconOnPress: () {
-                                        showModalBottomSheet(
-                                          backgroundColor: Colors.transparent,
-                                          context: context,
-                                          builder: (builder) {
-                                            // return const MoreOptionsToSend();
-                                            return Mots(
-                                              height: 380,
-                                              list: vm.moreOptionsToSend,
-                                              borderR: 15,
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.09,
-                                    child: const IconBtn(
-                                      icon: Icons.currency_rupee,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.09,
-                                    child: const IconBtn(
-                                      icon: Icons.camera_alt,
-                                    ),
-                                  ),
-                                ],
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.09,
+                                child: const IconBtn(
+                                  icon: Icons.camera_alt,
+                                ),
                               ),
                             ),
                           ),

@@ -53,6 +53,7 @@ class PostData {
   final String? id;
 
   final String? description;
+  final String? eventDescription;
   final String? eventCategory;
   final String? eventEndAt;
 
@@ -73,12 +74,17 @@ class PostData {
   final String? userId;
   final String? name;
   final String? profileImage;
+  final List<dynamic>? registration;
+  final bool? registrationRequired;
 
   PostData({
+    this.registrationRequired,
+    this.registration,
     this.name,
     this.profileImage,
     this.createdAt,
     this.description,
+    this.eventDescription,
     this.eventCategory,
     this.eventEndAt,
     this.eventId,
@@ -98,10 +104,13 @@ class PostData {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'registrationRequired': registrationRequired,
+      'registration': registration,
       'name': name,
       'profileImage': profileImage,
       'createdAt': createdAt,
       'description': description,
+      'eventDescription': eventDescription,
       'eventCategory': eventCategory,
       'eventEndAt': eventEndAt,
       'eventId': eventId,
@@ -122,6 +131,11 @@ class PostData {
 
   factory PostData.fromMap(Map<String, dynamic> map) {
     return PostData(
+      registrationRequired: map['registrationRequired'] != null
+          ? map['registrationRequired'] as bool
+          : false,
+      registration: map['registration'] ?? [],
+      eventDescription: map['eventDescription'] ?? [],
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : "null",
       description:
           map['description'] != null ? map['description'] as String : "null",
@@ -131,10 +145,10 @@ class PostData {
       eventEndAt:
           map['eventEndAt'] != null ? map['eventEndAt'] as String : "null",
       eventId: map['eventId'] != null ? map['eventId'] as String : "null",
-      // eventLocation: map['eventLocation'] != null
-      //     ? EventLocation.fromMap(map['eventLocation'] as Map<String, dynamic>)
-      //     : null,
-
+      eventLocation: map['eventLocation'] != null &&
+              map['eventLocation']["coordinates"] != null
+          ? EventLocation.fromMap(map['eventLocation'])
+          : EventLocation(coordinates: [83.18594949999999, 26.0739138]),
       eventStartAt:
           map['eventStartAt'] != null ? map['eventStartAt'] as String : "null",
       image: map['image'] != null
@@ -154,7 +168,7 @@ class PostData {
       name: map['name'] != null ? map['name'] as String : "null",
       userId: map['userId'] != null ? map['userId'] as String : "null",
       noOfComments:
-          map['noOfComments'] != null ? map['noOfComments'] as int : 0,
+          map['noOfComments'] != null ? (map['noOfComments']) as int : 0,
       id: map['_id'] != null ? map['_id'] as String : "null",
     );
   }
@@ -297,25 +311,25 @@ class Reply {
 //     },
 //   }
 class EventLocation {
-  final String type;
-  final List<double> coordinates;
+  String type = "Point";
+  List<double>? coordinates;
 
   EventLocation({
-    required this.type,
-    required this.coordinates,
+    this.type = "Point",
+    this.coordinates,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'type': type,
       'coordinates': coordinates,
     };
   }
 
   factory EventLocation.fromMap(Map<String, dynamic> map) {
     return EventLocation(
-      type: map['type'] as String,
-      coordinates: List<double>.from(map['coordinates'] as List),
+      coordinates: map['coordinates'] != null
+          ? List<double>.from(map['coordinates'] as List)
+          : [83.18594949999999, 26.0739138],
     );
   }
 

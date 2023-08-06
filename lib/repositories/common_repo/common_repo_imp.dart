@@ -10,11 +10,17 @@ class CommonRepoImp extends CommonRepo {
   @override
   Future<List>? userLikedPost() async {
     List? response = await commonApiServices.userLikedPosts();
-    debugPrint("common Repo Imp $response");
+    // debugPrint("common Repo Imp $response");
     if (response != null && response.isNotEmpty) {
       return response;
     }
     return [];
+  }
+
+  @override
+  Future<bool> followUser(String otherUserId) async {
+    bool response = await commonApiServices.followUser(otherUserId);
+    return response;
   }
 
   @override

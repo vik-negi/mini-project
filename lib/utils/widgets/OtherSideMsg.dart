@@ -2,6 +2,8 @@ import 'package:evika/view_models/user_chat_viewmodal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../constants.dart';
+
 class OtherSideMsgCard extends StatelessWidget {
   OtherSideMsgCard(
       {Key? key, required this.text, required this.time, required this.chatId})
@@ -22,10 +24,14 @@ class OtherSideMsgCard extends StatelessWidget {
           child: GestureDetector(
             onLongPress: () {
               showModalBottomSheet(
+                constraints: BoxConstraints(
+                  maxWidth: 500,
+                ),
                 context: context,
                 builder: (context) {
                   return Container(
                     height: 100,
+                    width: Get.width < Constants.mwidth ? Get.width : 500,
                     child: Column(
                       children: [
                         ListTile(

@@ -3,7 +3,7 @@ import 'package:evika/main.dart';
 import 'package:evika/utils/bindings.dart';
 import 'package:evika/views/create_post/create_post.dart';
 import 'package:evika/views/description/description.dart';
-import 'package:evika/views/mypost/my_post.dart';
+import 'package:evika/views/mypost/my_post_details.dart';
 import 'package:evika/views/profile/profile.dart';
 import 'package:evika/views/feed/feed.dart';
 import 'package:evika/views/signin.dart';
@@ -54,7 +54,7 @@ class AppRotutes {
     ),
     GetPage(
       name: AppRotutes.profile,
-      page: () => ProfilePage(),
+      page: () => const ProfilePage(),
       binding: ProfileBinding(),
     ),
     GetPage(

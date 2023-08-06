@@ -1,13 +1,10 @@
 import 'package:evika/auth/signup.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
 import 'package:evika/views/otp.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:location/location.dart';
 
 class FurtherDetails extends StatefulWidget {
   const FurtherDetails({super.key});
@@ -24,16 +21,16 @@ class _FurtherDetailsState extends State<FurtherDetails> {
   SignupVM vm = Get.put(SignupVM());
 
   void sendOtp() async {
-    Get.to(() => MyOtp());
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: "+91" + vm.mobileController.text,
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {
-        FurtherDetails.verify = verificationId;
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
+    //   Get.to(() => const MyOtp());
+    //   await FirebaseAuth.instance.verifyPhoneNumber(
+    //     phoneNumber: "+91${vm.mobileController.text}",
+    //     verificationCompleted: (PhoneAuthCredential credential) {},
+    //     verificationFailed: (FirebaseAuthException e) {},
+    //     codeSent: (String verificationId, int? resendToken) {
+    //       FurtherDetails.verify = verificationId;
+    //     },
+    //     codeAutoRetrievalTimeout: (String verificationId) {},
+    //   );
   }
 
   final stepperKey = GlobalKey<FormState>();
@@ -58,19 +55,19 @@ class _FurtherDetailsState extends State<FurtherDetails> {
                 if (isLastStep) {
                   if (vm.locationData != null) {
                     debugPrint("fetched by fetching location");
-                    sendOtp();
+                    vm.userSignup();
                   } else if (vm.locality1.text != "" &&
                       vm.adminArea1.text != "" &&
                       vm.postalCode1.text != "") {
                     vm.findPositionByAddress();
                     debugPrint("fetched by entering the location");
-                    sendOtp();
+                    vm.userSignup();
                   } else {
                     Get.snackbar("Alert", "Location is required!");
                   }
                 } else if (currentStep == 0) {
-                  print("ssssssssssssss");
-                  print(vm.selectedValue);
+                  debugPrint("ssssssssssssss");
+                  debugPrint(vm.selectedValue);
                   if (vm.selectedValue != "") {
                     setState(() {
                       currentStep += 1;
@@ -335,7 +332,9 @@ class _FurtherDetailsState extends State<FurtherDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ElevatedButton(
-                        onPressed: vm.determinePosition,
+                        onPressed: () {
+                          // vm.determinePosition
+                        },
                         child: const Text('Allow Location')),
                     const SizedBox(
                       height: 20.0,

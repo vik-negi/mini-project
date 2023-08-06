@@ -1,21 +1,18 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/data/remote/api_services/api_services.dart';
 import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
-import 'package:evika/utils/colors.dart';
+import 'package:evika/utils/sharedPreferenced.dart';
+import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
-import 'package:evika/views/create_post/registrationFilelds.dart';
+import 'package:geocoding_resolver/geocoding_resolver.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CreatePostVM extends GetxController {
   ApiResponce<Map<dynamic, dynamic>?> response = ApiResponce.loading();
@@ -29,7 +26,7 @@ class CreatePostVM extends GetxController {
 
   final ImagePicker picker = ImagePicker();
   FilePicker filePicker = FilePicker.platform;
-
+  GeoCoder geoCoder = GeoCoder();
   String? dateTime;
   int viewImageIndex = 0;
   bool isRegistrationRequired = false;
@@ -68,11 +65,6 @@ class CreatePostVM extends GetxController {
     'Dec'
   ];
 
-  logout() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
-  }
-
   void pickImage() async {
     final List<XFile>? images = await picker.pickMultiImage(
       imageQuality: 25,
@@ -90,81 +82,62 @@ class CreatePostVM extends GetxController {
     update();
   }
 
-  List<Widget> showImageRowList() {
-    List<Widget> res = [];
-    for (var image in selectedImages) {
-      res.add(
-        Stack(
-          children: [
-            InkWell(
-              onTap: () {
-                viewImageIndex = selectedImages.indexOf(image);
-                update();
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                height: 60,
-                width: 60,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.file(
-                    File(image.path),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              right: 10,
-              top: 5,
-              child: InkWell(
-                onTap: () {
-                  if (viewImageIndex == selectedImages.indexOf(image)) {
-                    viewImageIndex = 0;
-                    update();
-                    selectedImages.remove(image);
-                    update();
-                  }
-                  selectedImages.remove(image);
-                  update();
-                },
-                child: const Icon(
-                  CupertinoIcons.multiply_circle_fill,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    }
+  var first1;
+  List<double> coordinatesPoints = [];
 
-    if (selectedImages.length < 4) {
-      res.add(
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5),
-          decoration: BoxDecoration(
-            color: AppColors.accentColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          width: 60,
-          height: 60,
-          child: Center(
-            child: IconButton(
-              onPressed: () {
-                pickImage();
-              },
-              icon: const Icon(Icons.add),
-            ),
-          ),
-        ),
-      );
-    }
+  Future findPositionByAddress() async {
+    coordinatesPoints = [];
+    final query = locationController.text;
+    var address1 = await geoCoder.getAddressSuggestions(
+      address: query,
+    );
+    first1 = address1.first;
+    coordinatesPoints.add(first1.coordinates.longitude);
+    coordinatesPoints.add(first1.coordinates.latitude);
+    update();
+    debugPrint(coordinatesPoints.toString());
+    debugPrint("coordinates : ${first1.coordinates}");
+  }
 
-    return res;
+  clearAllFields() {
+    titleController.clear();
+    descriptionController.clear();
+    locationController.clear();
+    eventDescriptionController.clear();
+    startAndEndDate.clear();
+    selectedImages.clear();
+    update();
   }
 
   PostApiServices postApiServices = PostApiServices();
+
+  bool isValidSubmit() {
+    if (titleController.text.trim().isEmpty) {
+      Get.snackbar("Error", "Please enter title");
+      return false;
+    }
+    if (descriptionController.text.trim().isEmpty) {
+      Get.snackbar("Error", "Please enter description");
+      return false;
+    }
+    if (locationController.text.trim().isEmpty) {
+      Get.snackbar("Error", "Please enter location");
+      return false;
+    }
+    if (eventDescriptionController.text.trim().isEmpty) {
+      Get.snackbar("Error", "Please enter event description");
+      return false;
+    }
+    if (startAndEndDate.isEmpty) {
+      Get.snackbar("Error", "Please enter start and end date");
+      return false;
+    }
+    if (selectedImages.isEmpty) {
+      Get.snackbar("Error", "Please select images");
+      return false;
+    }
+    return true;
+  }
 
   Future<void> createPost() async {
     if (titleController.text.trim().isEmpty) {
@@ -172,75 +145,55 @@ class CreatePostVM extends GetxController {
       return;
     }
     try {
+      if (!isValidSubmit()) {
+        throw ("Some Fields are missing");
+      }
       debugPrint("chala");
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      // http.Response tagsMap =
-      //     await http.post(Uri.parse("$mlBaseUrl/api/keywords"), body: {
-      //   "text": descriptionController.text,
-      //   "user_id": "1",
-      // });
-      // String tagString = "";
-      // List tagList = jsonDecode(tagsMap.body)["data"];
-      // jsonDecode(tagsMap.body)["data"].forEach((element) {
-      // tagString += "$element,";
-      // });
-      String tagString = "";
-      // List tagList = jsonDecode(tagsMap.body)["data"];
-      // jsonDecode(tagsMap.body)["data"].forEach((element) {
-      //   tagString += "$element,";
-      // });
 
-      // tagString = tagString.substring(0, tagString.length - 1);
+      await findPositionByAddress();
+      String tagString = "";
       var request = http.MultipartRequest(
           "POST", Uri.parse("$baseUrl/api/user/create-post/"));
       request.headers["Authorization"] =
-          "Bearer ${sharedPreferences.getString("token")}";
+          "Bearer ${await SharedPrefs.getString("token")}";
       request.fields["title"] = titleController.text;
       request.fields["description"] = descriptionController.text;
-      request.fields["location"] = locationController.text;
+      request.fields["eventLocation"] = locationController.text;
+      request.fields["eventLocation"] = coordinatesPoints.toString();
+      // request.fields["eventLocation"] = [80.3319, 26.4499].toString();
       request.fields["eventDescription"] = eventDescriptionController.text;
       request.fields["eventStartAt"] = startAndEndDate[0].toString();
-      request.fields["isRegistrationRequired"] =
+      request.fields["registrationRequired"] =
           isRegistrationRequired.toString();
       request.fields["eventEndAt"] = startAndEndDate[1].toString();
       request.fields["eventCategory"] = 'sports';
       // request.fields["tags"] = [];
-      request.fields["userId"] = sharedPreferences.getString("user_id")!;
+      request.fields["userId"] = (await SharedPrefs.getString("userId"))!;
       for (var element in selectedImages) {
         request.files
             .add(await http.MultipartFile.fromPath("image", element.path));
       }
 
       print(request.fields.entries);
-      // debugPrint("printing");
-      // for (var i in request.fields.entries) {
-      // }
-      // debugPrint("printed");
-
       String? response = await postRepoImp.createPost(request);
-      print(response);
+      debugPrint(response.toString());
       if (response != null) {
-        Get.snackbar('Success', 'Post Created Successfully');
-        print('Post Created Successfully');
+        clearAllFields();
       } else {
-        Get.snackbar('Error', 'Something went wrong');
-        print("something went wrong");
+        UtilWidgetsAndFunctions.appSnakBar(
+          message: "Something went wrong",
+          isError: true,
+          maxwidth: 220,
+        );
+        debugPrint("something went wrong");
       }
     } catch (err) {
+      UtilWidgetsAndFunctions.appSnakBar(
+        message: "Something went wrong",
+        isError: true,
+        maxwidth: 220,
+      );
       print("err : $err");
-    }
-  }
-
-  Future<bool?>? likePost(id) async {
-    Map<String, dynamic>? response = await postRepoImp.likePost(id);
-    if (response != null) {
-      print("uuuuuuuuuuuuuuu");
-      print("Liked Post response : $response");
-      List<String> likedPosts = [];
-      return true;
-    } else {
-      return false;
     }
   }
 
