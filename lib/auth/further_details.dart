@@ -1,6 +1,6 @@
 import 'package:evika/auth/signup.dart';
 import 'package:evika/view_models/signin_signup_viewmodel.dart/signup_viewmodel.dart';
-import 'package:evika/views/otp.dart';
+
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

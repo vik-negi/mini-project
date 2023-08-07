@@ -7,7 +7,8 @@ import 'package:settings_ui/settings_ui.dart';
 
 class SettingScreen extends StatelessWidget {
   SettingScreen({Key? key}) : super(key: key);
-  SettingVM vm = Get.put(SettingVM());
+
+  final SettingVM vm = Get.put(SettingVM());
 
   @override
   Widget build(BuildContext context) {

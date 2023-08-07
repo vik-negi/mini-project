@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
       // themeMode: ThemeMode.dark,
       // themeMode: ThemeMode.light,
       getPages: AppRotutes.pages,
-      initialRoute: AppRotutes.splashScreen,
+      initialRoute: AppRotutes.signin,
+      // initialRoute: AppRotutes.splashScreen,
     );
   }
 }
