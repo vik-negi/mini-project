@@ -1,5 +1,5 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:evika/utils/widgets/MoreOptionToSend.dart';
+// import 'package:evika/utils/widgets/MoreOptionToSend.dart';
 import 'package:evika/view_models/user_chat_viewmodal.dart';
 import 'package:evika/views/chat_view/user_Chat_page.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class BottomTextMessaging extends StatelessWidget {
   BottomTextMessaging({super.key});
-  UserChatVM vm =
+  final UserChatVM vm =
       Get.isRegistered<UserChatVM>() ? Get.find() : Get.put(UserChatVM());
 
   @override
@@ -143,7 +143,7 @@ class BottomTextMessaging extends StatelessWidget {
             skinToneDialogBgColor: Colors.white,
             skinToneIndicatorColor: Colors.grey,
             enableSkinTones: true,
-            showRecentsTab: true,
+            // showRecentsTab: true,
             recentsLimit: 28,
             noRecents: Text(
               'No Recents',

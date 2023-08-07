@@ -35,7 +35,11 @@ class AppRotutes {
       page: () => const MyPostDetails(),
       binding: MyPostDetailsBinding(),
     ),
-    GetPage(name: AppRotutes.signin, page: () => SigninPage()),
+    GetPage(
+      name: AppRotutes.signin,
+      page: () => const SigninPage(),
+      binding: SigninBindings(),
+    ),
 
     GetPage(
       name: AppRotutes.signup,
@@ -58,10 +62,14 @@ class AppRotutes {
       binding: ProfileBinding(),
     ),
     GetPage(
-        name: AppRotutes.feed,
-        page: () => const FeedView(),
-        binding: FeedBinding()),
-    GetPage(name: AppRotutes.splashScreen, page: () => SplashScreen()),
+      name: AppRotutes.feed,
+      page: () => const FeedView(),
+      binding: FeedBinding(),
+    ),
+    GetPage(
+      name: AppRotutes.splashScreen,
+      page: () => const SplashScreen(),
+    ),
     // GetPage(name: AppRotutes.postDescription, page: () => Description()),
   ];
 }
