@@ -1,24 +1,18 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:evika/data/remote/api_responce.dart';
 import 'package:evika/data/remote/api_services/api_services.dart';
 import 'package:evika/data/remote/api_services/post_api_service.dart';
 import 'package:evika/models/user/post_model.dart';
 import 'package:evika/repositories/post_repo/post_repo_imp.dart';
-import 'package:evika/utils/colors.dart';
 import 'package:evika/utils/sharedPreferenced.dart';
 import 'package:evika/utils/util_widgets_and_functions.dart';
 import 'package:evika/view_models/common_viewmodel.dart';
-import 'package:evika/views/create_post/registrationFilelds.dart';
-import 'package:geocoder/geocoder.dart';
+import 'package:geocoding_resolver/geocoding_resolver.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CreatePostVM extends GetxController {
   ApiResponce<Map<dynamic, dynamic>?> response = ApiResponce.loading();
@@ -32,7 +26,7 @@ class CreatePostVM extends GetxController {
 
   final ImagePicker picker = ImagePicker();
   FilePicker filePicker = FilePicker.platform;
-
+  GeoCoder geoCoder = GeoCoder();
   String? dateTime;
   int viewImageIndex = 0;
   bool isRegistrationRequired = false;
@@ -93,9 +87,10 @@ class CreatePostVM extends GetxController {
 
   Future findPositionByAddress() async {
     coordinatesPoints = [];
-    //changing entered user address to coordinates
-    final query = "${locationController.text}";
-    var address1 = await Geocoder.local.findAddressesFromQuery(query);
+    final query = locationController.text;
+    var address1 = await geoCoder.getAddressSuggestions(
+      address: query,
+    );
     first1 = address1.first;
     coordinatesPoints.add(first1.coordinates.longitude);
     coordinatesPoints.add(first1.coordinates.latitude);
