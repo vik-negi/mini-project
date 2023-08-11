@@ -133,7 +133,8 @@ class PostVM extends GetxController {
       if (data != null) {
         debugPrint("getAllpost function Called");
         List<dynamic> list = data['data'];
-        // debugPrint(data.toString());
+
+        debugPrint(data.toString());
 
         response = ApiResponce.completed(data);
         update();

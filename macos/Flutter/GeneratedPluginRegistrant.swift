@@ -9,9 +9,9 @@ import emoji_picker_flutter
 import flutter_secure_storage_macos
 import geolocator_apple
 import location
-import path_provider_foundation
+import path_provider_macos
 import share_plus
-import shared_preferences_foundation
+import shared_preferences_macos
 import smart_auth
 import sqflite
 

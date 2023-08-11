@@ -111,9 +111,9 @@ class _MyOtpState extends State<MyOtp> {
                         //     PhoneAuthProvider.credential(
                         //         verificationId: FurtherDetails.verify,
                         //         smsCode: code);
-                        // await vm.userSignup();
+                        await vm.userSignup();
                         // // Sign the user in (or link) with the credential
-                        // Get.offAllNamed(AppRotutes.signin);
+                        Get.offAllNamed(AppRotutes.signin);
                       } catch (e) {
                         print(e);
                       }

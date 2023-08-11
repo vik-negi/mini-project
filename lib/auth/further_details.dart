@@ -333,7 +333,7 @@ class _FurtherDetailsState extends State<FurtherDetails> {
                   children: [
                     ElevatedButton(
                         onPressed: () {
-                          // vm.determinePosition
+                          vm.determinePosition();
                         },
                         child: const Text('Allow Location')),
                     const SizedBox(
